@@ -1,0 +1,11 @@
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export const SET_LOADING = 'SET_LOADING';
+export const SET_LOADED = 'SET_LOADED';
+export const SET_EMAIL = 'SET_EMAIL';
+export const SET_COMMENT = 'SET_COMMENT';
+export const SET_AUTHOR = 'SET_AUTHOR';
+export const SET_URL = 'SET_URL';
+export const SET_FORM = 'SET_FORM';
+export const CLEAR_FORM = 'CLEAR_FORM';
+export const CLEAR_COMMENTS = 'CLEAR_COMMENTS';
+export const SET_ERROR = 'SET_ERROR';

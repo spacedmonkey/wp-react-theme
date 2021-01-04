@@ -1,0 +1,67 @@
+{
+  "name": "wp-react-theme",
+  "version": "1.0.0",
+  "description": "React theme for WordPress",
+  "author": "Jonathan Harris",
+  "license": "GPL-2.0-or-later",
+  "main": "assets/js/theme.js",
+  "keywords": [
+    "WordPress",
+    "Theme"
+  ],
+  "homepage": "https://github.com/spacedmonkey/wp-react-theme#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spacedmonkey/wp-react-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spacedmonkey/wp-react-theme/issues"
+  },
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^7.4.0",
+    "@wordpress/scripts": "^12.6.0",
+    "dir-archiver": "^1.1.1",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "node-sass": "^4.14.1",
+    "rtlcss": "^2.5.0"
+  },
+  "rtlcssConfig": {
+    "options": {
+      "autoRename": false,
+      "autoRenameStrict": false,
+      "blacklist": {},
+      "clean": true,
+      "greedy": false,
+      "processUrls": false,
+      "stringMap": []
+    },
+    "plugins": [],
+    "map": false
+  },
+  "scripts": {
+    "watch": "node-sass sass/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
+    "compile:css": "node-sass sass/ -o ./ && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
+    "compile:rtl": "rtlcss assets/theme.css assets/theme-rtl.css",
+    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
+    "build": "wp-scripts build src/theme.js --output-path=assets; npm run compile:rtl",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "start": "wp-scripts start src/theme.js --output-path=assets",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "^3.21.0",
+    "@wordpress/date": "^3.13.0",
+    "@wordpress/dom-ready": "^2.12.0",
+    "@wordpress/element": "^2.19.0",
+    "@wordpress/i18n": "^3.17.0",
+    "@wordpress/url": "^2.20.0",
+    "react-helmet": "^6.1.0",
+    "react-router-dom": "^5.2.0"
+  }
+}
