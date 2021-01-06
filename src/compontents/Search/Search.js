@@ -63,7 +63,7 @@ function Search() {
 			<Helmet>
 				<title>
 					{ sprintf(
-						/* translators: 1: Search term. */
+						/* translators: %s: search query. */
 						__( 'Search Results for: %s', 'wp-react-theme' ),
 						searchTerm
 					) }
