@@ -19,7 +19,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 function Search() {
 	const {
-		state: { posts, loading, loaded, headers },
+		state: { posts, loaded, headers },
 		actions: { getPosts },
 	} = useQuery();
 	const params = useParams();
@@ -37,46 +37,46 @@ function Search() {
 		} );
 	}, [ getPosts ] );
 
-	if ( loading ) {
+	if ( ! loaded ) {
 		return <Loading />;
 	}
 
-	if ( loaded && posts.length ) {
-		const postList = posts.map( ( post ) => (
-			<Content post={ post } key={ post.id } />
-		) );
-
-		const searchTitle = createInterpolateElement(
-			sprintf(
-				/* translators: 1: Search term. */
-				__( 'Search Results for: <span>%s</span>', 'wp-react-theme' ),
-				searchTerm
-			),
-			{ span: <span /> }
-		);
-		const searchDescription = '';
-		return (
-			<>
-				<Helmet>
-					<title>
-						{ sprintf(
-							/* translators: 1: Search term. */
-							__( 'Search Results for: %s', 'wp-react-theme' ),
-							searchTerm
-						) }
-					</title>
-				</Helmet>
-				<PageHeader
-					title={ searchTitle }
-					description={ searchDescription }
-				/>
-				{ postList }
-				<Pagination headers={ headers } page={ parseInt( page ) } />
-			</>
-		);
+	if ( posts.length < 1 ) {
+		return <NotFound />;
 	}
 
-	return <NotFound />;
+	const postList = posts.map( ( post ) => (
+		<Content post={ post } key={ post.id } />
+	) );
+
+	const searchTitle = createInterpolateElement(
+		sprintf(
+			/* translators: 1: Search term. */
+			__( 'Search Results for: <span>%s</span>', 'wp-react-theme' ),
+			searchTerm
+		),
+		{ span: <span /> }
+	);
+	const searchDescription = '';
+	return (
+		<>
+			<Helmet>
+				<title>
+					{ sprintf(
+						/* translators: 1: Search term. */
+						__( 'Search Results for: %s', 'wp-react-theme' ),
+						searchTerm
+					) }
+				</title>
+			</Helmet>
+			<PageHeader
+				title={ searchTitle }
+				description={ searchDescription }
+			/>
+			{ postList }
+			<Pagination headers={ headers } page={ parseInt( page ) } />
+		</>
+	);
 }
 
 export default Search;

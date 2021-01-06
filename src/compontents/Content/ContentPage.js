@@ -1,7 +1,8 @@
 /**
  * Internal dependencies
  */
-import Image from '../Image/Image';
+import { Image, PasswordForm } from '../';
+import { isProtected } from '../../utils';
 
 function ContentPage( { post } ) {
 	const {
@@ -22,10 +23,14 @@ function ContentPage( { post } ) {
 				<h1 className="entry-title">{ titleRendered }</h1>
 			</header>
 			{ featuredmedia && <Image data={ featuredmedia } /> }
-			<div
-				className="entry-content"
-				dangerouslySetInnerHTML={ { __html: contentRendered } }
-			/>
+			{ ! isProtected( post ) ? (
+				<div
+					className="entry-content"
+					dangerouslySetInnerHTML={ { __html: contentRendered } }
+				/>
+			) : (
+				<PasswordForm id={ post.id } />
+			) }
 		</article>
 	);
 }

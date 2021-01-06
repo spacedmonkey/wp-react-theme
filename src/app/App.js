@@ -12,6 +12,7 @@ import {
 	Home,
 	DateArchive,
 	Scroll,
+	Sidebar,
 } from '../compontents';
 import { QueryProvider } from './query';
 import { CommentProvider } from './comments';
@@ -23,8 +24,8 @@ import { ConfigProvider } from './config';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App( { config } ) {
-	const { metadata, settings } = config;
-	const { front } = settings;
+	const { config: siteConfig } = config;
+	const { taxonomies, front } = siteConfig;
 
 	return (
 		<>
@@ -42,17 +43,13 @@ function App( { config } ) {
 									<Route exact path="/page/:page">
 										<Home />
 									</Route>
-									{ metadata.taxonomies &&
-										metadata.taxonomies.map( ( tax ) => (
+									{ taxonomies &&
+										taxonomies.map( ( tax ) => (
 											<Route
 												path={ `${ front }${ tax.rewrite.slug }/:slug/(page)?/:page?` }
 												key={ 'page' + tax.rest_base }
 											>
 												<TaxonomyArchive
-													taxononmy={ tax.name }
-													taxLabel={
-														tax.labels.singular_name
-													}
 													restBase={ tax.rest_base }
 													key={
 														'page' + tax.rest_base
@@ -93,6 +90,7 @@ function App( { config } ) {
 						</QueryProvider>
 					</Router>
 				</main>
+				<Sidebar />
 				<Footer />
 			</ConfigProvider>
 		</>

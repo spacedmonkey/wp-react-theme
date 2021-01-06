@@ -6,7 +6,7 @@ import useCommentReducer from './useCommentReducter';
 /**
  * WordPress dependencies
  */
-import { useCallback, useEffect, useState } from '@wordpress/element';
+import { useCallback, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';
 /**
@@ -20,17 +20,24 @@ function CommentProvider( { children } ) {
 	const location = useLocation();
 
 	const { loading, loaded, comment, author, url, comments, email } = state;
-	const { setLoaded, setLoading, setComments, clearForm, clearComments, setError } = actions;
+	const {
+		setLoaded,
+		setLoading,
+		setComments,
+		clearForm,
+		clearComments,
+	} = actions;
 
 	const getComments = useCallback(
-		( id ) => {
+		( id, order = 'asc', password ) => {
 			if ( ! loading && ! loaded ) {
 				setLoading( { loading: true } );
 				const config = {
 					path: addQueryArgs( '/wp/v2/comments', {
 						post: id,
 						per_page: -1,
-						order: 'asc',
+						order,
+						password,
 					} ),
 				};
 
@@ -91,8 +98,6 @@ function CommentProvider( { children } ) {
 			getComments,
 		},
 	};
-
-	console.log(data);
 
 	return <Context.Provider value={ data }>{ children }</Context.Provider>;
 }

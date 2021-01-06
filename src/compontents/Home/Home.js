@@ -20,7 +20,7 @@ import { useEffect } from '@wordpress/element';
 
 function Home() {
 	const {
-		state: { posts, loading, loaded, headers },
+		state: { posts, loaded, headers },
 		actions: { getPosts },
 	} = useQuery();
 	const params = useParams();
@@ -44,52 +44,49 @@ function Home() {
 		}
 	}, [ getPosts ] );
 
-	if ( loading ) {
+	if ( ! loaded ) {
 		return <Loading />;
 	}
 
-	if ( loaded && posts ) {
-		if ( pageOnFront && posts.id ) {
-			return (
-				<>
-					<Helmet>
-						<title>{ posts.title.rendered }</title>
-						<link rel="canonical" href={ posts.link } />
-						<link rel="shortlink" href={ posts.guid.rendered } />
-						<meta
-							name="description"
-							content={ stripHTML( posts.excerpt.rendered ) }
-						/>
-						<link
-							rel="alternate"
-							type="application/json"
-							href={ posts._links.self[ 0 ].href }
-						/>
-					</Helmet>
-					<ContentPage post={ posts } />
-				</>
-			);
-		} else if ( posts.length ) {
-			const postList = posts.map( ( post ) => (
-				<Content post={ post } key={ post.id } />
-			) );
-			return (
-				<>
-					<Helmet>
-						<title>{ metadata.name }</title>
-						<meta
-							name="description"
-							content={ metadata.description }
-						/>
-					</Helmet>
-					{ postList }
-					<Pagination headers={ headers } page={ parseInt( page ) } />
-				</>
-			);
-		}
+	if ( ! posts ) {
+		return <NotFound />;
 	}
 
-	return <NotFound />;
+	if ( pageOnFront && posts.id ) {
+		return (
+			<>
+				<Helmet>
+					<title>{ posts.title.rendered }</title>
+					<link rel="canonical" href={ posts.link } />
+					<link rel="shortlink" href={ posts.guid.rendered } />
+					<meta
+						name="description"
+						content={ stripHTML( posts.excerpt.rendered ) }
+					/>
+					<link
+						rel="alternate"
+						type="application/json"
+						href={ posts._links.self[ 0 ].href }
+					/>
+				</Helmet>
+				<ContentPage post={ posts } />
+			</>
+		);
+	} else if ( posts.length ) {
+		const postList = posts.map( ( post ) => (
+			<Content post={ post } key={ post.id } />
+		) );
+		return (
+			<>
+				<Helmet>
+					<title>{ metadata.name }</title>
+					<meta name="description" content={ metadata.description } />
+				</Helmet>
+				{ postList }
+				<Pagination headers={ headers } page={ parseInt( page ) } />
+			</>
+		);
+	}
 }
 
 export default Home;

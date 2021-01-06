@@ -21,9 +21,12 @@ function PaginationPage( { previous, next, url } ) {
 					<span className="nav-subtitle">
 						{ __( 'Previous: ', 'wp-react-theme' ) }
 					</span>
-					<span className="nav-title">
-						{ previous.title.rendered }
-					</span>
+					<span
+						className="nav-title"
+						dangerouslySetInnerHTML={ {
+							__html: previous.title.rendered,
+						} }
+					/>
 				</Link>
 			</div>
 		);
@@ -36,7 +39,12 @@ function PaginationPage( { previous, next, url } ) {
 					<span className="nav-subtitle">
 						{ __( 'Next: ', 'wp-react-theme' ) }
 					</span>
-					<span className="nav-title">{ next.title.rendered }</span>
+					<span
+						className="nav-title"
+						dangerouslySetInnerHTML={ {
+							__html: next.title.rendered,
+						} }
+					/>
 				</Link>
 			</div>
 		);

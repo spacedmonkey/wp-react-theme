@@ -17,4 +17,7 @@ export { default as Scroll } from './Scroll';
 export { default as Search } from './Search';
 export { default as SinglePage } from './SinglePage';
 export { default as SinglePost } from './SinglePost';
+export { default as Sidebar } from './Sidebar';
+export { default as SearchForm } from './SearchForm';
+export { default as PasswordForm } from './PasswordForm';
 export { default as TaxonomyArchive } from './TaxonomyArchive';

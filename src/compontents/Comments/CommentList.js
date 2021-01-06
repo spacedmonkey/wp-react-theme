@@ -8,7 +8,7 @@ function CommentList( {
 	parent = 0,
 	depth = 1,
 	comments = [],
-	status = '',
+	post,
 } ) {
 	const commentFilters = comments.filter( ( comment ) => {
 		return comment.parent === parent;
@@ -25,7 +25,7 @@ function CommentList( {
 					key={ comment.id }
 					comment={ comment }
 					depth={ depth }
-					status={ status }
+					post={ post }
 					num={ index }
 				/>
 			) ) }

@@ -9,8 +9,8 @@ import { createInterpolateElement } from '@wordpress/element';
 import { useConfig } from '../../app/config';
 
 function Footer() {
-	const { metadata } = useConfig();
-	const { theme } = metadata;
+	const { config } = useConfig();
+	const { theme } = config;
 
 	return (
 		<footer id="colophon" className="site-footer">

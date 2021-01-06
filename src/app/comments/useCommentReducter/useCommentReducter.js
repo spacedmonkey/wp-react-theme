@@ -18,7 +18,7 @@ const INITIAL_STATE = {
 	author: '',
 	url: '',
 	showMainForm: true,
-	error: false
+	error: false,
 };
 
 function useCommentReducer() {

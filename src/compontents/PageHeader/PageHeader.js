@@ -1,8 +1,18 @@
 function PageHeader( { title, description } ) {
 	return (
 		<header className="page-header">
-			<h1 className="page-title">{ title }</h1>
-			<div className="archive-description">{ description }</div>
+			<h1
+				className="page-title"
+				dangerouslySetInnerHTML={ {
+					__html: title,
+				} }
+			/>
+			<div
+				className="archive-description"
+				dangerouslySetInnerHTML={ {
+					__html: description,
+				} }
+			/>
 		</header>
 	);
 }

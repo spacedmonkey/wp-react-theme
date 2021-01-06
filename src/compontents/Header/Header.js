@@ -4,8 +4,9 @@
 import { useConfig } from '../../app/config';
 
 function Header() {
-	const { metadata } = useConfig();
-	const { url, description, name, logo, menu } = metadata;
+	const { metadata, furniture } = useConfig();
+	const { url, description, name } = metadata;
+	const { logo, menu } = furniture;
 
 	return (
 		<header id="masthead" className="site-header">

@@ -23,6 +23,7 @@ function QueryProvider( { children } ) {
 	const [ headers, setHeaders ] = useState( {} );
 	const [ loading, setLoading ] = useState( false );
 	const [ loaded, setLoaded ] = useState( false );
+	const [ password, setPassword ] = useState( '' );
 
 	const location = useLocation();
 
@@ -30,11 +31,15 @@ function QueryProvider( { children } ) {
 		( config ) => {
 			if ( ! loading && ! loaded ) {
 				setLoading( true );
-				config.path = addQueryArgs( config.path, {
-					_embed: 'author,wp:featuredmedia,wp:term,next,previous',
-				} );
-				config.parse = false;
-				apiFetch( config ).then( ( results ) => {
+				const options = {
+					...config,
+					path: addQueryArgs( config.path, {
+						_embed: 'author,wp:featuredmedia,wp:term,next,previous',
+					} ),
+					parse: false,
+				};
+
+				apiFetch( options ).then( ( results ) => {
 					const resultsHeaders = {};
 					results.headers.forEach( function ( value, name ) {
 						resultsHeaders[ name ] = value;
@@ -51,11 +56,32 @@ function QueryProvider( { children } ) {
 				} );
 			}
 		},
-		[ posts.length, loading, loaded ]
+		[ loading, loaded ]
 	);
+
+	const getProtectedPost = useCallback( ( id, passwordRaw ) => {
+		const options = {
+			path: addQueryArgs( '/wp/v2/posts/' + id, {
+				_embed: 'author,wp:featuredmedia,wp:term,next,previous',
+				password: passwordRaw,
+			} ),
+			parse: false,
+		};
+
+		apiFetch( options ).then( ( results ) => {
+			const resultsHeaders = {};
+			results.headers.forEach( function ( value, name ) {
+				resultsHeaders[ name ] = value;
+			} );
+
+			setHeaders( resultsHeaders );
+			results.json().then( ( post ) => setPosts( [ post ] ) );
+		} );
+	}, [] );
 
 	useEffect( () => {
 		setLoaded( false );
+		setPassword( '' );
 	}, [ location.pathname ] );
 
 	const state = {
@@ -64,11 +90,15 @@ function QueryProvider( { children } ) {
 			loading,
 			loaded,
 			headers,
+			password,
 		},
 		actions: {
 			getPosts,
+			setPosts,
+			getProtectedPost,
 			setLoaded,
 			setLoading,
+			setPassword,
 		},
 	};
 

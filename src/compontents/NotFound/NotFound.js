@@ -7,6 +7,11 @@ import { __ } from '@wordpress/i18n';
  */
 import { Helmet } from 'react-helmet';
 
+/**
+ * Internal dependencies
+ */
+import { SearchForm } from '../';
+
 function NotFound() {
 	return (
 		<section className="error-404 not-found">
@@ -29,10 +34,11 @@ function NotFound() {
 			<div className="page-content">
 				<p>
 					{ __(
-						'It looks like nothing was found at this location.',
+						'It looks like nothing was found at this location. Maybe try one of the links below or a search?',
 						'wp-react-theme'
 					) }
 				</p>
+				<SearchForm />
 			</div>
 		</section>
 	);

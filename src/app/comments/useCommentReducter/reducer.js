@@ -4,7 +4,6 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
-/* eslint-disable complexity */
 function reducer( state, { type, payload } ) {
 	switch ( type ) {
 		case types.ADD_COMMENTS: {

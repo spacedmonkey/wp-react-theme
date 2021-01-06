@@ -1,4 +1,9 @@
 <?php
+/**
+ * Add some custom headers replacing existing ones.
+ *
+ * @package WP_React_theme
+ */
 
 remove_action( 'wp_head', 'rel_canonical' );
 remove_action( 'wp_head', 'wp_shortlink_wp_head' );
@@ -6,7 +11,6 @@ remove_action( 'wp_head', 'rest_output_link_wp_head' );
 
 /**
  * Outputs rel=canonical for singular queries.
- *
  */
 function wp_react_theme_rel_canonical() {
 	if ( ! is_singular() ) {
@@ -31,7 +35,6 @@ add_action( 'wp_head', 'wp_react_theme_rel_canonical' );
  * Injects rel=shortlink into the head if a shortlink is defined for the current page.
  *
  * Attached to the {@see 'wp_head'} action.
- *
  */
 function wp_react_theme_shortlink_wp_head() {
 	$shortlink = wp_get_shortlink( 0, 'query' );

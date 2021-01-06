@@ -5,16 +5,22 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import { useConfig } from '../../app/config';
 import { useComments } from '../../app/comments';
+import { commentsOpen } from '../../utils';
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { date } from '@wordpress/date';
 
-function Comment( { comment, depth, num, status } ) {
-	const { settings } = useConfig();
-	const { threadComments, dateFormat, timeFormat } = settings;
+function Comment( { comment, depth, num, post } ) {
+	const { settings, state } = useConfig();
+	const {
+		threadComments,
+		commentRegistration,
+		threadCommentsDepth,
+		showAvatars,
+	} = settings;
+	const { isLogged } = state;
 
 	const {
 		state: { comments, showMainForm },
@@ -23,8 +29,12 @@ function Comment( { comment, depth, num, status } ) {
 
 	const [ showForm, setShowForm ] = useState( false );
 
-	const commentDateFormat = date( dateFormat, comment.date );
-	const commentTimeFormat = date( timeFormat, comment.date );
+	const {
+		date_time: {
+			date: { rendered: commentDateFormat },
+			time: { rendered: commentTimeFormat },
+		},
+	} = comment;
 
 	const newDepth = depth + 1;
 	const isEven = ( n ) => {
@@ -37,6 +47,17 @@ function Comment( { comment, depth, num, status } ) {
 		? __( 'Cancel reply', 'wp-react-theme' )
 		: __( 'Reply', 'wp-react-theme' );
 
+	let showReply = false;
+	if ( threadComments && commentsOpen( post ) ) {
+		showReply = true;
+	}
+	if ( commentRegistration && ! isLogged ) {
+		showReply = false;
+	}
+	if ( depth > threadCommentsDepth ) {
+		showReply = false;
+	}
+
 	return (
 		<li
 			id={ `comment-${ comment.id }` }
@@ -48,14 +69,18 @@ function Comment( { comment, depth, num, status } ) {
 			>
 				<footer className="comment-meta">
 					<div className="comment-author vcard">
-						<img
-							alt=""
-							src={ comment.author_avatar_urls[ '24' ] }
-							className="avatar avatar-24 photo"
-							height="24"
-							width="24"
-							loading="lazy"
-						/>{ ' ' }
+						{ showAvatars && (
+							<>
+								<img
+									alt=""
+									src={ comment.author_avatar_urls[ '24' ] }
+									className="avatar avatar-24 photo"
+									height="24"
+									width="24"
+									loading="lazy"
+								/>{ ' ' }
+							</>
+						) }
 						<b className="fn">
 							<a
 								href={ comment.author_url }
@@ -98,13 +123,15 @@ function Comment( { comment, depth, num, status } ) {
 						__html: comment.content.rendered,
 					} }
 				/>
-				{ threadComments && status === 'open' && (
+				{ showReply && (
 					<div className="reply">
 						<button
 							className="comment-reply-link"
 							onClick={ () => {
 								setShowForm( ! showForm );
-								setShowMainForm( ! showMainForm );
+								setShowMainForm( {
+									showMainForm: ! showMainForm,
+								} );
 							} }
 						>
 							{ replyText }
@@ -113,11 +140,11 @@ function Comment( { comment, depth, num, status } ) {
 				) }
 				{ showForm && (
 					<CommentForm
-						post={ comment.post }
+						post={ post }
 						parent={ comment.id }
 						onComplete={ () => {
 							setShowForm( false );
-							setShowMainForm( true );
+							setShowMainForm( { showMainForm: true } );
 						} }
 					/>
 				) }
@@ -126,7 +153,7 @@ function Comment( { comment, depth, num, status } ) {
 				className="children"
 				comments={ comments }
 				parent={ comment.id }
-				status={ status }
+				post={ post }
 				depth={ newDepth }
 			/>
 		</li>

@@ -15,12 +15,12 @@ import { Content, NotFound, Loading, Pagination, PageHeader } from '../index';
  * WordPress dependencies
  */
 import { addQueryArgs } from '@wordpress/url';
-import { createInterpolateElement, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { sprintf, __ } from '@wordpress/i18n';
 
 function AuthorArchive() {
 	const {
-		state: { posts, loading, loaded, headers },
+		state: { posts, loaded, headers },
 		actions: { getPosts },
 	} = useQuery();
 	const params = useParams();
@@ -39,54 +39,49 @@ function AuthorArchive() {
 		} );
 	}, [ getPosts ] );
 
-	if ( loading ) {
+	if ( ! loaded ) {
 		return <Loading />;
 	}
 
-	if ( loaded && posts.length ) {
-		const postList = posts.map( ( post ) => (
-			<Content post={ post } key={ post.id } />
-		) );
-		const author = posts[ 0 ]._embedded.author[ 0 ];
-		let authorTitle = '';
-		let authorDescription = '';
-		if ( author ) {
-			authorTitle = createInterpolateElement(
-				sprintf(
-					/* translators: 1: Title. */
-					__( 'Author: <span>%s</span>', 'wp-react-theme' ),
-					author.name
-				),
-				{ span: <span /> }
-			);
-			authorDescription = author.description;
-		}
-		return (
-			<>
-				<Helmet>
-					<title>
-						{ sprintf(
-							/* translators: 1: Title. */
-							__( 'Author: %s', 'wp-react-theme' ),
-							author.name
-						) }
-					</title>
-					<meta
-						name="description"
-						content={ stripHTML( authorDescription ) }
-					/>
-				</Helmet>
-				<PageHeader
-					title={ authorTitle }
-					description={ authorDescription }
-				/>
-				{ postList }
-				<Pagination headers={ headers } page={ parseInt( page ) } />
-			</>
-		);
+	if ( posts.length < 1 ) {
+		return <NotFound />;
 	}
 
-	return <NotFound />;
+	const postList = posts.map( ( post ) => (
+		<Content post={ post } key={ post.id } />
+	) );
+	const author = posts[ 0 ]._embedded.author[ 0 ];
+
+	const authorTitle = headers?.[ 'x-wp-archive-header' ]
+		? headers?.[ 'x-wp-archive-header' ]
+		: '';
+	const authorDescription = headers?.[ 'x-wp-archive-description' ]
+		? headers?.[ 'x-wp-archive-description' ]
+		: '';
+
+	return (
+		<>
+			<Helmet>
+				<title>
+					{ sprintf(
+						/* translators: 1: Title. */
+						__( 'Author: %s', 'wp-react-theme' ),
+						author.name
+					) }
+				</title>
+				<meta
+					name="description"
+					content={ stripHTML( authorDescription ) }
+				/>
+			</Helmet>
+			<PageHeader
+				title={ authorTitle }
+				description={ authorDescription }
+			/>
+			{ postList }
+			<Pagination headers={ headers } page={ parseInt( page ) } />
+		</>
+	);
 }
 
 export default AuthorArchive;

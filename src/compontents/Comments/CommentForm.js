@@ -27,21 +27,36 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 		},
 	} = useComments();
 
-	const { state } = useConfig();
+	const { state, settings } = useConfig();
 	const { isLogged } = state;
+	const { commentRegistration, requireNameEmail } = settings;
 
-	const changeEmail = ( e ) => {
-		setEmail( { email: e.target.value } );
-	};
-	const changeComment = ( e ) => {
-		setComment( { comment: e.target.value } );
-	};
-	const changeAuthor = ( e ) => {
-		setAuthor( { author: e.target.value } );
-	};
-	const changeUrl = ( e ) => {
-		setUrl( { url: e.target.value } );
-	};
+	const elId = uuid();
+
+	const changeEmail = useCallback(
+		( e ) => {
+			setEmail( { email: e.target.value } );
+		},
+		[ setEmail ]
+	);
+	const changeComment = useCallback(
+		( e ) => {
+			setComment( { comment: e.target.value } );
+		},
+		[ setComment ]
+	);
+	const changeAuthor = useCallback(
+		( e ) => {
+			setAuthor( { author: e.target.value } );
+		},
+		[ setAuthor ]
+	);
+	const changeUrl = useCallback(
+		( e ) => {
+			setUrl( { url: e.target.value } );
+		},
+		[ setUrl ]
+	);
 
 	const onSubmit = useCallback(
 		( evt ) => {
@@ -50,21 +65,40 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 				submitComment( {
 					post,
 					parent,
-				} ).then( ( newComment ) => {
-					addComment( newComment );
-					onComplete();
-				} ).catch( (error) => {
-					setError( { error } );
-				} );
+				} )
+					.then( ( newComment ) => {
+						addComment( newComment );
+						onComplete();
+					} )
+					.catch( ( e ) => {
+						setError( { error: e } );
+					} );
 			}
 		},
 		[ email, comment, author, url ]
 	);
 
-	const elId = uuid();
+	if ( commentRegistration && ! isLogged ) {
+		return (
+			<div id="respond" className="comment-respond">
+				<h3
+					id={ `reply-title-${ elId }` }
+					className="comment-reply-title"
+				>
+					{ __( 'Leave a Reply', 'wp-react-theme' ) }
+				</h3>
+				<p className="must-log-in">
+					{ __(
+						'You must be logged in to post a comment.',
+						'wp-react-theme'
+					) }
+				</p>
+			</div>
+		);
+	}
 
 	return (
-		<div id={ `respond-${ elId }` } className="comment-respond">
+		<div id="respond" className="comment-respond">
 			<h3 id={ `reply-title-${ elId }` } className="comment-reply-title">
 				{ __( 'Leave a Reply', 'wp-react-theme' ) }
 			</h3>
@@ -89,8 +123,9 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 							'wp-react-theme'
 						) }
 					</span>
-					{ __( 'Required fields are marked', 'wp-react-theme' ) }
-					<span className="required">*</span>
+					{ requireNameEmail &&
+						__( 'Required fields are marked', 'wp-react-theme' ) }
+					{ requireNameEmail && <span className="required">*</span> }
 				</p>
 				<p className="comment-form-comment">
 					<label htmlFor={ `comment-${ elId }` }>
@@ -111,7 +146,9 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 					<p className="comment-form-author">
 						<label htmlFor={ `author-${ elId }` }>
 							{ __( 'Name', 'wp-react-theme' ) }
-							<span className="required">*</span>
+							{ requireNameEmail && (
+								<span className="required">*</span>
+							) }
 						</label>
 						<input
 							id={ `author-${ elId }` }
@@ -119,7 +156,7 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 							type="text"
 							size="30"
 							maxLength="245"
-							required="required"
+							required={ requireNameEmail }
 							onChange={ changeAuthor }
 							value={ author }
 						/>
@@ -129,7 +166,9 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 					<p className="comment-form-email">
 						<label htmlFor={ `email-${ elId }` }>
 							{ __( 'Email', 'wp-react-theme' ) }
-							<span className="required">*</span>
+							{ requireNameEmail && (
+								<span className="required">*</span>
+							) }
 						</label>
 						<input
 							id={ `email-${ elId }` }
@@ -138,7 +177,7 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 							size="30"
 							maxLength="100"
 							aria-describedby="email-notes"
-							required="required"
+							required={ requireNameEmail }
 							onChange={ changeEmail }
 							value={ email }
 						/>

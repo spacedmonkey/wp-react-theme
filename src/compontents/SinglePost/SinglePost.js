@@ -2,8 +2,8 @@
  * Internal dependencies
  */
 import { useQuery } from '../../app/query';
-import { stripHTML } from '../../utils';
-import { NotFound, Loading, Content, Comments } from '../index';
+import { stripHTML, isProtected } from '../../utils';
+import { NotFound, Loading, Content, Comments } from '../';
 
 /**
  * External dependencies
@@ -18,7 +18,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 function SinglePost() {
 	const {
-		state: { posts, loading, loaded },
+		state: { posts, loaded },
 		actions: { getPosts },
 	} = useQuery();
 	const { postSlug } = useParams();
@@ -32,39 +32,41 @@ function SinglePost() {
 		} );
 	}, [ getPosts ] );
 
-	if ( loading ) {
+	if ( ! loaded ) {
 		return <Loading />;
 	}
 
-	if ( loaded && posts.length ) {
-		const post = posts[ 0 ];
-		return (
-			<>
-				<Helmet>
-					<title>{ post.title.rendered }</title>
-					<link rel="canonical" href={ post.link } />
-					<link rel="shortlink" href={ post.guid.rendered } />
-					<meta
-						name="description"
-						content={ stripHTML( post.excerpt.rendered ) }
-					/>
-					<link
-						rel="alternate"
-						type="application/json"
-						href={ post._links.self[ 0 ].href }
-					/>
-				</Helmet>
-				<Content post={ post } showLink={ true } titleLink={ false } />
-				<Comments
-					title={ post.title.rendered }
-					status={ post.comment_status }
-					postId={ post.id }
-				/>
-			</>
-		);
+	if ( posts.length < 1 ) {
+		return <NotFound />;
 	}
 
-	return <NotFound />;
+	const post = posts[ 0 ];
+
+	return (
+		<>
+			<Helmet>
+				<title>{ post.title.rendered }</title>
+				<link rel="canonical" href={ post.link } />
+				<link rel="shortlink" href={ post.guid.rendered } />
+				<meta
+					name="description"
+					content={ stripHTML( post.excerpt.rendered ) }
+				/>
+				<link
+					rel="alternate"
+					type="application/json"
+					href={ post._links.self[ 0 ].href }
+				/>
+			</Helmet>
+			<Content
+				post={ post }
+				showLink={ true }
+				showCommentLink={ false }
+				titleLink={ false }
+			/>
+			{ ! isProtected( post ) && <Comments post={ post } /> }
+		</>
+	);
 }
 
 export default SinglePost;

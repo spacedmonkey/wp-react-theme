@@ -117,12 +117,34 @@ function wp_react_theme_content_width() {
 add_action( 'after_setup_theme', 'wp_react_theme_content_width', 0 );
 
 /**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function wp_react_theme_widgets_init() {
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar', 'wp-react-theme' ),
+			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'wp-react-theme' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+}
+add_action( 'widgets_init', 'wp_react_theme_widgets_init' );
+
+/**
  * Enqueue scripts and styles.
  */
 function wp_react_theme_scripts() {
 	$asset = wp_react_theme_asset_metadata( 'theme' );
-	wp_enqueue_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
+	wp_register_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
 	wp_style_add_data( 'wp-react-theme-style', 'rtl', 'replace' );
+
+	wp_enqueue_style( 'wp-react-theme-style' );
 
 	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), $asset['dependencies'], $asset['version'], true );
 	wp_localize_script(
@@ -130,11 +152,17 @@ function wp_react_theme_scripts() {
 		'react_theme_settings',
 		wp_react_theme_settings()
 	);
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'wp_react_theme_scripts' );
 
 /**
- * @param $slug
+ * Get metadata from generated file.
+ *
+ * @param string $slug Script handle.
  *
  * @return array
  */
@@ -148,6 +176,8 @@ function wp_react_theme_asset_metadata( $slug ) {
 }
 
 /**
+ * Get an object of data meta used to populate the react app.
+ *
  * @return array[]
  */
 function wp_react_theme_settings() {
@@ -160,13 +190,17 @@ function wp_react_theme_settings() {
 			'echo'           => false,
 		)
 	);
+	ob_start();
+	dynamic_sidebar( 'sidebar-1' );
+	$sidebar = (string) ob_get_clean();
 
-	$_theme     = wp_get_theme();
-	$theme      = [
+	$_theme = wp_get_theme();
+	$theme  = array(
 		'name'      => $_theme->get( 'Name' ),
 		'author'    => $_theme->get( 'Author' ),
 		'authorUri' => $_theme->get( 'AuthorURI' ),
-	];
+	);
+
 	$taxonomies = wp_list_filter( get_object_taxonomies( 'post', 'objects' ), array( 'show_in_rest' => true ) );
 	$taxonomies = array_values( $taxonomies );
 
@@ -175,27 +209,41 @@ function wp_react_theme_settings() {
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
 			'url'         => get_bloginfo( 'url' ),
+		),
+		'furniture' => array(
 			'logo'        => get_custom_logo(),
 			'menu'        => $menu,
-			'theme'       => $theme,
-			'taxonomies'  => $taxonomies
+			'sidebar'     => $sidebar,
 		),
-		'state'    => array(
-			'isLogged' => is_user_logged_in()
+		'state' => array(
+			'isLogged' => is_user_logged_in(),
+			'locale'   => str_replace( '_', '-', get_user_locale() ),
+		),
+		'config' => array(
+			'front'       => $wp_rewrite->front,
+			'theme'       => $theme,
+			'taxonomies'  => $taxonomies,
 		),
 		'settings' => array(
-			'pageOnFront'    => (int) get_option( 'page_on_front' ),
-			'pageForPosts'   => (int) get_option( 'page_for_posts' ),
-			'perPage'        => (int) get_option( 'posts_per_page' ),
-			'threadComments' => (bool) get_option( 'thread_comments' ),
-			'dateFormat'     =>  get_option( 'date_format' ),
-			'timeFormat'     =>  get_option( 'time_format' ),
-			'front'          =>  $wp_rewrite->front,
+			'pageOnFront'         => (int) get_option( 'page_on_front' ),
+			'pageForPosts'        => (int) get_option( 'page_for_posts' ),
+			'perPage'             => (int) get_option( 'posts_per_page' ),
+			'commentRegistration' => (bool) get_option( 'comment_registration' ),
+			'threadComments'      => (bool) get_option( 'thread_comments' ),
+			'threadCommentsDepth' => (int) get_option( 'thread_comments_depth' ),
+			'requireNameEmail'    => (bool) get_option( 'require_name_email' ),
+			'commentOrder'        => get_option( 'comment_order' ),
+			'showAvatars'         => (bool) get_option( 'show_avatars' ),
+			'dateFormat'          => get_option( 'date_format' ),
+			'timeFormat'          => get_option( 'time_format' ),
 		),
 	);
 }
 
-function wp_react_theme_date_structure(){
+/**
+ * Change the url pattern of date archives to match react.
+ */
+function wp_react_theme_date_structure() {
 	global $wp_rewrite;
 	$wp_rewrite->date_structure = $wp_rewrite->front . 'date/%year%/%monthnum%/%day%';
 }

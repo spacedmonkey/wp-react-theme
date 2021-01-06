@@ -12,11 +12,9 @@ import { render } from 'react-dom';
  */
 import './theme.css';
 import { App } from './app';
+import { domReady } from './utils';
 
-/**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
+
 
 const initialize = () => {
 	const config = window?.react_theme_settings;

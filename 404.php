@@ -18,11 +18,13 @@ get_header();
 			</header><!-- .page-header -->
 
 			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location.', 'wp-react-theme' ); ?></p>
+				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'wp-react-theme' ); ?></p>
+				<?php get_search_form(); ?>
 			</div><!-- .page-content -->
 		</section><!-- .error-404 -->
 
 	</main><!-- #main -->
 
 <?php
+get_sidebar();
 get_footer();
