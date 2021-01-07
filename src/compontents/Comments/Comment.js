@@ -5,12 +5,12 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import { useConfig } from '../../app/config';
 import { useComments } from '../../app/comments';
-import { commentsOpen } from '../../utils';
+import { commentsOpen, isEven } from '../../utils';
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useMemo, RawHTML } from '@wordpress/element';
 
 function Comment( { comment, depth, num, post } ) {
 	const { settings, state } = useConfig();
@@ -37,12 +37,11 @@ function Comment( { comment, depth, num, post } ) {
 	} = comment;
 
 	const newDepth = depth + 1;
-	const isEven = ( n ) => {
-		// eslint-disable-next-line eqeqeq
-		return n % 2 == 0;
-	};
 
-	const oddEvenClass = isEven( num ) ? 'even' : 'odd';
+	const oddEvenClass = useMemo( () => {
+		return isEven( num ) ? 'even' : 'odd';
+	}, [ num ] );
+
 	const replyText = showForm
 		? __( 'Cancel reply', 'wp-react-theme' )
 		: __( 'Reply', 'wp-react-theme' );
@@ -117,12 +116,10 @@ function Comment( { comment, depth, num, post } ) {
 						</em>
 					) }
 				</footer>
-				<div
-					className="comment-content"
-					dangerouslySetInnerHTML={ {
-						__html: comment.content.rendered,
-					} }
-				/>
+				<RawHTML className="comment-content">
+					{ comment.content.rendered }
+				</RawHTML>
+
 				{ showReply && (
 					<div className="reply">
 						<button

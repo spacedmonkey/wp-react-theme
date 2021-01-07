@@ -13,6 +13,8 @@ import {
 	DateArchive,
 	Scroll,
 	Sidebar,
+	SkipLink,
+	Navigation,
 } from '../compontents';
 import { QueryProvider } from './query';
 import { CommentProvider } from './comments';
@@ -30,9 +32,11 @@ function App( { config } ) {
 	return (
 		<>
 			<ConfigProvider config={ config }>
+				<SkipLink />
 				<Header />
-				<main id="primary" className="site-main">
-					<Router>
+				<Router>
+					<Navigation />
+					<main id="primary" className="site-main">
 						<Scroll />
 						<QueryProvider>
 							<CommentProvider>
@@ -44,19 +48,38 @@ function App( { config } ) {
 										<Home />
 									</Route>
 									{ taxonomies &&
-										taxonomies.map( ( tax ) => (
-											<Route
-												path={ `${ front }${ tax.rewrite.slug }/:slug/(page)?/:page?` }
-												key={ 'page' + tax.rest_base }
-											>
-												<TaxonomyArchive
-													restBase={ tax.rest_base }
+										taxonomies.map( ( tax ) => {
+											const paths = [
+												`${ front }${ tax.rewrite.slug }/:slug/(page)?/:page(\\d+)?`,
+											];
+											if ( tax.hierarchical ) {
+												paths.unshift(
+													`${ front }${ tax.rewrite.slug }/:parentSlug/:slug/(page)?/:page(\\d+)?`
+												);
+												paths.unshift(
+													`${ front }${ tax.rewrite.slug }/:granParentSlug/:parentSlug/:slug/(page)?/:page(\\d+)?`
+												);
+											}
+
+											return (
+												<Route
+													path={ paths }
 													key={
 														'page' + tax.rest_base
 													}
-												/>
-											</Route>
-										) ) }
+												>
+													<TaxonomyArchive
+														restBase={
+															tax.rest_base
+														}
+														key={
+															'page' +
+															tax.rest_base
+														}
+													/>
+												</Route>
+											);
+										} ) }
 
 									<Route
 										path={ `${ front }author/:slug/(page)?/:page?` }
@@ -88,9 +111,9 @@ function App( { config } ) {
 								</Switch>
 							</CommentProvider>
 						</QueryProvider>
-					</Router>
-				</main>
-				<Sidebar />
+					</main>
+					<Sidebar />
+				</Router>
 				<Footer />
 			</ConfigProvider>
 		</>

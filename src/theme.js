@@ -14,8 +14,6 @@ import './theme.css';
 import { App } from './app';
 import { domReady } from './utils';
 
-
-
 const initialize = () => {
 	const config = window?.react_theme_settings;
 	render(

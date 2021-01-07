@@ -141,10 +141,8 @@ add_action( 'widgets_init', 'wp_react_theme_widgets_init' );
  */
 function wp_react_theme_scripts() {
 	$asset = wp_react_theme_asset_metadata( 'theme' );
-	wp_register_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
+	wp_enqueue_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
 	wp_style_add_data( 'wp-react-theme-style', 'rtl', 'replace' );
-
-	wp_enqueue_style( 'wp-react-theme-style' );
 
 	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), $asset['dependencies'], $asset['version'], true );
 	wp_localize_script(
@@ -152,6 +150,7 @@ function wp_react_theme_scripts() {
 		'react_theme_settings',
 		wp_react_theme_settings()
 	);
+	wp_set_script_translations( 'wp-react-theme-script', 'wp-react-theme' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -183,13 +182,21 @@ function wp_react_theme_asset_metadata( $slug ) {
 function wp_react_theme_settings() {
 	global $wp_rewrite;
 
-	$menu = wp_nav_menu(
-		array(
-			'theme_location' => 'menu-1',
-			'menu_id'        => 'primary-menu',
-			'echo'           => false,
-		)
-	);
+
+	$locations      = get_nav_menu_locations();
+	$theme_location = 'menu-1';
+	$menu_items     = array();
+	if ( $locations && isset( $locations[ $theme_location ] ) ) {
+		$menu_obj   = wp_get_nav_menu_object( $locations[ $theme_location ] );
+		$menu_items = wp_get_nav_menu_items(
+			$menu_obj,
+			array(
+				'update_post_term_cache' => false,
+				'suppress_filters'       => false,
+			)
+		);
+	}
+
 	ob_start();
 	dynamic_sidebar( 'sidebar-1' );
 	$sidebar = (string) ob_get_clean();
@@ -204,16 +211,26 @@ function wp_react_theme_settings() {
 	$taxonomies = wp_list_filter( get_object_taxonomies( 'post', 'objects' ), array( 'show_in_rest' => true ) );
 	$taxonomies = array_values( $taxonomies );
 
+	$custom_logo_id               = get_theme_mod( 'custom_logo' );
+	$image                        = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+	list( $src, $width, $height ) = $image;
+	$logo                         = compact( 'src', 'width', 'height' );
+	$logo                         = array_filter( $logo );
+
 	return array(
 		'metadata' => array(
 			'name'        => get_bloginfo( 'name' ),
 			'description' => get_bloginfo( 'description' ),
 			'url'         => get_bloginfo( 'url' ),
+			'logo'        => $logo,
 		),
 		'furniture' => array(
-			'logo'        => get_custom_logo(),
-			'menu'        => $menu,
 			'sidebar'     => $sidebar,
+		),
+		'menu' => array(
+			'id'        => 'primary-menu',
+			'menuItems' => $menu_items,
+
 		),
 		'state' => array(
 			'isLogged' => is_user_logged_in(),

@@ -3,6 +3,11 @@
  */
 import Comment from './Comment';
 
+/**
+ * WordPress dependencies
+ */
+import { useMemo } from '@wordpress/element';
+
 function CommentList( {
 	className = 'comment-list',
 	parent = 0,
@@ -10,9 +15,11 @@ function CommentList( {
 	comments = [],
 	post,
 } ) {
-	const commentFilters = comments.filter( ( comment ) => {
-		return comment.parent === parent;
-	} );
+	const commentFilters = useMemo( () => {
+		return comments.filter( ( comment ) => {
+			return comment.parent === parent;
+		} );
+	}, [ parent ] );
 
 	if ( ! commentFilters.length ) {
 		return null;

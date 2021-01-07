@@ -22,11 +22,13 @@ function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 
 	const { id } = post;
 
-	terms.forEach( function ( tax ) {
-		tax.forEach( function ( term ) {
-			dataTerm[ term.taxonomy ].push( term );
+	if ( terms ) {
+		terms.forEach( function ( tax ) {
+			tax.forEach( function ( term ) {
+				dataTerm[ term.taxonomy ].push( term );
+			} );
 		} );
-	} );
+	}
 
 	const catList = dataTerm.category.map( ( term ) => (
 		<span key={ `cat-link-${ term.id }` }>

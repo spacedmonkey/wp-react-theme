@@ -4,14 +4,22 @@
 import { useConfig } from '../../app/config';
 
 function Header() {
-	const { metadata, furniture } = useConfig();
-	const { url, description, name } = metadata;
-	const { logo, menu } = furniture;
+	const { metadata } = useConfig();
+	const { url, description, name, logo } = metadata;
 
 	return (
 		<header id="masthead" className="site-header">
 			<div className="site-branding">
-				<div dangerouslySetInnerHTML={ { __html: logo } } />
+				{ logo && logo.src && (
+					<a href={ url } rel="home" className="custom-logo-link">
+						<img
+							{ ...logo }
+							alt={ name }
+							className="custom-logo"
+							loading="lazy"
+						/>
+					</a>
+				) }
 				<h1 className="site-title">
 					<a href={ url } rel="home">
 						{ name }
@@ -21,11 +29,6 @@ function Header() {
 					<p className="site-description">{ description }</p>
 				) }
 			</div>
-			<nav
-				id="site-navigation"
-				className="main-navigation"
-				dangerouslySetInnerHTML={ { __html: menu } }
-			/>
 		</header>
 	);
 }

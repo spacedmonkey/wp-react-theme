@@ -4,6 +4,11 @@
 import { Image, PasswordForm } from '../';
 import { isProtected } from '../../utils';
 
+/**
+ * WordPress dependencies
+ */
+import { RawHTML } from '@wordpress/element';
+
 function ContentPage( { post } ) {
 	const {
 		id,
@@ -22,12 +27,10 @@ function ContentPage( { post } ) {
 			<header className="entry-header">
 				<h1 className="entry-title">{ titleRendered }</h1>
 			</header>
+			<RawHTML></RawHTML>
 			{ featuredmedia && <Image data={ featuredmedia } /> }
 			{ ! isProtected( post ) ? (
-				<div
-					className="entry-content"
-					dangerouslySetInnerHTML={ { __html: contentRendered } }
-				/>
+				<RawHTML className="entry-content">{ contentRendered }</RawHTML>
 			) : (
 				<PasswordForm id={ post.id } />
 			) }

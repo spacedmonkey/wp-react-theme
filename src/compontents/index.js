@@ -20,4 +20,6 @@ export { default as SinglePost } from './SinglePost';
 export { default as Sidebar } from './Sidebar';
 export { default as SearchForm } from './SearchForm';
 export { default as PasswordForm } from './PasswordForm';
+export { default as Navigation } from './Navigation';
+export { default as SkipLink } from './SkipLink';
 export { default as TaxonomyArchive } from './TaxonomyArchive';

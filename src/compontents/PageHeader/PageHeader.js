@@ -1,3 +1,8 @@
+/**
+ * WordPress dependencies
+ */
+import { RawHTML } from '@wordpress/element';
+
 function PageHeader( { title, description } ) {
 	return (
 		<header className="page-header">
@@ -7,12 +12,7 @@ function PageHeader( { title, description } ) {
 					__html: title,
 				} }
 			/>
-			<div
-				className="archive-description"
-				dangerouslySetInnerHTML={ {
-					__html: description,
-				} }
-			/>
+			<RawHTML className="archive-description">{ description }</RawHTML>
 		</header>
 	);
 }

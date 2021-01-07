@@ -16,6 +16,11 @@ import { useConfig } from '../../app/config';
  */
 import { Link } from 'react-router-dom';
 
+/**
+ * WordPress dependencies
+ */
+import { RawHTML } from '@wordpress/element';
+
 function Content( {
 	post,
 	showLink = false,
@@ -67,10 +72,9 @@ function Content( {
 				<EntryMeta post={ post } url={ url } />
 				{ featuredmedia && <Image data={ featuredmedia } /> }
 				{ ! isProtected( post ) ? (
-					<div
-						className="entry-content"
-						dangerouslySetInnerHTML={ { __html: contentRendered } }
-					/>
+					<RawHTML className="entry-content">
+						{ contentRendered }
+					</RawHTML>
 				) : (
 					<PasswordForm id={ post.id } />
 				) }
