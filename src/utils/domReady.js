@@ -1,7 +1,7 @@
 /**
  * Specify a function to execute when the DOM is fully loaded.
  *
- * @param {Callback} callback A function to execute after the DOM is ready.
+ * @param {Function} callback A function to execute after the DOM is ready.
  *
  * @example
  * ```js
@@ -22,6 +22,6 @@ export default function domReady( callback ) {
 		return void callback();
 	}
 
-	// DOMContentLoaded has not fired yet, delay callback until then.
+	// eslint-disable-next-line @wordpress/no-global-event-listener
 	document.addEventListener( 'DOMContentLoaded', callback );
 }

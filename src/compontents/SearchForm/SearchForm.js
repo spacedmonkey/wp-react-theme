@@ -7,24 +7,23 @@ import { useState, useCallback } from '@wordpress/element';
  * External dependencies
  */
 import { v4 as uuid } from 'uuid';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function SearchForm() {
 	const elId = uuid();
 
 	const [ search, setSearch ] = useState( '' );
-	const [ submitted, setSubmitted ] = useState( false );
+	const history = useHistory();
 
-	const onSubmit = useCallback( ( evt ) => {
-		if ( evt ) {
-			evt.preventDefault();
-			setSubmitted( true );
-		}
-	}, [] );
-
-	if ( submitted && search ) {
-		return <Redirect to={ `/search/${ search }` } />;
-	}
+	const onSubmit = useCallback(
+		( evt ) => {
+			if ( evt ) {
+				evt.preventDefault();
+				history.push( `/search/${ search }` );
+			}
+		},
+		[ history, search ]
+	);
 
 	return (
 		<form role="search" className="search-form" onSubmit={ onSubmit }>

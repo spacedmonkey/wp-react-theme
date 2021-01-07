@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 /**
  * WordPress dependencies
  */
-import { createInterpolateElement, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -49,25 +49,16 @@ function Search() {
 		<Content post={ post } key={ post.id } />
 	) );
 
-	const searchTitle = createInterpolateElement(
-		sprintf(
-			/* translators: 1: Search term. */
-			__( 'Search Results for: <span>%s</span>', 'wp-react-theme' ),
-			searchTerm
-		),
-		{ span: <span /> }
+	const searchTitle = sprintf(
+		/* translators: 1: Search term. */
+		__( 'Search Results for: %s', 'wp-react-theme' ),
+		searchTerm
 	);
 	const searchDescription = '';
 	return (
 		<>
 			<Helmet>
-				<title>
-					{ sprintf(
-						/* translators: %s: search query. */
-						__( 'Search Results for: %s', 'wp-react-theme' ),
-						searchTerm
-					) }
-				</title>
+				<title>{ searchTitle }</title>
 			</Helmet>
 			<PageHeader
 				title={ searchTitle }
