@@ -22,6 +22,10 @@ function wp_react_theme_body_classes( $classes ) {
 		$classes[] = 'no-sidebar';
 	}
 
+	if ( ! has_nav_menu( 'menu-1' ) ) {
+		$classes[] = 'no-menu';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'wp_react_theme_body_classes' );
