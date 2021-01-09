@@ -18,6 +18,10 @@ function Navigation() {
 
 	const className = expanded ? 'toggled main-navigation' : 'main-navigation';
 
+	if ( ! menuItems ) {
+		return null;
+	}
+
 	return (
 		<nav id="site-navigation" className={ className }>
 			<button

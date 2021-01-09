@@ -63,7 +63,7 @@ function NavigationItem( { menuItem } ) {
 		return menuItems.filter( ( thisItem ) => {
 			return parseInt( thisItem.menu_item_parent ) === parseInt( ID );
 		} );
-	}, [ ID ] );
+	}, [ ID, menuItems ] );
 
 	const hasChildren =
 		menuItemsFilters.length > 0 ? 'menu-item-has-children' : '';

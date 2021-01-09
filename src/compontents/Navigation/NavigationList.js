@@ -18,7 +18,7 @@ function NavigationList( {
 		return menuItems.filter( ( thisItem ) => {
 			return parseInt( thisItem.menu_item_parent ) === parseInt( parent );
 		} );
-	}, [ parent ] );
+	}, [ parent, menuItems ] );
 
 	if ( ! menuItemsFilters.length ) {
 		return null;
