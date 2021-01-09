@@ -2,25 +2,22 @@
  * External dependencies
  */
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 /**
  * Internal dependencies
  */
 import { useQuery } from '../../app/query';
 import { useConfig } from '../../app/config';
-import { stripHTML } from '../../utils';
-import { Content, NotFound, Loading, Pagination, PageHeader } from '../index';
+import { Archive } from '../';
+
 /**
  * WordPress dependencies
  */
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from '@wordpress/element';
-import { sprintf, __ } from '@wordpress/i18n';
 
 function AuthorArchive() {
 	const {
-		state: { posts, loaded, headers },
 		actions: { getPosts },
 	} = useQuery();
 	const params = useParams();
@@ -39,49 +36,7 @@ function AuthorArchive() {
 		} );
 	}, [ getPosts ] );
 
-	if ( ! loaded ) {
-		return <Loading />;
-	}
-
-	if ( posts.length < 1 ) {
-		return <NotFound />;
-	}
-
-	const postList = posts.map( ( post ) => (
-		<Content post={ post } key={ post.id } />
-	) );
-	const author = posts[ 0 ]._embedded.author[ 0 ];
-
-	const authorTitle = headers?.[ 'x-wp-archive-header' ]
-		? headers?.[ 'x-wp-archive-header' ]
-		: '';
-	const authorDescription = headers?.[ 'x-wp-archive-description' ]
-		? headers?.[ 'x-wp-archive-description' ]
-		: '';
-
-	return (
-		<>
-			<Helmet>
-				<title>
-					{ sprintf(
-						/* translators: 1: Title. */
-						__( 'Author: %s', 'wp-react-theme' ),
-						author.name
-					) }
-				</title>
-				<meta
-					name="description"
-					content={ stripHTML( authorDescription ) }
-				/>
-			</Helmet>
-			<PageHeader
-				title={ authorTitle }
-				description={ authorDescription }
-			/>
-			{ postList }
-			<Pagination headers={ headers } page={ parseInt( page ) } />
-		</>
-	);
+	return <Archive />;
 }
 
 export default AuthorArchive;
