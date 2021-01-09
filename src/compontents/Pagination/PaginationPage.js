@@ -18,9 +18,6 @@ function PaginationPage( { previous, next, url } ) {
 					<span className="nav-subtitle">
 						{ __( 'Previous: ', 'wp-react-theme' ) }
 					</span>
-					<span className="nav-subtitle">
-						{ __( 'Previous: ', 'wp-react-theme' ) }
-					</span>
 					<span
 						className="nav-title"
 						dangerouslySetInnerHTML={ {
