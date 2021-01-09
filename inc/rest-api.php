@@ -176,7 +176,7 @@ function wp_react_theme_extra_fields() {
 								'rendered' => array(
 									'description' => __( 'Rendered date', 'wp-react-theme' ),
 									'type'        => 'string',
-									'context'     => array( 'view', 'edit' ),
+									'context'     => array( 'view', 'edit', 'embed' ),
 									'readonly'    => true,
 								),
 							),
@@ -186,12 +186,12 @@ function wp_react_theme_extra_fields() {
 							'type'        => 'object',
 							'readonly'    => true,
 							'default'     => array(),
-							'context'     => array( 'view', 'embed' ),
+							'context'     => array( 'view', 'edit', 'embed' ),
 							'properties'  => array(
 								'rendered' => array(
 									'description' => __( 'Rendered time', 'wp-react-theme' ),
 									'type'        => 'string',
-									'context'     => array( 'view', 'edit' ),
+									'context'     => array( 'view', 'edit', 'embed' ),
 									'readonly'    => true,
 								),
 							),
@@ -233,12 +233,12 @@ function wp_react_theme_extra_fields() {
 						'type'        => 'object',
 						'readonly'    => true,
 						'default'     => array(),
-						'context'     => array( 'view', 'embed' ),
+						'context'     => array( 'view', 'edit', 'embed' ),
 						'properties'  => array(
 							'rendered' => array(
 								'description' => __( 'Rendered date', 'wp-react-theme' ),
 								'type'        => 'string',
-								'context'     => array( 'view', 'edit' ),
+								'context'     => array( 'view', 'edit', 'embed' ),
 								'readonly'    => true,
 							),
 						),
@@ -248,12 +248,12 @@ function wp_react_theme_extra_fields() {
 						'type'        => 'object',
 						'readonly'    => true,
 						'default'     => array(),
-						'context'     => array( 'view', 'embed' ),
+						'context'     => array( 'view', 'edit', 'embed' ),
 						'properties'  => array(
 							'rendered' => array(
 								'description' => __( 'Rendered time', 'wp-react-theme' ),
 								'type'        => 'string',
-								'context'     => array( 'view', 'edit' ),
+								'context'     => array( 'view', 'edit', 'embed' ),
 								'readonly'    => true,
 							),
 						),
@@ -432,6 +432,11 @@ function wp_react_theme_archive_header( $result, $server, $request ) {
 			$prefix      = _x( 'Author:', 'author archive title prefix', 'wp-react-theme' );
 			$description = get_the_author_meta( 'description', $authordata->ID );
 		}
+	}
+
+	if ( ! empty( $request['search'] ) ) {
+		$prefix      = _x( 'Search Results for: ', 'search results title prefix', 'wp-react-theme' );
+		$title       = $request['search'];
 	}
 
 	if ( $title && $prefix ) {
