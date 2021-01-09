@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-01-06T00:30:55+00:00\n"
+"POT-Creation-Date: 2021-01-09T01:52:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wp-react-theme\n"
@@ -39,7 +39,6 @@ msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
 #: 404.php:21
-#: assets/theme.js:9003
 #: src/compontents/NotFound/NotFound.js:36
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
@@ -62,14 +61,12 @@ msgid "Comments are closed."
 msgstr ""
 
 #: footer.php:16
-#: assets/theme.js:8614
 #: src/compontents/Footer/Footer.js:18
 msgid "https://wordpress.org/"
 msgstr ""
 
 #. translators: %s: CMS name, i.e. WordPress.
 #: footer.php:19
-#: assets/theme.js:8617
 #: src/compontents/Footer/Footer.js:21
 msgid "Proudly powered by %s"
 msgstr ""
@@ -92,11 +89,13 @@ msgid "Add widgets here."
 msgstr ""
 
 #: header.php:26
+#: src/compontents/SkipLink/SkipLink.js:9
 msgid "Skip to content"
 msgstr ""
 
-#: header.php:41
-msgid "Primary Menu"
+#: header.php:42
+#: src/compontents/Navigation/Navigation.js:33
+msgid "Menu"
 msgstr ""
 
 #. translators: %s: Taxonomy name.
@@ -191,8 +190,13 @@ msgctxt "author archive title prefix"
 msgid "Author:"
 msgstr ""
 
+#: inc/rest-api.php:438
+msgctxt "search results title prefix"
+msgid "Search Results for: "
+msgstr ""
+
 #. translators: 1: Title prefix. 2: Title.
-#: inc/rest-api.php:447
+#: inc/rest-api.php:452
 msgctxt "archive title"
 msgid "%1$s %2$s"
 msgstr ""
@@ -243,8 +247,6 @@ msgstr ""
 
 #. translators: %s: search query.
 #: search.php:21
-#: assets/theme.js:9487
-#: src/compontents/Search/Search.js:67
 msgid "Search Results for: %s"
 msgstr ""
 
@@ -283,186 +285,95 @@ msgstr ""
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr ""
 
-#. translators: 1: Title.
-#: assets/theme.js:7539
-msgid "Author: %s"
-msgstr ""
-
-#: assets/theme.js:7647
-#: src/compontents/Comments/Comment.js:47
+#: src/compontents/Comments/Comment.js:46
 msgid "Cancel reply"
 msgstr ""
 
-#: assets/theme.js:7647
-#: src/compontents/Comments/Comment.js:48
+#: src/compontents/Comments/Comment.js:47
 msgid "Reply"
 msgstr ""
 
-#: assets/theme.js:7687
-#: src/compontents/Comments/Comment.js:94
+#: src/compontents/Comments/Comment.js:93
 msgid "says:"
 msgstr ""
 
 #. translators: 1: Comment date, 2: Comment time.
-#: assets/theme.js:7695
-#: src/compontents/Comments/Comment.js:103
+#: src/compontents/Comments/Comment.js:102
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: assets/theme.js:7697
-#: src/compontents/Comments/Comment.js:113
+#: src/compontents/Comments/Comment.js:112
 msgid "Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved. "
 msgstr ""
 
-#: assets/theme.js:7845
-#: assets/theme.js:7856
-msgid "Leave a Reply"
-msgstr ""
-
-#: assets/theme.js:7847
-msgid "You must be logged in to post a comment."
-msgstr ""
-
-#: assets/theme.js:7870
-msgid "Your email address will not be published."
-msgstr ""
-
-#: assets/theme.js:7870
-msgid "Required fields are marked"
-msgstr ""
-
-#: assets/theme.js:7876
-msgid "Comment"
-msgstr ""
-
-#: assets/theme.js:7889
-msgid "Name"
-msgstr ""
-
-#: assets/theme.js:7904
-msgid "Email"
-msgstr ""
-
-#: assets/theme.js:7920
-msgid "Website"
-msgstr ""
-
-#: assets/theme.js:7935
-msgid "Post Comment"
-msgstr ""
-
-#: assets/theme.js:8442
-#: src/compontents/EntryFooter/EntryFooter.js:47
+#: src/compontents/EntryFooter/EntryFooter.js:49
 msgid "Leave a Comment"
 msgstr ""
 
 #. translators: 1: Comment link text, 2: Title of post
-#: assets/theme.js:8451
-#: src/compontents/EntryFooter/EntryFooter.js:63
+#: src/compontents/EntryFooter/EntryFooter.js:65
 msgid "<a>%1$s <span> on %2$s</span></a>"
 msgstr ""
 
-#: assets/theme.js:8470
-#: src/compontents/EntryFooter/EntryFooter.js:85
+#: src/compontents/EntryFooter/EntryFooter.js:87
 msgid "Posted in "
 msgstr ""
 
-#: assets/theme.js:8473
-#: src/compontents/EntryFooter/EntryFooter.js:91
+#: src/compontents/EntryFooter/EntryFooter.js:93
 msgid "Tagged in "
 msgstr ""
 
-#: assets/theme.js:8540
-msgid "Posted on"
-msgstr ""
-
-#: assets/theme.js:8548
-msgid " by "
-msgstr ""
-
 #. translators: 1: Theme name, 2: Theme author.
-#: assets/theme.js:8621
 #: src/compontents/Footer/Footer.js:29
 msgid "Theme: %1$s by <a>%2$s</a>."
 msgstr ""
 
-#: assets/theme.js:8939
 #: src/compontents/Loading/Loading.js:15
 #: src/compontents/Loading/Loading.js:17
 msgid "Loading…"
 msgstr ""
 
-#: assets/theme.js:8997
-#: assets/theme.js:9001
 #: src/compontents/NotFound/NotFound.js:20
 #: src/compontents/NotFound/NotFound.js:28
 msgid "Oops! That page can't be found."
 msgstr ""
 
-#: assets/theme.js:9133
-msgid "Older posts"
-msgstr ""
-
-#: assets/theme.js:9141
-msgid "Newer posts"
-msgstr ""
-
-#: assets/theme.js:9148
-#: assets/theme.js:9230
-#: src/compontents/Pagination/PaginationPage.js:57
-msgid "Posts"
-msgstr ""
-
-#: assets/theme.js:9151
-#: assets/theme.js:9233
-#: src/compontents/Pagination/PaginationPage.js:60
-msgid "Posts navigation"
-msgstr ""
-
-#: assets/theme.js:9201
-#: assets/theme.js:9203
 #: src/compontents/Pagination/PaginationPage.js:19
-#: src/compontents/Pagination/PaginationPage.js:22
 msgid "Previous: "
 msgstr ""
 
-#: assets/theme.js:9219
-#: src/compontents/Pagination/PaginationPage.js:40
+#: src/compontents/Pagination/PaginationPage.js:37
 msgid "Next: "
 msgstr ""
 
-#: assets/theme.js:9308
+#: src/compontents/Pagination/PaginationPage.js:54
+msgid "Posts"
+msgstr ""
+
+#: src/compontents/Pagination/PaginationPage.js:57
+msgid "Posts navigation"
+msgstr ""
+
 #: src/compontents/PasswordForm/PasswordForm.js:32
 msgid "This content is password protected. To view it please enter your password below:"
 msgstr ""
 
-#: assets/theme.js:9310
 #: src/compontents/PasswordForm/PasswordForm.js:39
 msgid "Password:"
 msgstr ""
 
-#: assets/theme.js:9322
 #: src/compontents/PasswordForm/PasswordForm.js:52
 msgid "Enter"
 msgstr ""
 
-#. translators: 1: Search term.
-#: assets/theme.js:9481
-#: src/compontents/Search/Search.js:55
-msgid "Search Results for: <span>%s</span>"
-msgstr ""
-
-#: assets/theme.js:9583
-#: src/compontents/SearchForm/SearchForm.js:33
+#: src/compontents/SearchForm/SearchForm.js:32
 msgid "Search for: "
 msgstr ""
 
-#: assets/theme.js:9586
-#: src/compontents/SearchForm/SearchForm.js:38
+#: src/compontents/SearchForm/SearchForm.js:37
 msgid "Search …"
 msgstr ""
 
-#: assets/theme.js:9596
-#: src/compontents/SearchForm/SearchForm.js:48
+#: src/compontents/SearchForm/SearchForm.js:47
 msgid "Search"
 msgstr ""

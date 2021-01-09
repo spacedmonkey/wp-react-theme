@@ -30,7 +30,7 @@ function Navigation() {
 				onClick={ () => setExpanded( ! expanded ) }
 				aria-expanded={ expanded }
 			>
-				{ __( 'Primary Menu', 'wp-react-theme' ) }
+				{ __( 'Menu', 'wp-react-theme' ) }
 			</button>
 			<NavigationList id={ id } menuItems={ menuItems } parent="0" />
 		</nav>
