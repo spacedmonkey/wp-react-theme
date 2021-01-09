@@ -63,7 +63,7 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 			if ( evt ) {
 				evt.preventDefault();
 				submitComment( {
-					post,
+					post: post.id,
 					parent,
 				} )
 					.then( ( newComment ) => {

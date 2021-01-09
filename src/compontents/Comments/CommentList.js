@@ -19,7 +19,7 @@ function CommentList( {
 		return comments.filter( ( comment ) => {
 			return comment.parent === parent;
 		} );
-	}, [ parent ] );
+	}, [ parent, comments ] );
 
 	if ( ! commentFilters.length ) {
 		return null;
