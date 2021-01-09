@@ -27,8 +27,11 @@ function ContentPage( { post } ) {
 			<header className="entry-header">
 				<h1 className="entry-title">{ titleRendered }</h1>
 			</header>
-			<RawHTML></RawHTML>
-			{ featuredmedia && <Image data={ featuredmedia } /> }
+			{ featuredmedia && (
+				<div className="post-thumbnail">
+					<Image data={ featuredmedia } />
+				</div>
+			) }
 			{ ! isProtected( post ) ? (
 				<RawHTML className="entry-content">{ contentRendered }</RawHTML>
 			) : (

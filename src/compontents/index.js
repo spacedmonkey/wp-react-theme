@@ -1,3 +1,4 @@
+export { default as Archive } from './Archive';
 export { default as AuthorArchive } from './AuthorArchive';
 export { default as Comments } from './Comments';
 export { default as Content } from './Content/Content';

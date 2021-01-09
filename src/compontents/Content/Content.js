@@ -70,7 +70,11 @@ function Content( {
 					) }
 				</header>
 				<EntryMeta post={ post } url={ url } />
-				{ featuredmedia && <Image data={ featuredmedia } /> }
+				{ featuredmedia && (
+					<div className="post-thumbnail">
+						<Image data={ featuredmedia } />
+					</div>
+				) }
 				{ ! isProtected( post ) ? (
 					<RawHTML className="entry-content">
 						{ contentRendered }
