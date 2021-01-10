@@ -69,3 +69,13 @@ function wp_react_theme_output_link_wp_head() {
 	}
 }
 add_action( 'wp_head', 'wp_react_theme_output_link_wp_head' );
+
+/**
+ * Add a pingback url auto-discovery header for single posts, pages, or attachments.
+ */
+function wp_react_theme_pingback_header() {
+	if ( is_singular() && pings_open() ) {
+		printf( '<link rel="pingback" href="%s" data-react-helmet="true" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
+	}
+}
+add_action( 'wp_head', 'wp_react_theme_pingback_header' );
