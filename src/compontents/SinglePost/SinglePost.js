@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { useQuery } from '../../app/query';
+import { useConfig } from '../../app/config';
 import { stripHTML, isProtected } from '../../utils';
 import { NotFound, Loading, Content, Comments } from '../';
 
@@ -16,12 +17,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 
+
 function SinglePost() {
 	const {
 		state: { posts, loaded },
 		actions: { getPosts },
 	} = useQuery();
 	const { postSlug } = useParams();
+
+	const { metadata } = useConfig();
+	const { name } = metadata;
 
 	useEffect( () => {
 		getPosts( {
@@ -45,7 +50,7 @@ function SinglePost() {
 	return (
 		<>
 			<Helmet>
-				<title>{ post.title.rendered }</title>
+				<title>{ post.title.rendered }{' - '}{ name }</title>
 				<link rel="canonical" href={ post.link } />
 				<link rel="shortlink" href={ post.guid.rendered } />
 				<meta

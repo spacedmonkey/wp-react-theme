@@ -34,7 +34,11 @@ function Pagenation( { headers, page } ) {
 			backLink = (
 				<div className={ 'nav-previous' }>
 					<Link to={ getLink( 1 ) }>
-						{ __( 'Older posts', 'wp-react-theme' ) }
+						<span className="meta-nav"
+							  dangerouslySetInnerHTML={ {
+								  __html: '&larr;',
+							  } }
+						/> { __( 'Older posts', 'wp-react-theme' ) }
 					</Link>
 				</div>
 			);
@@ -43,7 +47,11 @@ function Pagenation( { headers, page } ) {
 			forwardLink = (
 				<div className={ 'nav-next' }>
 					<Link to={ getLink( -1 ) }>
-						{ __( 'Newer posts', 'wp-react-theme' ) }
+						{ __( 'Newer posts', 'wp-react-theme' ) } <span className="meta-nav"
+																		dangerouslySetInnerHTML={ {
+																			__html: '&rarr;',
+																		} }
+					/>
 					</Link>
 				</div>
 			);

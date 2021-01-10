@@ -3,13 +3,11 @@
  */
 import { useQuery } from '../../app/query';
 import { isProtected, stripHTML } from '../../utils';
+import { useConfig } from '../../app/config';
 import { NotFound, Loading, ContentPage, Comments } from '../';
 
 /**
  * External dependencies
- */
-/**
- * WordPress dependencies
  */
 import { useEffect } from '@wordpress/element';
 import { useLocation } from 'react-router-dom';
@@ -26,6 +24,9 @@ function SinglePage() {
 		actions: { getPosts },
 	} = useQuery();
 	const location = useLocation();
+
+	const { metadata } = useConfig();
+	const { name } = metadata;
 
 	useEffect( () => {
 		const pieces = location.pathname.split( '/' );
@@ -53,7 +54,7 @@ function SinglePage() {
 	return (
 		<>
 			<Helmet>
-				<title>{ post.title.rendered }</title>
+				<title>{ post.title.rendered }{' - '}{ name }</title>
 				<link rel="canonical" href={ post.link } />
 				<link rel="shortlink" href={ post.guid.rendered } />
 				<meta

@@ -35,7 +35,12 @@ get_header();
 
 			endwhile;
 
-			the_posts_navigation();
+			the_posts_navigation(
+					array(
+							'prev_text' => '<span class="meta-nav">&larr;</span>' . __( 'Older posts', 'wp-react-theme' ),
+							'next_text' => __( 'Newer posts', 'wp-react-theme' ) . '<span class="meta-nav">&rarr;</span>'
+					)
+			);
 
 		else :
 
