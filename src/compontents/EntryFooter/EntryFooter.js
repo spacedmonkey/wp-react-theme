@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { __, sprintf, _n } from '@wordpress/i18n';
+import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * External dependencies
@@ -12,7 +13,7 @@ import { Link } from 'react-router-dom';
  * Internal dependencies
  */
 import { commentsOpen, isProtected } from '../../utils';
-import { createInterpolateElement } from '@wordpress/element';
+
 
 function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 	const dataTerm = {
@@ -30,17 +31,17 @@ function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 		} );
 	}
 
-	const catList = dataTerm.category.map( ( term ) => (
-		<span key={ `cat-link-${ term.id }` }>
-			<Link to={ term.link.replace( url, '' ) }>{ term.name }</Link>,{ ' ' }
-		</span>
-	) );
+	const termList = ( termArray, prefix ) => {
+		return termArray.map( ( term, index ) => (
+			<span key={ `${ prefix}-link-${ term.id }` }>
+				<Link to={ term.link.replace( url, '' ) }>{ term.name }</Link>
+				{ index !== termArray.length - 1 && ', ' }
+			</span>
+		) );
+	}
 
-	const tagList = dataTerm.post_tag.map( ( term ) => (
-		<span key={ `tags-links-${ term.id }` }>
-			<Link to={ term.link.replace( url, '' ) }>{ term.name }</Link>,{ ' ' }
-		</span>
-	) );
+	const catList = termList( dataTerm.category, 'cat' );
+	const tagList = termList( dataTerm.post_tag, 'tag' );
 
 	let commentLink = '';
 	if ( showCommentLink && commentsOpen( post ) && ! isProtected( post ) ) {

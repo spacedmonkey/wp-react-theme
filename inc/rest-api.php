@@ -79,7 +79,7 @@ function wp_react_theme_rest_query( $args, $request ) {
 				'taxonomy'         => $taxonomy->name,
 				'field'            => 'slug',
 				'terms'            => $request[ $tax_slug ],
-				'include_children' => false,
+				'include_children' => true,
 			);
 		}
 	}

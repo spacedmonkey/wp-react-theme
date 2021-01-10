@@ -3,12 +3,14 @@
  */
 import { useQuery } from '../../app/query';
 import { stripHTML } from '../../utils';
+import { useConfig } from '../../app/config';
 import { Content, NotFound, Loading, Pagination, PageHeader } from '../index';
 /**
  * External dependencies
  */
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
+
 
 function Archive() {
 	const {
@@ -17,6 +19,9 @@ function Archive() {
 
 	const params = useParams();
 	const { page = 1 } = params;
+
+	const { metadata } = useConfig();
+	const { name } = metadata;
 
 	if ( ! loaded ) {
 		return <Loading />;
@@ -40,7 +45,7 @@ function Archive() {
 	return (
 		<>
 			<Helmet>
-				<title>{ archiveTitle }</title>
+				<title>{ archiveTitle }{' - '}{ name }</title>
 				<meta
 					name="description"
 					content={ stripHTML( archiveDescription ) }
