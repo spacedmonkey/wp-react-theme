@@ -54,12 +54,12 @@ function SinglePage() {
 	return (
 		<>
 			<Helmet>
-				<title>{ post.title.rendered }{' - '}{ name }</title>
-				<link rel="canonical" href={ post.link } />
-				<link rel="shortlink" href={ post.guid.rendered } />
+				<title>{ post?.title.rendered }{' - '}{ name }</title>
+				<link rel="canonical" href={ post?.link } />
+				<link rel="shortlink" href={ post?.guid.rendered } />
 				<meta
 					name="description"
-					content={ stripHTML( post.excerpt.rendered ) }
+					content={ stripHTML( post?.excerpt.rendered ) }
 				/>
 				<link
 					rel="alternate"

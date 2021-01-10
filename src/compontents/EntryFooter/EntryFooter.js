@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __, sprintf, _n } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
+import { createInterpolateElement, useMemo } from '@wordpress/element';
 
 /**
  * External dependencies
@@ -14,34 +14,42 @@ import { Link } from 'react-router-dom';
  */
 import { commentsOpen, isProtected } from '../../utils';
 
+const termList = ( termArray, prefix, url ) => {
+	return termArray.map( ({id, link, name}, index ) => (
+		<span key={ `${ prefix }-link-${ id }` }>
+			<Link to={ link.replace( url, '' ) }>{ name }</Link>
+			{ index !== termArray.length - 1 && ', ' }
+		</span>
+	) );
+};
 
 function EntryFooter( { terms, post, url, showCommentLink = true } ) {
-	const dataTerm = {
-		category: [],
-		post_tag: [],
-	};
+	const { id: postId } = post;
 
-	const { id } = post;
+	let termArray = [];
 
-	if ( terms ) {
-		terms.forEach( function ( tax ) {
-			tax.forEach( function ( term ) {
-				dataTerm[ term.taxonomy ].push( term );
+	if( terms ) {
+		termArray = terms.flat();
+	}
+
+	const catList = useMemo(
+		() => {
+			const categories = termArray.filter( (term) => {
+				return term.taxonomy === 'category'
+			} )
+			return termList(categories, 'cat', url);
+		},
+		[termArray]
+	);
+	const tagList = useMemo(
+		() => {
+			const postTag = termArray.filter( ( term ) => {
+				return term.taxonomy === 'post_tag';
 			} );
-		} );
-	}
-
-	const termList = ( termArray, prefix ) => {
-		return termArray.map( ( term, index ) => (
-			<span key={ `${ prefix}-link-${ term.id }` }>
-				<Link to={ term.link.replace( url, '' ) }>{ term.name }</Link>
-				{ index !== termArray.length - 1 && ', ' }
-			</span>
-		) );
-	}
-
-	const catList = termList( dataTerm.category, 'cat' );
-	const tagList = termList( dataTerm.post_tag, 'tag' );
+			return termList( postTag, 'tag', url );
+		},
+		[termArray]
+	);
 
 	let commentLink = '';
 	if ( showCommentLink && commentsOpen( post ) && ! isProtected( post ) ) {
@@ -82,15 +90,15 @@ function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 	}
 
 	return (
-		<footer className="entry-footer" key={ `post-${ id }` }>
-			{ dataTerm.category.length > 0 && (
-				<span className="cat-links" key={ `cat-links-${ id }` }>
+		<footer className="entry-footer" key={ `post-${ postId }` }>
+			{ catList && (
+				<span className="cat-links" key={ `cat-links-${ postId }` }>
 					{ __( 'Posted in ', 'wp-react-theme' ) }
 					{ catList }
 				</span>
 			) }
-			{ dataTerm.post_tag.length > 0 && tagList && (
-				<span className="tags-links" key={ `tags-links-${ id }` }>
+			{ tagList && (
+				<span className="tags-links" key={ `tags-links-${ postId }` }>
 					{ __( 'Tagged in ', 'wp-react-theme' ) }
 					{ tagList }
 				</span>

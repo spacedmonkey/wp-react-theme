@@ -30,7 +30,7 @@ function Archive() {
 	if ( posts.length < 1 ) {
 		return <NotFound />;
 	}
-
+	
 	const postList = posts.map( ( post ) => (
 		<Content post={ post } key={ post.id } />
 	) );
