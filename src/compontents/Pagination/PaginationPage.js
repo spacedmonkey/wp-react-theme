@@ -15,10 +15,11 @@ function PaginationPage( { previous, next, url } ) {
 		backLink = (
 			<div className={ 'nav-previous' }>
 				<Link to={ previous.link.replace( url, '' ) } rel="prev">
-					<span className="meta-nav"
-						  dangerouslySetInnerHTML={ {
-							  __html: '&larr;',
-						  } }
+					<span
+						className="meta-nav"
+						dangerouslySetInnerHTML={ {
+							__html: '&larr;',
+						} }
 					/>
 					<span className="nav-subtitle">
 						{ __( 'Previous: ', 'wp-react-theme' ) }
@@ -40,7 +41,6 @@ function PaginationPage( { previous, next, url } ) {
 				<Link to={ next.link.replace( url, '' ) } rel="next">
 					<span className="nav-subtitle">
 						{ __( 'Next: ', 'wp-react-theme' ) }
-
 					</span>
 					<span
 						className="nav-title"
@@ -48,10 +48,11 @@ function PaginationPage( { previous, next, url } ) {
 							__html: next.title.rendered,
 						} }
 					/>
-					<span className="meta-nav"
-						  dangerouslySetInnerHTML={ {
-							  __html: '&rarr;',
-						  } }
+					<span
+						className="meta-nav"
+						dangerouslySetInnerHTML={ {
+							__html: '&rarr;',
+						} }
 					/>
 				</Link>
 			</div>

@@ -8,6 +8,8 @@
 remove_action( 'wp_head', 'rel_canonical' );
 remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 remove_action( 'wp_head', 'rest_output_link_wp_head' );
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
 /**
  * Outputs rel=canonical for singular queries.
@@ -79,3 +81,13 @@ function wp_react_theme_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'wp_react_theme_pingback_header' );
+
+/**
+ * @param $output
+ *
+ * @return string|string[]
+ */
+function wp_react_theme_replace_end( $output ){
+	return str_replace(' />', ' data-react-helmet="true" />', $output);
+}
+add_filter( 'oembed_discovery_links', 'wp_react_theme_replace_end');

@@ -435,8 +435,8 @@ function wp_react_theme_archive_header( $result, $server, $request ) {
 	}
 
 	if ( ! empty( $request['search'] ) ) {
-		$prefix      = _x( 'Search Results for: ', 'search results title prefix', 'wp-react-theme' );
-		$title       = $request['search'];
+		$prefix = _x( 'Search Results for: ', 'search results title prefix', 'wp-react-theme' );
+		$title  = $request['search'];
 	}
 
 	if ( $title && $prefix ) {

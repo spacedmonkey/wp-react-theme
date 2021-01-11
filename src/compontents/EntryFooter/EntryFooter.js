@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { commentsOpen, isProtected } from '../../utils';
 
 const termList = ( termArray, prefix, url ) => {
-	return termArray.map( ({id, link, name}, index ) => (
+	return termArray.map( ( { id, link, name }, index ) => (
 		<span key={ `${ prefix }-link-${ id }` }>
 			<Link to={ link.replace( url, '' ) }>{ name }</Link>
 			{ index !== termArray.length - 1 && ', ' }
@@ -28,28 +28,22 @@ function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 
 	let termArray = [];
 
-	if( terms ) {
+	if ( terms ) {
 		termArray = terms.flat();
 	}
 
-	const catList = useMemo(
-		() => {
-			const categories = termArray.filter( (term) => {
-				return term.taxonomy === 'category'
-			} )
-			return termList(categories, 'cat', url);
-		},
-		[termArray]
-	);
-	const tagList = useMemo(
-		() => {
-			const postTag = termArray.filter( ( term ) => {
-				return term.taxonomy === 'post_tag';
-			} );
-			return termList( postTag, 'tag', url );
-		},
-		[termArray]
-	);
+	const catList = useMemo( () => {
+		const categories = termArray.filter( ( term ) => {
+			return term.taxonomy === 'category';
+		} );
+		return termList( categories, 'cat', url );
+	}, [ termArray ] );
+	const tagList = useMemo( () => {
+		const postTag = termArray.filter( ( term ) => {
+			return term.taxonomy === 'post_tag';
+		} );
+		return termList( postTag, 'tag', url );
+	}, [ termArray ] );
 
 	let commentLink = '';
 	if ( showCommentLink && commentsOpen( post ) && ! isProtected( post ) ) {

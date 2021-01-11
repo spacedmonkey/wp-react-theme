@@ -17,7 +17,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 
-
 function SinglePost() {
 	const {
 		state: { posts, loaded },
@@ -25,8 +24,9 @@ function SinglePost() {
 	} = useQuery();
 	const { postSlug } = useParams();
 
-	const { metadata } = useConfig();
+	const { metadata, config } = useConfig();
 	const { name } = metadata;
+	const { embedAPI } = config;
 
 	useEffect( () => {
 		getPosts( {
@@ -50,7 +50,11 @@ function SinglePost() {
 	return (
 		<>
 			<Helmet>
-				<title>{ post?.title.rendered }{' - '}{ name }</title>
+				<title>
+					{ post?.title.rendered }
+					{ ' - ' }
+					{ name }
+				</title>
 				<link rel="canonical" href={ post?.link } />
 				<link rel="shortlink" href={ post?.guid.rendered } />
 				<meta
@@ -61,6 +65,21 @@ function SinglePost() {
 					rel="alternate"
 					type="application/json"
 					href={ post._links.self[ 0 ].href }
+				/>
+				<link
+					rel="alternate"
+					type="application/json+oembed"
+					href={ addQueryArgs( embedAPI, {
+						url: post?.link,
+					} ) }
+				/>
+				<link
+					rel="alternate"
+					type="text/xml+oembed"
+					href={ addQueryArgs( embedAPI, {
+						url: post?.link,
+						format: 'xml'
+					} ) }
 				/>
 			</Helmet>
 			<Content

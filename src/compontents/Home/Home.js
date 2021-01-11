@@ -3,8 +3,15 @@
  */
 import { useQuery } from '../../app/query';
 import { useConfig } from '../../app/config';
-import { stripHTML } from '../../utils';
-import { NotFound, Loading, Content, ContentPage, Pagination } from '../index';
+import { isProtected, stripHTML } from '../../utils';
+import {
+	NotFound,
+	Loading,
+	Content,
+	ContentPage,
+	Pagination,
+	Comments,
+} from '../index';
 
 /**
  * External dependencies
@@ -28,11 +35,15 @@ function Home() {
 
 	const { metadata, settings } = useConfig();
 	const { pageOnFront, perPage } = settings;
+	const { name } = metadata;
 
 	useEffect( () => {
 		if ( pageOnFront > 0 ) {
 			getPosts( {
-				path: 'wp/v2/pages/' + pageOnFront,
+				path: addQueryArgs( '/wp/v2/pages', {
+					include: pageOnFront,
+					per_page: perPage,
+				} ),
 			} );
 		} else {
 			getPosts( {
@@ -52,24 +63,30 @@ function Home() {
 		return <NotFound />;
 	}
 
-	if ( pageOnFront && posts.id ) {
+	if ( pageOnFront ) {
+		const post = posts[ 0 ];
 		return (
 			<>
 				<Helmet>
-					<title>{ posts.title.rendered }</title>
-					<link rel="canonical" href={ posts.link } />
-					<link rel="shortlink" href={ posts.guid.rendered } />
+					<title>
+						{ post?.title.rendered }
+						{ ' - ' }
+						{ name }
+					</title>
+					<link rel="canonical" href={ post?.link } />
+					<link rel="shortlink" href={ post?.guid.rendered } />
 					<meta
 						name="description"
-						content={ stripHTML( posts.excerpt.rendered ) }
+						content={ stripHTML( post?.excerpt.rendered ) }
 					/>
 					<link
 						rel="alternate"
 						type="application/json"
-						href={ posts._links.self[ 0 ].href }
+						href={ post._links.self[ 0 ].href }
 					/>
 				</Helmet>
-				<ContentPage post={ posts } />
+				<ContentPage post={ post } />
+				{ ! isProtected( post ) && <Comments post={ post } /> }
 			</>
 		);
 	} else if ( posts.length ) {
@@ -79,7 +96,11 @@ function Home() {
 		return (
 			<>
 				<Helmet>
-					<title>{ metadata.name }</title>
+					<title>
+						{ metadata.name }
+						{ ' - ' }
+						{ name }
+					</title>
 					<meta name="description" content={ metadata.description } />
 				</Helmet>
 				{ postList }

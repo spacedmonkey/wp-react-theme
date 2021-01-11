@@ -1,24 +1,31 @@
 function Image( { data } ) {
-	const sizes =
-		'(max-width: ' +
-		data?.media_details.width +
-		'px) 100vw, ' +
-		data?.media_details.width +
-		'px';
+	const {
+		media_details: mediaDetails,
+		alt_text: alt,
+		source_url: sourceUrl,
+	} = data;
+	const { height, width, sizes: imageSizes } = mediaDetails;
+
+	const sizes = `(max-width: ${ width }px) 100vw, ${ width }px`;
 	let srcset = '';
 
-	Object.values( data.media_details.sizes ).forEach( function ( value ) {
-		srcset += value.source_url + ' ' + value.width + 'w, ';
+	Object.values( imageSizes ).forEach( function (
+		{ source_url: sourceUrlImage, width: sourceWidth },
+		index
+	) {
+		srcset += `${ sourceUrlImage } ${ sourceWidth }w`;
+		srcset += index !== imageSizes.length - 1 ? ', ' : '';
 	} );
-	srcset = srcset.slice( 0, -2 );
+
 	return (
 		<img
-			src={ data.source_url }
-			alt={ data.alt_text }
-			width={ data?.media_details.width }
-			height={ data?.media_details.height }
+			src={ sourceUrl }
+			alt={ alt }
+			width={ width }
+			height={ height }
 			sizes={ sizes }
 			srcSet={ srcset }
+			loading="lazy"
 		/>
 	);
 }

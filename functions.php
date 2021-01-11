@@ -86,6 +86,12 @@ if ( ! function_exists( 'wp_react_theme_setup' ) ) :
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
 
+		add_theme_support( 'align-wide' );
+
+		add_theme_support( 'responsive-embeds' );
+
+		add_theme_support( 'wp-block-styles' );
+
 		/**
 		 * Add support for core custom logo.
 		 *
@@ -182,7 +188,6 @@ function wp_react_theme_asset_metadata( $slug ) {
 function wp_react_theme_settings() {
 	global $wp_rewrite;
 
-
 	$locations      = get_nav_menu_locations();
 	$theme_location = 'menu-1';
 	$menu_items     = array();
@@ -237,9 +242,11 @@ function wp_react_theme_settings() {
 			'locale'   => str_replace( '_', '-', get_user_locale() ),
 		),
 		'config' => array(
-			'front'       => $wp_rewrite->front,
-			'theme'       => $theme,
-			'taxonomies'  => $taxonomies,
+			'front'      => $wp_rewrite->front,
+			'theme'      => $theme,
+			'taxonomies' => $taxonomies,
+			'embedAPI'   => rest_url( 'oembed/1.0/embed' ),
+			'assetPath'  => get_template_directory_uri() . '/assets/',
 		),
 		'settings' => array(
 			'pageOnFront'         => (int) get_option( 'page_on_front' ),
@@ -268,11 +275,10 @@ add_action( 'init', 'wp_react_theme_date_structure' );
 
 /**
  * Redirect search to pretty url.
- *
  */
 function wp_react_theme_change_search_url() {
-	if ( is_search() && ! empty( $_GET['s'] ) ) {
-		wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) );
+	if ( is_search() && ! empty( $_GET['s'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		wp_safe_redirect( home_url( '/search/' . urlencode( get_query_var( 's' ) ) ) );
 		exit();
 	}
 }

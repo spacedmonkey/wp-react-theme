@@ -26,8 +26,9 @@
         "phpcompatibility/phpcompatibility-wp": "^2.1"
     },
     "scripts": {
-        "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
-        "make-pot": "wp i18n make-pot . languages/_s.pot"
+        "lint": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+        "format": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+        "make-pot": "wp i18n make-pot . languages/wp-react-theme.pot"
     },
     "support": {
         "issues": "https://github.com/spacedmonkey/wp-react-theme/issues",

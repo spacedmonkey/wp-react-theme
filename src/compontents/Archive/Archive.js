@@ -11,7 +11,6 @@ import { Content, NotFound, Loading, Pagination, PageHeader } from '../index';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-
 function Archive() {
 	const {
 		state: { posts, loaded, headers },
@@ -30,7 +29,7 @@ function Archive() {
 	if ( posts.length < 1 ) {
 		return <NotFound />;
 	}
-	
+
 	const postList = posts.map( ( post ) => (
 		<Content post={ post } key={ post.id } />
 	) );
@@ -45,7 +44,11 @@ function Archive() {
 	return (
 		<>
 			<Helmet>
-				<title>{ archiveTitle }{' - '}{ name }</title>
+				<title>
+					{ archiveTitle }
+					{ ' - ' }
+					{ name }
+				</title>
 				<meta
 					name="description"
 					content={ stripHTML( archiveDescription ) }

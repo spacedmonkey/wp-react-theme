@@ -43,16 +43,17 @@
     "map": false
   },
   "scripts": {
-    "watch": "node-sass sass/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
-    "compile:css": "node-sass sass/ -o ./ && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
-    "compile:rtl": "rtlcss assets/theme.css assets/theme-rtl.css",
     "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
     "build": "wp-scripts build src/theme.js --output-path=assets; npm run compile:rtl",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "lint:css": "wp-scripts lint-style",
     "lint:js": "wp-scripts lint-js",
+    "lint:php": "composer lint",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "format:css": "wp-scripts lint-style --fix",
+    "format:js": "wp-scripts lint-js --fix",
+    "format:php": "composer format",
     "start": "wp-scripts start src/theme.js --output-path=assets",
     "test:e2e": "wp-scripts test-e2e",
     "test:unit": "wp-scripts test-unit-js"
