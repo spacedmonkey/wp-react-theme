@@ -43,7 +43,7 @@
     "map": false
   },
   "scripts": {
-    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
+    "bundle": "dir-archiver --src . --dest ../wp-react-theme.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
     "build": "wp-scripts build src/theme.js --output-path=assets; npm run compile:rtl",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
