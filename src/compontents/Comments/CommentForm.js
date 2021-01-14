@@ -200,13 +200,14 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 					</p>
 				) }
 				<p className="form-submit">
-					<input
+					<button
 						name="submit"
 						type="submit"
 						id={ `submit-${ elId }` }
 						className="submit"
-						value={ __( 'Post Comment', 'wp-react-theme' ) }
-					/>
+					>
+						{ __( 'Post Comment', 'wp-react-theme' ) }
+					</button>
 				</p>
 			</form>
 		</div>

@@ -56,7 +56,8 @@
     "format:php": "composer format",
     "start": "wp-scripts start src/theme.js --output-path=assets",
     "test:e2e": "wp-scripts test-e2e",
-    "test:unit": "wp-scripts test-unit-js"
+    "test:unit": "wp-scripts test-unit-js",
+    "compile:rtl": "rtlcss assets/theme.css assets/theme-rtl.css"
   },
   "dependencies": {
     "@wordpress/api-fetch": "^3.21.0",

@@ -57,10 +57,12 @@ function Comment( { comment, depth, num, post } ) {
 		showReply = false;
 	}
 
+	const showReplyForm = showForm ? 'comment-show-form' : '';
+
 	return (
 		<li
 			id={ `comment-${ comment.id }` }
-			className={ `comment depth-${ depth } ${ oddEvenClass }` }
+			className={ `comment depth-${ depth } ${ oddEvenClass } ${ showReplyForm }` }
 		>
 			<article
 				id={ `div-comment-${ comment.id }` }

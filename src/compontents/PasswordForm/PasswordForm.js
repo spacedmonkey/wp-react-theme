@@ -34,11 +34,14 @@ function PasswordForm( { id } ) {
 					'wp-react-theme'
 				) }
 			</p>
-			<p>
+			<p className="post-password-form-inside">
 				<label htmlFor={ inputId }>
-					{ __( 'Password:', 'wp-react-theme' ) }{ ' ' }
+					<span className="screen-reader-text">
+						{ __( 'Password:', 'wp-react-theme' ) }
+					</span>
 					<input
 						name="post_password"
+						placeholder={ __( 'Password', 'wp-react-theme' ) }
 						id={ inputId }
 						type="password"
 						size="20"
@@ -46,11 +49,9 @@ function PasswordForm( { id } ) {
 						onChange={ ( e ) => setPassword( e.target.value ) }
 					/>
 				</label>
-				<input
-					type="submit"
-					name="Submit"
-					value={ __( 'Enter', 'wp-react-theme' ) }
-				/>
+				<button type="submit" name="Submit">
+					{ __( 'Enter', 'wp-react-theme' ) }
+				</button>
 			</p>
 		</form>
 	);

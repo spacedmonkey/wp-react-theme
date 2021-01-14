@@ -41,11 +41,9 @@ function SearchForm() {
 					id={ `search-${ elId }` }
 				/>
 			</label>
-			<input
-				type="submit"
-				className="search-submit"
-				value={ __( 'Search', 'wp-react-theme' ) }
-			/>
+			<button type="submit" className="search-submit">
+				{ __( 'Search', 'wp-react-theme' ) }
+			</button>
 		</form>
 	);
 }

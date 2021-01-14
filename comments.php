@@ -73,7 +73,11 @@ if ( post_password_required() ) {
 
 	endif; // Check for have_comments().
 
-	comment_form();
+	comment_form(
+		array(
+			'submit_button' => '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>',
+		)
+	);
 	?>
 
 </div><!-- #comments -->

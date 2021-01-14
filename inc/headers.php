@@ -83,11 +83,13 @@ function wp_react_theme_pingback_header() {
 add_action( 'wp_head', 'wp_react_theme_pingback_header' );
 
 /**
- * @param $output
+ * Add data-react-helmet to link tags.
  *
- * @return string|string[]
+ * @param string $output Current output.
+ *
+ * @return string Replaced output.
  */
-function wp_react_theme_replace_end( $output ){
-	return str_replace(' />', ' data-react-helmet="true" />', $output);
+function wp_react_theme_replace_end( $output ) {
+	return str_replace( ' />', ' data-react-helmet="true" />', $output );
 }
-add_filter( 'oembed_discovery_links', 'wp_react_theme_replace_end');
+add_filter( 'oembed_discovery_links', 'wp_react_theme_replace_end' );

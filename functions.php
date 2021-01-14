@@ -150,6 +150,7 @@ function wp_react_theme_scripts() {
 	wp_enqueue_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
 	wp_style_add_data( 'wp-react-theme-style', 'rtl', 'replace' );
 
+
 	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), $asset['dependencies'], $asset['version'], true );
 	wp_localize_script(
 		'wp-react-theme-script',

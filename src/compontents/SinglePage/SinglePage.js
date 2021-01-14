@@ -86,7 +86,7 @@ function SinglePage() {
 					type="text/xml+oembed"
 					href={ addQueryArgs( embedAPI, {
 						url: post?.link,
-						format: 'xml'
+						format: 'xml',
 					} ) }
 				/>
 			</Helmet>

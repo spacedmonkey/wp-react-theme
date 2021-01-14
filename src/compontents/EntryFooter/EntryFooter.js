@@ -85,13 +85,13 @@ function EntryFooter( { terms, post, url, showCommentLink = true } ) {
 
 	return (
 		<footer className="entry-footer" key={ `post-${ postId }` }>
-			{ catList && (
+			{ catList.length > 0 && (
 				<span className="cat-links" key={ `cat-links-${ postId }` }>
 					{ __( 'Posted in ', 'wp-react-theme' ) }
 					{ catList }
 				</span>
 			) }
-			{ tagList && (
+			{ tagList.length > 0 && (
 				<span className="tags-links" key={ `tags-links-${ postId }` }>
 					{ __( 'Tagged in ', 'wp-react-theme' ) }
 					{ tagList }

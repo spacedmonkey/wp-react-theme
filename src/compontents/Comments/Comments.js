@@ -5,12 +5,12 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 import { useConfig } from '../../app/config';
 import { useQuery } from '../../app/query';
+import { useComments } from '../../app/comments';
 import { commentsOpen } from '../../utils';
 /**
  * WordPress dependencies
  */
-import { sprintf, _nx } from '@wordpress/i18n';
-import { useComments } from '../../app/comments';
+import { sprintf, _nx, __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 
 function Comments( { post } ) {
@@ -61,7 +61,14 @@ function Comments( { post } ) {
 				/>
 			) }
 			{ comments.length > 0 && (
-				<CommentList comments={ comments } post={ post } />
+				<>
+					<CommentList comments={ comments } post={ post } />
+					{ commentsOpen( post ) && (
+						<p className="no-comments">
+							{ __( 'Comments are closed.', 'wp-react-theme' ) }
+						</p>
+					) }
+				</>
 			) }
 			{ showMainForm && commentsOpen( post ) && (
 				<CommentForm post={ post } />

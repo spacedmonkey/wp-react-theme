@@ -29,3 +29,26 @@ function wp_react_theme_body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'wp_react_theme_body_classes' );
+
+/**
+ * Change output of password form.
+ *
+ * @param string $output Current output.
+ *
+ * @return string
+ */
+function wp_react_theme_the_password_form( $output ) {
+	global $post;
+
+	$label  = 'pwbox-' . ( empty( $post->ID ) ? wp_rand() : $post->ID );
+	$output = '<form action="' . esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) ) . '" class="post-password-form" method="post">
+	    <p>' . __( 'This content is password protected. To view it please enter your password below:', 'wp-react-theme' ) . '</p>
+	    <p class="post-password-form-inside"><label for="' . $label . '"><span class="screen-reader-text">' . __( 'Password:', 'wp-react-theme' ) . '</span><input name="post_password" id="' . $label . '" type="password" placeholder="' . esc_html__( 'Password', 'wp-react-theme' ) . '" size="20" /></label><button type="submit" name="Submit">' . esc_html__( 'Enter', 'wp-react-theme' ) . '</button></p>
+    </form>
+    ';
+
+	return $output;
+}
+
+add_filter( 'the_password_form', 'wp_react_theme_the_password_form' );
+
