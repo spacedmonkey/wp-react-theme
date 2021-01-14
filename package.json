@@ -1,7 +1,7 @@
 {
   "name": "wp-react-theme",
   "version": "1.0.0",
-  "description": "React theme for WordPress",
+  "description": "A WordPress theme based on the _s by Automattic, but uses react and REST API to render content. \n",
   "author": "Jonathan Harris",
   "license": "GPL-2.0-or-later",
   "main": "assets/js/theme.js",
