@@ -28,7 +28,7 @@
     "scripts": {
         "lint": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
         "format": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
-        "make-pot": "wp i18n make-pot . languages/wp-react-theme.pot"
+        "make-pot": "wp i18n make-pot . languages/wp-react-theme.pot --exclude=assets"
     },
     "support": {
         "issues": "https://github.com/spacedmonkey/wp-react-theme/issues",

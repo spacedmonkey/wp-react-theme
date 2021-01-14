@@ -2,28 +2,28 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP React theme 1.0.0\n"
+"Project-Id-Version: WP React Theme 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/wp-react-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-01-09T01:52:37+00:00\n"
+"POT-Creation-Date: 2021-01-14T00:58:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wp-react-theme\n"
 
 #. Theme Name of the theme
-msgid "WP React theme"
+msgid "WP React Theme"
 msgstr ""
 
 #. Theme URI of the theme
-msgid "http://underscores.me/"
+msgid "https://github.com/spacedmonkey/wp-react-theme"
 msgstr ""
 
 #. Description of the theme
-msgid "React theme for WordPress"
+msgid "A WordPress theme based on the _s by Automattic, but uses react and REST API to render content."
 msgstr ""
 
 #. Author of the theme
@@ -43,6 +43,20 @@ msgstr ""
 msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
 msgstr ""
 
+#: archive.php:40
+#: index.php:46
+#: search.php:42
+#: src/compontents/Pagination/Pagination.js:43
+msgid "Older posts"
+msgstr ""
+
+#: archive.php:41
+#: index.php:47
+#: search.php:43
+#: src/compontents/Pagination/Pagination.js:52
+msgid "Newer posts"
+msgstr ""
+
 #. translators: 1: title.
 #: comments.php:35
 msgid "One thought on &ldquo;%1$s&rdquo;"
@@ -57,6 +71,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: comments.php:70
+#: src/compontents/Comments/Comments.js:68
 msgid "Comments are closed."
 msgstr ""
 
@@ -80,11 +95,11 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: functions.php:127
+#: functions.php:133
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:129
+#: functions.php:135
 msgid "Add widgets here."
 msgstr ""
 
@@ -201,6 +216,26 @@ msgctxt "archive title"
 msgid "%1$s %2$s"
 msgstr ""
 
+#: inc/template-functions.php:45
+#: src/compontents/PasswordForm/PasswordForm.js:32
+msgid "This content is password protected. To view it please enter your password below:"
+msgstr ""
+
+#: inc/template-functions.php:46
+#: src/compontents/PasswordForm/PasswordForm.js:40
+msgid "Password:"
+msgstr ""
+
+#: inc/template-functions.php:46
+#: src/compontents/PasswordForm/PasswordForm.js:44
+msgid "Password"
+msgstr ""
+
+#: inc/template-functions.php:46
+#: src/compontents/PasswordForm/PasswordForm.js:53
+msgid "Enter"
+msgstr ""
+
 #. translators: %s: post date.
 #: inc/template-tags.php:30
 msgctxt "post date"
@@ -250,6 +285,25 @@ msgstr ""
 msgid "Search Results for: %s"
 msgstr ""
 
+#: searchform.php:14
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:15
+msgctxt "placeholder"
+msgid "Search …"
+msgstr ""
+
+#: searchform.php:15
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:17
+#: src/compontents/SearchForm/SearchForm.js:45
+msgid "Search"
+msgstr ""
+
 #: single.php:23
 msgid "Previous:"
 msgstr ""
@@ -293,34 +347,79 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: src/compontents/Comments/Comment.js:93
+#: src/compontents/Comments/Comment.js:95
 msgid "says:"
 msgstr ""
 
 #. translators: 1: Comment date, 2: Comment time.
-#: src/compontents/Comments/Comment.js:102
+#: src/compontents/Comments/Comment.js:104
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: src/compontents/Comments/Comment.js:112
+#: src/compontents/Comments/Comment.js:114
 msgid "Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved. "
 msgstr ""
 
-#: src/compontents/EntryFooter/EntryFooter.js:49
+#: src/compontents/Comments/CommentForm.js:88
+#: src/compontents/Comments/CommentForm.js:103
+msgid "Leave a Reply"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:91
+msgid "You must be logged in to post a comment."
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:121
+msgid "Your email address will not be published."
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:127
+msgid "Required fields are marked"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:132
+msgid "Comment"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:148
+msgid "Name"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:168
+msgid "Email"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:189
+msgid "Website"
+msgstr ""
+
+#: src/compontents/Comments/CommentForm.js:209
+msgid "Post Comment"
+msgstr ""
+
+#: src/compontents/EntryFooter/EntryFooter.js:52
 msgid "Leave a Comment"
 msgstr ""
 
 #. translators: 1: Comment link text, 2: Title of post
-#: src/compontents/EntryFooter/EntryFooter.js:65
+#: src/compontents/EntryFooter/EntryFooter.js:68
 msgid "<a>%1$s <span> on %2$s</span></a>"
 msgstr ""
 
-#: src/compontents/EntryFooter/EntryFooter.js:87
+#: src/compontents/EntryFooter/EntryFooter.js:90
 msgid "Posted in "
 msgstr ""
 
-#: src/compontents/EntryFooter/EntryFooter.js:93
+#: src/compontents/EntryFooter/EntryFooter.js:96
 msgid "Tagged in "
+msgstr ""
+
+#: src/compontents/EntryMeta/EntryMeta.js:25
+msgid "Posted on"
+msgstr ""
+
+#: src/compontents/EntryMeta/EntryMeta.js:33
+msgid " by "
 msgstr ""
 
 #. translators: 1: Theme name, 2: Theme author.
@@ -338,32 +437,22 @@ msgstr ""
 msgid "Oops! That page can't be found."
 msgstr ""
 
-#: src/compontents/Pagination/PaginationPage.js:19
-msgid "Previous: "
-msgstr ""
-
-#: src/compontents/Pagination/PaginationPage.js:37
-msgid "Next: "
-msgstr ""
-
-#: src/compontents/Pagination/PaginationPage.js:54
+#: src/compontents/Pagination/Pagination.js:69
+#: src/compontents/Pagination/PaginationPage.js:66
 msgid "Posts"
 msgstr ""
 
-#: src/compontents/Pagination/PaginationPage.js:57
+#: src/compontents/Pagination/Pagination.js:72
+#: src/compontents/Pagination/PaginationPage.js:69
 msgid "Posts navigation"
 msgstr ""
 
-#: src/compontents/PasswordForm/PasswordForm.js:32
-msgid "This content is password protected. To view it please enter your password below:"
+#: src/compontents/Pagination/PaginationPage.js:25
+msgid "Previous: "
 msgstr ""
 
-#: src/compontents/PasswordForm/PasswordForm.js:39
-msgid "Password:"
-msgstr ""
-
-#: src/compontents/PasswordForm/PasswordForm.js:52
-msgid "Enter"
+#: src/compontents/Pagination/PaginationPage.js:43
+msgid "Next: "
 msgstr ""
 
 #: src/compontents/SearchForm/SearchForm.js:32
@@ -372,8 +461,4 @@ msgstr ""
 
 #: src/compontents/SearchForm/SearchForm.js:37
 msgid "Search …"
-msgstr ""
-
-#: src/compontents/SearchForm/SearchForm.js:47
-msgid "Search"
 msgstr ""
