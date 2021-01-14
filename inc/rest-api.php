@@ -75,10 +75,14 @@ function wp_react_theme_rest_query( $args, $request ) {
 		$base     = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 		$tax_slug = $base . '_slug';
 		if ( ! empty( $request[ $tax_slug ] ) ) {
+			$slug = $request[ $tax_slug ];
+			if ( 'post_format' === $taxonomy->name ) {
+				$slug = 'post-format-' . $request[ $tax_slug ];
+			}
 			$args['tax_query'][] = array(
 				'taxonomy'         => $taxonomy->name,
 				'field'            => 'slug',
-				'terms'            => $request[ $tax_slug ],
+				'terms'            => $slug,
 				'include_children' => true,
 			);
 		}
@@ -128,6 +132,26 @@ function wp_react_theme_prepare_post( $response ) {
 
 add_filter( 'rest_prepare_post', 'wp_react_theme_prepare_post', 10 );
 
+
+/**
+ * Add post formats to rest api.
+ *
+ * @param array  $args register args for taxonomy.
+ * @param string $taxonomy taxonomy name.
+ *
+ * @return array
+ */
+function wp_react_theme_add_format_to_api( $args, $taxonomy ) {
+	if ( 'post_format' === $taxonomy ) {
+		$args['show_in_rest']          = current_theme_supports( 'post-formats' );
+		$args['rest_base']             = 'formats';
+		$args['rest_controller_class'] = 'WP_REST_Terms_Controller';
+	}
+
+	return $args;
+}
+
+add_filter( 'register_taxonomy_args', 'wp_react_theme_add_format_to_api', 10, 2 );
 
 /**
  * Add some extra fields to the rest apis.
@@ -409,10 +433,15 @@ function wp_react_theme_archive_header( $result, $server, $request ) {
 	$taxonomies = wp_list_filter( get_object_taxonomies( $post_type, 'objects' ), array( 'show_in_rest' => true ) );
 
 	foreach ( $taxonomies as $taxonomy ) {
-		$base     = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+		$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+
 		$tax_slug = $base . '_slug';
 		if ( ! empty( $request[ $tax_slug ] ) ) {
-			$term = get_term_by( 'slug', $request[ $tax_slug ], $taxonomy->name );
+			$slug = $request[ $tax_slug ];
+			if ( 'post_format' === $taxonomy->name ) {
+				$slug = 'post-format-' . $request[ $tax_slug ];
+			}
+			$term = get_term_by( 'slug', $slug, $taxonomy->name );
 			if ( $term ) {
 				$title  = $term->name;
 				$prefix = sprintf(
@@ -477,6 +506,7 @@ function wp_react_theme_preload() {
 
 	$embed          = urlencode( 'author,wp:featuredmedia,wp:term,next,previous' );
 	$posts_per_page = (int) get_option( 'posts_per_page' );
+
 
 	if ( is_single() ) {
 		$preload_paths[] = sprintf( '/wp/v2/posts?_embed=%s&per_page=%d&slug=%s', $embed, 1, $post->post_name );

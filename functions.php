@@ -47,6 +47,26 @@ if ( ! function_exists( 'wp_react_theme_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
+
+		/*
+		 * This theme supports all available post formats by default.
+		 * See https://wordpress.org/support/article/post-formats/
+		 */
+		add_theme_support(
+			'post-formats',
+			array(
+				'aside',
+				'audio',
+				'chat',
+				'gallery',
+				'image',
+				'link',
+				'quote',
+				'status',
+				'video',
+			)
+		);
+
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
