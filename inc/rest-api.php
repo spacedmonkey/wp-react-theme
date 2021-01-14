@@ -516,6 +516,11 @@ function wp_react_theme_preload() {
 		$preload_paths[] = sprintf( '/wp/v2/pages?_embed=%s&per_page=%d&slug=%s', $embed, 1, $post->post_name );
 	}
 
+	if ( is_home() ) {
+		$paged           = get_query_var( 'page', 1 );
+		$preload_paths[] = sprintf( '/wp/v2/posts?page=%d&per_page=%d&_embed=%s', $paged, $posts_per_page, $embed );
+	}
+
 	if ( is_author() ) {
 		$user            = get_queried_object();
 		$paged           = get_query_var( 'page', 1 );
@@ -527,7 +532,6 @@ function wp_react_theme_preload() {
 		$paged           = get_query_var( 'page', 1 );
 		$preload_paths[] = sprintf( '/wp/v2/posts?search=%s&page=%d&per_page=%d&_embed=%s', $search, $paged, $posts_per_page, $embed );
 	}
-
 
 	if ( is_tax() || is_tag() || is_category() ) {
 		$term            = get_queried_object();
