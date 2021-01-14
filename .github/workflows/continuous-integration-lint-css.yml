@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
