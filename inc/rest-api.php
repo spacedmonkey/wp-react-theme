@@ -471,6 +471,11 @@ function wp_react_theme_archive_header( $result, $server, $request ) {
 						$title = '';
 						break;
 				}
+				$prefix = sprintf(
+				/* translators: %s: Taxonomy singular name. */
+					_x( '%s:', 'taxonomy term archive title prefix', 'wp-react-theme' ),
+					$taxonomy->labels->singular_name
+				);
 			} else {
 				$term = get_term_by( 'slug', $slug, $taxonomy->name );
 				if ( $term ) {
