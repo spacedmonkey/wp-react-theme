@@ -439,17 +439,49 @@ function wp_react_theme_archive_header( $result, $server, $request ) {
 		if ( ! empty( $request[ $tax_slug ] ) ) {
 			$slug = $request[ $tax_slug ];
 			if ( 'post_format' === $taxonomy->name ) {
-				$slug = 'post-format-' . $request[ $tax_slug ];
-			}
-			$term = get_term_by( 'slug', $slug, $taxonomy->name );
-			if ( $term ) {
-				$title  = $term->name;
-				$prefix = sprintf(
-				/* translators: %s: Taxonomy singular name. */
-					_x( '%s:', 'taxonomy term archive title prefix', 'wp-react-theme' ),
-					$taxonomy->labels->singular_name
-				);
-				$description = term_description( $term );
+				switch ( $slug ) {
+					case 'aside':
+						$title = _x( 'Asides', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'gallery':
+						$title = _x( 'Galleries', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'image':
+						$title = _x( 'Images', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'video':
+						$title = _x( 'Videos', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'quote':
+						$title = _x( 'Quotes', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'link':
+						$title = _x( 'Links', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'status':
+						$title = _x( 'Statuses', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'audio':
+						$title = _x( 'Audio', 'post format archive title', 'wp-react-theme' );
+						break;
+					case 'chat':
+						$title = _x( 'Chats', 'post format archive title', 'wp-react-theme' );
+						break;
+					default:
+						$title = '';
+						break;
+				}
+			} else {
+				$term = get_term_by( 'slug', $slug, $taxonomy->name );
+				if ( $term ) {
+					$title  = $term->name;
+					$prefix = sprintf(
+					/* translators: %s: Taxonomy singular name. */
+						_x( '%s:', 'taxonomy term archive title prefix', 'wp-react-theme' ),
+						$taxonomy->labels->singular_name
+					);
+					$description = term_description( $term );
+				}
 			}
 		}
 	}
