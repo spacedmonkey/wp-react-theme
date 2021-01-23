@@ -28,8 +28,18 @@
     "scripts": {
         "lint": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
         "format": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
-        "make-pot": "wp i18n make-pot . languages/wp-react-theme.pot --exclude=assets"
-    },
+        "make-pot": "wp i18n make-pot . languages/wp-react-theme.pot --exclude=assets",
+        "post-update-cmd": [
+			"npm install",
+			"npm run build",
+			"rm -rf node_modules/"
+		],
+        "post-install-cmd": [
+			"npm install",
+			"npm run build",
+			"rm -rf node_modules/"
+		]
+	},
     "support": {
         "issues": "https://github.com/spacedmonkey/wp-react-theme/issues",
         "source": "https://github.com/spacedmonkey/wp-react-theme"
