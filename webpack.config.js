@@ -15,5 +15,17 @@ module.exports = {
 			...defaultConfig.optimization.minimizer,
 			new OptimizeCSSAssetsPlugin( {} ),
 		],
+		splitChunks: {
+			...defaultConfig.optimization.splitChunks,
+			cacheGroups: {
+				...defaultConfig.optimization.splitChunks.cacheGroups,
+				vendor: {
+					test: /node_modules/,
+					chunks: 'initial',
+					name: 'vendor',
+					enforce: true
+				},
+			}
+		}
 	},
 };

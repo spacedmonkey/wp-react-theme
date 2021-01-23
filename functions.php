@@ -170,8 +170,9 @@ function wp_react_theme_scripts() {
 	wp_enqueue_style( 'wp-react-theme-style', get_theme_file_uri( '/assets/theme.css' ), array(), $asset['version'] );
 	wp_style_add_data( 'wp-react-theme-style', 'rtl', 'replace' );
 
+	wp_register_script( 'wp-react-theme-vendor', get_theme_file_uri( '/assets/vendor.js' ), $asset['dependencies'], $asset['version'], true );
+	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), array( 'wp-react-theme-vendor' ), $asset['version'], true );
 
-	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), $asset['dependencies'], $asset['version'], true );
 	wp_localize_script(
 		'wp-react-theme-script',
 		'react_theme_settings',
@@ -184,6 +185,7 @@ function wp_react_theme_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'wp_react_theme_scripts' );
+
 
 /**
  * Get metadata from generated file.
