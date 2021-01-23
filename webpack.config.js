@@ -23,9 +23,9 @@ module.exports = {
 					test: /node_modules/,
 					chunks: 'initial',
 					name: 'vendor',
-					enforce: true
+					enforce: true,
 				},
-			}
-		}
+			},
+		},
 	},
 };
