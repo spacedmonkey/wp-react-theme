@@ -173,11 +173,8 @@ function wp_react_theme_scripts() {
 	wp_register_script( 'wp-react-theme-vendor', get_theme_file_uri( '/assets/vendor.js' ), $asset['dependencies'], $asset['version'], true );
 	wp_enqueue_script( 'wp-react-theme-script', get_theme_file_uri( '/assets/theme.js' ), array( 'wp-react-theme-vendor' ), $asset['version'], true );
 
-	wp_localize_script(
-		'wp-react-theme-script',
-		'react_theme_settings',
-		wp_react_theme_settings()
-	);
+	wp_add_inline_script( 'wp-react-theme-script', sprintf( 'var react_theme_settings = %s', wp_json_encode( wp_react_theme_settings() ) ), 'before' );
+
 	wp_set_script_translations( 'wp-react-theme-script', 'wp-react-theme' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -258,10 +255,10 @@ function wp_react_theme_settings() {
 		'menu' => array(
 			'id'        => 'primary-menu',
 			'menuItems' => $menu_items,
-
 		),
 		'state' => array(
 			'isLogged' => is_user_logged_in(),
+			'classes'  => wp_react_theme_body_classes(),
 			'locale'   => str_replace( '_', '-', get_user_locale() ),
 		),
 		'config' => array(

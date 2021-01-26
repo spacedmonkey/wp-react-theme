@@ -11,10 +11,14 @@
  * @param array $classes Classes for the body element.
  * @return array
  */
-function wp_react_theme_body_classes( $classes ) {
+function wp_react_theme_body_classes_filter( $classes ) {
 	// Adds a class of hfeed to non-singular pages.
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
+	}
+
+	if ( is_rtl() ) {
+		$classes[] = 'rtl';
 	}
 
 	// Adds a class of no-sidebar when there is no sidebar present.
@@ -26,9 +30,60 @@ function wp_react_theme_body_classes( $classes ) {
 		$classes[] = 'no-menu';
 	}
 
+	$classes[] = 'no-js';
+
 	return $classes;
 }
-add_filter( 'body_class', 'wp_react_theme_body_classes' );
+add_filter( 'body_class', 'wp_react_theme_body_classes_filter' );
+
+/**
+ * List of default body classes.
+ *
+ * @return array
+ */
+function wp_react_theme_body_classes() {
+	$classes = [ 'js' ];
+
+	// Adds a class of no-sidebar when there is no sidebar present.
+	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+		$classes[] = 'no-sidebar';
+	}
+
+	if ( ! has_nav_menu( 'menu-1' ) ) {
+		$classes[] = 'no-menu';
+	}
+
+	if ( is_user_logged_in() ) {
+		$classes[] = 'logged-in';
+	}
+
+	if ( is_admin_bar_showing() ) {
+		$classes[] = 'admin-bar';
+		$classes[] = 'no-customize-support';
+	}
+
+	if ( current_theme_supports( 'custom-background' ) && ( get_background_color() !== get_theme_support( 'custom-background', 'default-color' ) || get_background_image() ) ) {
+		$classes[] = 'custom-background';
+	}
+
+	if ( has_custom_logo() ) {
+		$classes[] = 'wp-custom-logo';
+	}
+
+	if ( current_theme_supports( 'responsive-embeds' ) ) {
+		$classes[] = 'wp-embed-responsive';
+	}
+
+	$classes = array_map( 'esc_attr', $classes );
+	/**
+	 * Filters the list of CSS body class names for the current post or page.
+	 *
+	 * @param string[] $classes An array of body class names.
+	 */
+	$classes = apply_filters( 'wp_react_theme_body_class', $classes );
+
+	return array_unique( $classes );
+}
 
 /**
  * Change output of password form.
