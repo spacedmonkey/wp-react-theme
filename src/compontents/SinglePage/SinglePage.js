@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { useQuery } from '../../app/query';
+import { useBodyClasses } from '../../app/bodyClasses';
 import { isProtected, stripHTML } from '../../utils';
 import { useConfig } from '../../app/config';
 import { NotFound, Loading, ContentPage, Comments } from '../';
@@ -32,6 +33,10 @@ function SinglePage() {
 	const { name } = metadata;
 	const { embedAPI } = config;
 
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
+
 	useEffect( () => {
 		const pieces = location.pathname.split( '/' );
 		const filtered = pieces.filter( Boolean );
@@ -45,6 +50,18 @@ function SinglePage() {
 			} );
 		}
 	}, [ getPosts ] );
+
+	useEffect( () => {
+		if ( posts.length === 1 ) {
+			const post = posts[ 0 ];
+			const template = post.template ? post.template : 'default';
+			setupClasses( [
+				'page',
+				`page-id-${ post.id }`,
+				`page-template-${ template }`,
+			] );
+		}
+	}, [ posts ] );
 
 	if ( ! loaded ) {
 		return <Loading />;

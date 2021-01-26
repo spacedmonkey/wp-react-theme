@@ -14,16 +14,26 @@ import { Archive } from '../index';
  */
 import { useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import { useBodyClasses } from '../../app/bodyClasses';
 
 function DateArchive() {
 	const {
 		actions: { getPosts },
+		state: { posts },
 	} = useQuery();
 	const params = useParams();
 	const { year, month = 0, day = 0, page = 1 } = params;
 
 	const { settings } = useConfig();
 	const { perPage } = settings;
+
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
+
+	useEffect( () => {
+		setupClasses( [ 'archive', 'date', 'hfeed' ] );
+	}, [ posts ] );
 
 	useEffect( () => {
 		getPosts( {

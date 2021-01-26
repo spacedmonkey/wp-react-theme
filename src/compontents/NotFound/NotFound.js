@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 /**
  * External dependencies
  */
@@ -11,8 +12,17 @@ import { Helmet } from 'react-helmet';
  * Internal dependencies
  */
 import { SearchForm } from '../';
+import { useBodyClasses } from '../../app/bodyClasses';
 
 function NotFound() {
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
+
+	useEffect( () => {
+		setupClasses( [ 'error404' ] );
+	}, [] );
+
 	return (
 		<section className="error-404 not-found">
 			<Helmet>
