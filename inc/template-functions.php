@@ -17,10 +17,6 @@ function wp_react_theme_body_classes_filter( $classes ) {
 		$classes[] = 'hfeed';
 	}
 
-	if ( is_rtl() ) {
-		$classes[] = 'rtl';
-	}
-
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 		$classes[] = 'no-sidebar';
@@ -43,6 +39,10 @@ add_filter( 'body_class', 'wp_react_theme_body_classes_filter' );
  */
 function wp_react_theme_body_classes() {
 	$classes = [ 'js' ];
+
+	if ( is_rtl() ) {
+		$classes[] = 'rtl';
+	}
 
 	// Adds a class of no-sidebar when there is no sidebar present.
 	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
