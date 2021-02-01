@@ -13,7 +13,7 @@ import { commentsOpen } from '../../utils';
 import { sprintf, _nx, __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 
-function Comments( { post } ) {
+function Comments({ post }) {
 	const {
 		state: { comments, loaded, showMainForm },
 		actions: { getComments },
@@ -31,11 +31,11 @@ function Comments( { post } ) {
 		title: { rendered: postTitle },
 	} = post;
 
-	useEffect( () => {
-		getComments( id, commentOrder, password );
-	}, [] );
+	useEffect(() => {
+		getComments(id, commentOrder, password);
+	}, []);
 
-	if ( ! loaded ) {
+	if (!loaded) {
 		return null;
 	}
 
@@ -54,25 +54,23 @@ function Comments( { post } ) {
 
 	return (
 		<div id="comments" className="comments-area">
-			{ comments.length > 0 && (
+			{comments.length > 0 && (
 				<h2
 					className="comments-title"
-					dangerouslySetInnerHTML={ { __html: commentTitle } }
+					dangerouslySetInnerHTML={{ __html: commentTitle }}
 				/>
-			) }
-			{ comments.length > 0 && (
+			)}
+			{comments.length > 0 && (
 				<>
-					<CommentList comments={ comments } post={ post } />
-					{ commentsOpen( post ) && (
+					<CommentList comments={comments} post={post} />
+					{commentsOpen(post) && (
 						<p className="no-comments">
-							{ __( 'Comments are closed.', 'wp-react-theme' ) }
+							{__('Comments are closed.', 'wp-react-theme')}
 						</p>
-					) }
+					)}
 				</>
-			) }
-			{ showMainForm && commentsOpen( post ) && (
-				<CommentForm post={ post } />
-			) }
+			)}
+			{showMainForm && commentsOpen(post) && <CommentForm post={post} />}
 		</div>
 	);
 }

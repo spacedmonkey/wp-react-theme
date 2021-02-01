@@ -1,3 +1,3 @@
-export default function stripHTML( string ) {
-	return string.replace( /<\/?[^>]+(>|$)/g, '' );
+export default function stripHTML(string) {
+	return string.replace(/<\/?[^>]+(>|$)/g, '');
 }

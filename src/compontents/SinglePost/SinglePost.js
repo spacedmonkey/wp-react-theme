@@ -33,81 +33,81 @@ function SinglePost() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		getPosts( {
-			path: addQueryArgs( '/wp/v2/posts', {
+	useEffect(() => {
+		getPosts({
+			path: addQueryArgs('/wp/v2/posts', {
 				slug: postSlug,
 				per_page: 1,
-			} ),
-		} );
-	}, [ getPosts ] );
+			}),
+		});
+	}, [getPosts]);
 
-	useEffect( () => {
-		if ( posts.length === 1 ) {
-			const post = posts[ 0 ];
+	useEffect(() => {
+		if (posts.length === 1) {
+			const post = posts[0];
 			const template = post.template ? post.template : 'default';
-			setupClasses( [
+			setupClasses([
 				'single',
-				`single-${ post.type }`,
-				`postid-${ post.id }`,
-				`single-format-${ post.format }`,
-				`single-template-${ template }`,
-			] );
+				`single-${post.type}`,
+				`postid-${post.id}`,
+				`single-format-${post.format}`,
+				`single-template-${template}`,
+			]);
 		}
-	}, [ posts ] );
+	}, [posts]);
 
-	if ( ! loaded ) {
+	if (!loaded) {
 		return <Loading />;
 	}
 
-	if ( posts.length < 1 ) {
+	if (posts.length < 1) {
 		return <NotFound />;
 	}
 
-	const post = posts[ 0 ];
+	const post = posts[0];
 
 	return (
 		<>
 			<Helmet>
 				<title>
-					{ post?.title.rendered }
-					{ ' - ' }
-					{ name }
+					{post?.title.rendered}
+					{' - '}
+					{name}
 				</title>
-				<link rel="canonical" href={ post?.link } />
-				<link rel="shortlink" href={ post?.guid.rendered } />
+				<link rel="canonical" href={post?.link} />
+				<link rel="shortlink" href={post?.guid.rendered} />
 				<meta
 					name="description"
-					content={ stripHTML( post?.excerpt.rendered ) }
+					content={stripHTML(post?.excerpt.rendered)}
 				/>
 				<link
 					rel="alternate"
 					type="application/json"
-					href={ post._links.self[ 0 ].href }
+					href={post._links.self[0].href}
 				/>
 				<link
 					rel="alternate"
 					type="application/json+oembed"
-					href={ addQueryArgs( embedAPI, {
+					href={addQueryArgs(embedAPI, {
 						url: post?.link,
-					} ) }
+					})}
 				/>
 				<link
 					rel="alternate"
 					type="text/xml+oembed"
-					href={ addQueryArgs( embedAPI, {
+					href={addQueryArgs(embedAPI, {
 						url: post?.link,
 						format: 'xml',
-					} ) }
+					})}
 				/>
 			</Helmet>
 			<Content
-				post={ post }
-				showLink={ true }
-				showCommentLink={ false }
-				titleLink={ false }
+				post={post}
+				showLink={true}
+				showCommentLink={false}
+				titleLink={false}
 			/>
-			{ ! isProtected( post ) && <Comments post={ post } /> }
+			{!isProtected(post) && <Comments post={post} />}
 		</>
 	);
 }

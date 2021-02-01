@@ -7,52 +7,52 @@ import { __ } from '@wordpress/i18n';
  */
 import { Link } from 'react-router-dom';
 
-function PaginationPage( { previous, next, url } ) {
+function PaginationPage({ previous, next, url }) {
 	let backLink = '';
 	let forwardLink = '';
 
-	if ( previous ) {
+	if (previous) {
 		backLink = (
-			<div className={ 'nav-previous' }>
-				<Link to={ previous.link.replace( url, '' ) } rel="prev">
+			<div className={'nav-previous'}>
+				<Link to={previous.link.replace(url, '')} rel="prev">
 					<span
 						className="meta-nav"
-						dangerouslySetInnerHTML={ {
+						dangerouslySetInnerHTML={{
 							__html: '&larr;',
-						} }
+						}}
 					/>
 					<span className="nav-subtitle">
-						{ __( 'Previous: ', 'wp-react-theme' ) }
+						{__('Previous: ', 'wp-react-theme')}
 					</span>
 					<span
 						className="nav-title"
-						dangerouslySetInnerHTML={ {
+						dangerouslySetInnerHTML={{
 							__html: previous.title.rendered,
-						} }
+						}}
 					/>
 				</Link>
 			</div>
 		);
 	}
 
-	if ( next ) {
+	if (next) {
 		forwardLink = (
-			<div className={ 'nav-next' }>
-				<Link to={ next.link.replace( url, '' ) } rel="next">
+			<div className={'nav-next'}>
+				<Link to={next.link.replace(url, '')} rel="next">
 					<span className="nav-subtitle">
-						{ __( 'Next: ', 'wp-react-theme' ) }
+						{__('Next: ', 'wp-react-theme')}
 					</span>
 					<span
 						className="nav-title"
-						dangerouslySetInnerHTML={ {
+						dangerouslySetInnerHTML={{
 							__html: next.title.rendered,
-						} }
+						}}
 					/>
 					<span
 						className="meta-nav"
-						dangerouslySetInnerHTML={ {
+						dangerouslySetInnerHTML={{
 							__html: '&rarr;',
-						} }
+						}}
 					/>
 				</Link>
 			</div>
@@ -63,14 +63,14 @@ function PaginationPage( { previous, next, url } ) {
 		<nav
 			className="navigation posts-navigation"
 			role="navigation"
-			aria-label={ __( 'Posts', 'wp-react-theme' ) }
+			aria-label={__('Posts', 'wp-react-theme')}
 		>
 			<h2 className="screen-reader-text">
-				{ __( 'Posts navigation', 'wp-react-theme' ) }
+				{__('Posts navigation', 'wp-react-theme')}
 			</h2>
-			<div className={ 'nav-links' }>
-				{ backLink }
-				{ forwardLink }
+			<div className={'nav-links'}>
+				{backLink}
+				{forwardLink}
 			</div>
 		</nav>
 	);

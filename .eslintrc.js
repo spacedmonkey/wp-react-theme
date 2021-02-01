@@ -1,12 +1,12 @@
 /**
  * External dependencies
  */
-const { escapeRegExp } = require( 'lodash' );
+const { escapeRegExp } = require('lodash');
 
 /**
  * Internal dependencies
  */
-const { version } = require( './package' );
+const { version } = require('./package');
 
 /**
  * Regular expression string matching a SemVer string with equal major/minor to
@@ -15,7 +15,7 @@ const { version } = require( './package' );
  * @type {string}
  */
 const majorMinorRegExp =
-	escapeRegExp( version.replace( /\.\d+$/, '' ) ) + '(\\.\\d+)?';
+	escapeRegExp(version.replace(/\.\d+$/, '')) + '(\\.\\d+)?';
 
 /**
  * The list of patterns matching files used only for development purposes.
@@ -34,7 +34,7 @@ module.exports = {
 		'plugin:@wordpress/eslint-plugin/recommended',
 		'plugin:eslint-comments/recommended',
 	],
-	plugins: [ 'import' ],
+	plugins: ['import'],
 	globals: {
 		wp: 'off',
 	},
@@ -119,7 +119,7 @@ module.exports = {
 	},
 	overrides: [
 		{
-			files: [ 'packages/**/*.js' ],
+			files: ['packages/**/*.js'],
 			excludedFiles: [
 				'**/*.@(android|ios|native).js',
 				...developmentFiles,
@@ -130,7 +130,7 @@ module.exports = {
 			},
 		},
 		{
-			files: [ 'packages/**/*.js' ],
+			files: ['packages/**/*.js'],
 			excludedFiles: [
 				'packages/block-library/src/*/save.js',
 				...developmentFiles,
@@ -140,36 +140,36 @@ module.exports = {
 					'error',
 					{
 						forbid: [
-							[ 'button', 'Button' ],
-							[ 'circle', 'Circle' ],
-							[ 'g', 'G' ],
-							[ 'path', 'Path' ],
-							[ 'polygon', 'Polygon' ],
-							[ 'rect', 'Rect' ],
-							[ 'svg', 'SVG' ],
-						].map( ( [ element, componentName ] ) => {
+							['button', 'Button'],
+							['circle', 'Circle'],
+							['g', 'G'],
+							['path', 'Path'],
+							['polygon', 'Polygon'],
+							['rect', 'Rect'],
+							['svg', 'SVG'],
+						].map(([element, componentName]) => {
 							return {
 								element,
-								message: `use cross-platform <${ componentName } /> component instead.`,
+								message: `use cross-platform <${componentName} /> component instead.`,
 							};
-						} ),
+						}),
 					},
 				],
 			},
 		},
 		{
-			files: [ 'packages/jest*/**/*.js' ],
-			extends: [ 'plugin:@wordpress/eslint-plugin/test-unit' ],
+			files: ['packages/jest*/**/*.js'],
+			extends: ['plugin:@wordpress/eslint-plugin/test-unit'],
 		},
 		{
-			files: [ 'packages/e2e-test*/**/*.js' ],
-			extends: [ 'plugin:@wordpress/eslint-plugin/test-e2e' ],
+			files: ['packages/e2e-test*/**/*.js'],
+			extends: ['plugin:@wordpress/eslint-plugin/test-e2e'],
 			rules: {
 				'jest/expect-expect': 'off',
 			},
 		},
 		{
-			files: [ 'bin/**/*.js' ],
+			files: ['bin/**/*.js'],
 			rules: {
 				'no-console': 'off',
 			},

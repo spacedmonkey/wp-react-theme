@@ -31,21 +31,21 @@ function DateArchive() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		setupClasses( [ 'archive', 'date', 'hfeed' ] );
-	}, [ posts ] );
+	useEffect(() => {
+		setupClasses(['archive', 'date', 'hfeed']);
+	}, [posts]);
 
-	useEffect( () => {
-		getPosts( {
-			path: addQueryArgs( '/wp/v2/posts', {
+	useEffect(() => {
+		getPosts({
+			path: addQueryArgs('/wp/v2/posts', {
 				year,
 				month,
 				day,
 				page,
 				per_page: perPage,
-			} ),
-		} );
-	}, [ getPosts ] );
+			}),
+		});
+	}, [getPosts]);
 
 	return <Archive />;
 }

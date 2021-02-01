@@ -15,7 +15,7 @@ import { useCallback, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { useBodyClasses } from '../../app/bodyClasses';
 
-function TaxonomyArchive( { restBase, name } ) {
+function TaxonomyArchive({ restBase, name }) {
 	const {
 		actions: { getPosts },
 		state: { posts },
@@ -28,13 +28,13 @@ function TaxonomyArchive( { restBase, name } ) {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	const getNewSlug = useCallback( () => {
-		let pieces = location.pathname.split( '/' );
-		pieces = pieces.filter( Boolean );
-		pieces = pieces.slice( 2, pieces.length );
+	const getNewSlug = useCallback(() => {
+		let pieces = location.pathname.split('/');
+		pieces = pieces.filter(Boolean);
+		pieces = pieces.slice(2, pieces.length);
 		let newSlug = '';
 		let newPage = 1;
-		if ( pieces.length >= 3 && 'page' === pieces[ pieces.length - 2 ] ) {
+		if (pieces.length >= 3 && 'page' === pieces[pieces.length - 2]) {
 			newPage = pieces.pop();
 			pieces.pop();
 			newSlug = pieces.pop();
@@ -43,24 +43,24 @@ function TaxonomyArchive( { restBase, name } ) {
 		}
 
 		return { newSlug, newPage };
-	}, [ location ] );
+	}, [location]);
 
-	useEffect( () => {
+	useEffect(() => {
 		const { newSlug, newPage } = getNewSlug();
 
-		getPosts( {
-			path: addQueryArgs( '/wp/v2/posts', {
-				[ `${ restBase }_slug` ]: newSlug,
+		getPosts({
+			path: addQueryArgs('/wp/v2/posts', {
+				[`${restBase}_slug`]: newSlug,
 				page: newPage,
 				per_page: perPage,
-			} ),
-		} );
-	}, [ getPosts, restBase, getNewSlug ] );
+			}),
+		});
+	}, [getPosts, restBase, getNewSlug]);
 
-	useEffect( () => {
+	useEffect(() => {
 		const { newSlug } = getNewSlug();
-		setupClasses( [ 'archive', 'hfeed', name, `${ name }-${ newSlug }` ] );
-	}, [ posts, getNewSlug, name ] );
+		setupClasses(['archive', 'hfeed', name, `${name}-${newSlug}`]);
+	}, [posts, getNewSlug, name]);
 
 	return <Archive />;
 }

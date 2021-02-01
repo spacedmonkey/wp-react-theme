@@ -18,71 +18,71 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import Context from './context';
 
-function QueryProvider( { children } ) {
-	const [ posts, setPosts ] = useState( [] );
-	const [ headers, setHeaders ] = useState( {} );
-	const [ loading, setLoading ] = useState( false );
-	const [ loaded, setLoaded ] = useState( false );
-	const [ password, setPassword ] = useState( '' );
+function QueryProvider({ children }) {
+	const [posts, setPosts] = useState([]);
+	const [headers, setHeaders] = useState({});
+	const [loading, setLoading] = useState(false);
+	const [loaded, setLoaded] = useState(false);
+	const [password, setPassword] = useState('');
 
 	const location = useLocation();
 
 	const getPosts = useCallback(
-		( config ) => {
-			if ( ! loading && ! loaded ) {
-				setLoading( true );
+		(config) => {
+			if (!loading && !loaded) {
+				setLoading(true);
 				const options = {
 					...config,
-					path: addQueryArgs( config.path, {
+					path: addQueryArgs(config.path, {
 						_embed: 'author,wp:featuredmedia,wp:term,next,previous',
-					} ),
+					}),
 					parse: false,
 				};
 
-				apiFetch( options ).then( ( results ) => {
+				apiFetch(options).then((results) => {
 					const resultsHeaders = {};
-					results.headers.forEach( function ( value, name ) {
-						resultsHeaders[ name ] = value;
-					} );
+					results.headers.forEach(function (value, name) {
+						resultsHeaders[name] = value;
+					});
 
-					setHeaders( resultsHeaders );
+					setHeaders(resultsHeaders);
 					results
 						.json()
-						.then( setPosts )
-						.finally( () => {
-							setLoaded( true );
-							setLoading( false );
-						} );
-				} );
+						.then(setPosts)
+						.finally(() => {
+							setLoaded(true);
+							setLoading(false);
+						});
+				});
 			}
 		},
-		[ loading, loaded ]
+		[loading, loaded]
 	);
 
-	const getProtectedPost = useCallback( ( id, passwordRaw ) => {
+	const getProtectedPost = useCallback((id, passwordRaw) => {
 		const options = {
-			path: addQueryArgs( '/wp/v2/posts/' + id, {
+			path: addQueryArgs('/wp/v2/posts/' + id, {
 				_embed: 'author,wp:featuredmedia,wp:term,next,previous',
 				password: passwordRaw,
-			} ),
+			}),
 			parse: false,
 		};
 
-		apiFetch( options ).then( ( results ) => {
+		apiFetch(options).then((results) => {
 			const resultsHeaders = {};
-			results.headers.forEach( function ( value, name ) {
-				resultsHeaders[ name ] = value;
-			} );
+			results.headers.forEach(function (value, name) {
+				resultsHeaders[name] = value;
+			});
 
-			setHeaders( resultsHeaders );
-			results.json().then( ( post ) => setPosts( [ post ] ) );
-		} );
-	}, [] );
+			setHeaders(resultsHeaders);
+			results.json().then((post) => setPosts([post]));
+		});
+	}, []);
 
-	useEffect( () => {
-		setLoaded( false );
-		setPassword( '' );
-	}, [ location.pathname ] );
+	useEffect(() => {
+		setLoaded(false);
+		setPassword('');
+	}, [location.pathname]);
 
 	const state = {
 		state: {
@@ -102,7 +102,7 @@ function QueryProvider( { children } ) {
 		},
 	};
 
-	return <Context.Provider value={ state }>{ children }</Context.Provider>;
+	return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 export default QueryProvider;

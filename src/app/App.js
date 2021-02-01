@@ -26,13 +26,13 @@ import { CommentProvider } from './comments';
 import { ConfigProvider } from './config';
 import { BodyClassesProvider } from './bodyClasses';
 
-function App( { config } ) {
+function App({ config }) {
 	const { config: siteConfig } = config;
 	const { taxonomies, front } = siteConfig;
 
 	return (
 		<>
-			<ConfigProvider config={ config }>
+			<ConfigProvider config={config}>
 				<BodyClassesProvider>
 					<Router>
 						<SkipLink />
@@ -49,23 +49,23 @@ function App( { config } ) {
 										<Route exact path="/page/:page">
 											<Home />
 										</Route>
-										{ taxonomies &&
-											taxonomies.map( ( tax ) => {
+										{taxonomies &&
+											taxonomies.map((tax) => {
 												const paths = [
-													`${ front }${ tax.rewrite.slug }/:slug/(page)?/:page(\\d+)?`,
+													`${front}${tax.rewrite.slug}/:slug/(page)?/:page(\\d+)?`,
 												];
-												if ( tax.hierarchical ) {
+												if (tax.hierarchical) {
 													paths.unshift(
-														`${ front }${ tax.rewrite.slug }/:parentSlug/:slug/(page)?/:page(\\d+)?`
+														`${front}${tax.rewrite.slug}/:parentSlug/:slug/(page)?/:page(\\d+)?`
 													);
 													paths.unshift(
-														`${ front }${ tax.rewrite.slug }/:granParentSlug/:parentSlug/:slug/(page)?/:page(\\d+)?`
+														`${front}${tax.rewrite.slug}/:granParentSlug/:parentSlug/:slug/(page)?/:page(\\d+)?`
 													);
 												}
 
 												return (
 													<Route
-														path={ paths }
+														path={paths}
 														key={
 															'page' +
 															tax.rest_base
@@ -75,7 +75,7 @@ function App( { config } ) {
 															restBase={
 																tax.rest_base
 															}
-															name={ tax.name }
+															name={tax.name}
 															key={
 																'page' +
 																tax.rest_base
@@ -83,10 +83,10 @@ function App( { config } ) {
 														/>
 													</Route>
 												);
-											} ) }
+											})}
 
 										<Route
-											path={ `${ front }author/:slug/(page)?/:page?` }
+											path={`${front}author/:slug/(page)?/:page?`}
 										>
 											<AuthorArchive />
 										</Route>
@@ -96,16 +96,16 @@ function App( { config } ) {
 										</Route>
 
 										<Route
-											path={ [
-												`${ front }date/:year(\\d+)/:month/:day/(page)?/:page?`,
-												`${ front }date/:year(\\d+)/:month/(page)?/:page?`,
-												`${ front }date/:year(\\d+)/(page)?/:page?`,
-											] }
+											path={[
+												`${front}date/:year(\\d+)/:month/:day/(page)?/:page?`,
+												`${front}date/:year(\\d+)/:month/(page)?/:page?`,
+												`${front}date/:year(\\d+)/(page)?/:page?`,
+											]}
 										>
 											<DateArchive />
 										</Route>
 
-										<Route path={ `${ front }:postSlug` }>
+										<Route path={`${front}:postSlug`}>
 											<SinglePost />
 										</Route>
 

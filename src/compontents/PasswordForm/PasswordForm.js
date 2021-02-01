@@ -8,8 +8,8 @@ import { useCallback } from '@wordpress/element';
  */
 import { useQuery } from '../../app/query';
 
-function PasswordForm( { id } ) {
-	const inputId = `pwbox-${ id }`;
+function PasswordForm({ id }) {
+	const inputId = `pwbox-${id}`;
 
 	const {
 		state: { password },
@@ -17,40 +17,40 @@ function PasswordForm( { id } ) {
 	} = useQuery();
 
 	const onSubmit = useCallback(
-		( evt ) => {
-			if ( evt ) {
+		(evt) => {
+			if (evt) {
 				evt.preventDefault();
-				getProtectedPost( id, password );
+				getProtectedPost(id, password);
 			}
 		},
-		[ id, password ]
+		[id, password]
 	);
 
 	return (
-		<form className="post-password-form" onSubmit={ onSubmit }>
+		<form className="post-password-form" onSubmit={onSubmit}>
 			<p>
-				{ __(
+				{__(
 					'This content is password protected. To view it please enter your password below:',
 					'wp-react-theme'
-				) }
+				)}
 			</p>
 			<p className="post-password-form-inside">
-				<label htmlFor={ inputId }>
+				<label htmlFor={inputId}>
 					<span className="screen-reader-text">
-						{ __( 'Password:', 'wp-react-theme' ) }
+						{__('Password:', 'wp-react-theme')}
 					</span>
 					<input
 						name="post_password"
-						placeholder={ __( 'Password', 'wp-react-theme' ) }
-						id={ inputId }
+						placeholder={__('Password', 'wp-react-theme')}
+						id={inputId}
 						type="password"
 						size="20"
-						value={ password }
-						onChange={ ( e ) => setPassword( e.target.value ) }
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</label>
 				<button type="submit" name="Submit">
-					{ __( 'Enter', 'wp-react-theme' ) }
+					{__('Enter', 'wp-react-theme')}
 				</button>
 			</p>
 		</form>

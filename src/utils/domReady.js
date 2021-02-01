@@ -14,7 +14,7 @@
  *
  * @return {void}
  */
-export default function domReady( callback ) {
+export default function domReady(callback) {
 	if (
 		document.readyState === 'complete' || // DOMContentLoaded + Images/Styles/etc loaded, so we call directly.
 		document.readyState === 'interactive' // DOMContentLoaded fires at this point, so we call directly.
@@ -23,5 +23,5 @@ export default function domReady( callback ) {
 	}
 
 	// eslint-disable-next-line @wordpress/no-global-event-listener
-	document.addEventListener( 'DOMContentLoaded', callback );
+	document.addEventListener('DOMContentLoaded', callback);
 }

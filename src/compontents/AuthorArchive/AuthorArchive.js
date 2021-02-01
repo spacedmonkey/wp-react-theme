@@ -32,19 +32,19 @@ function AuthorArchive() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		getPosts( {
-			path: addQueryArgs( '/wp/v2/posts', {
+	useEffect(() => {
+		getPosts({
+			path: addQueryArgs('/wp/v2/posts', {
 				author_slug: slug,
 				page,
 				per_page: perPage,
-			} ),
-		} );
-	}, [ getPosts ] );
+			}),
+		});
+	}, [getPosts]);
 
-	useEffect( () => {
-		setupClasses( [ 'archive', 'author', `author-${ slug }`, 'hfeed' ] );
-	}, [ posts ] );
+	useEffect(() => {
+		setupClasses(['archive', 'author', `author-${slug}`, 'hfeed']);
+	}, [posts]);
 
 	return <Archive />;
 }

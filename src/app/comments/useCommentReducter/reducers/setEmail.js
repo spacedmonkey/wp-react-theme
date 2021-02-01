@@ -1,4 +1,4 @@
-export const setEmail = ( state, { email } ) => {
+export const setEmail = (state, { email }) => {
 	return {
 		...state,
 		email,

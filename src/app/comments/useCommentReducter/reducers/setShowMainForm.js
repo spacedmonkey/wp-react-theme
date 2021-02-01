@@ -1,4 +1,4 @@
-export const setShowMainForm = ( state, { showMainForm } ) => {
+export const setShowMainForm = (state, { showMainForm }) => {
 	return {
 		...state,
 		showMainForm,

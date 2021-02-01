@@ -7,54 +7,54 @@ import { Link, useLocation } from 'react-router-dom';
  */
 import { __ } from '@wordpress/i18n';
 
-function Pagenation( { headers, page } ) {
+function Pagenation({ headers, page }) {
 	const location = useLocation();
-	const totalPage = headers?.[ 'x-wp-totalpages' ];
+	const totalPage = headers?.['x-wp-totalpages'];
 	let backLink = '';
 	let forwardLink = '';
 
-	const getLink = ( num ) => {
+	const getLink = (num) => {
 		let { pathname } = location;
-		if ( ! pathname.endsWith( '/' ) ) {
+		if (!pathname.endsWith('/')) {
 			pathname += '/';
 		}
-		if ( ! pathname.endsWith( 'page/' + page + '/' ) ) {
+		if (!pathname.endsWith('page/' + page + '/')) {
 			pathname += 'page/' + page + '/';
 		}
 		pathname = pathname.replace(
 			'page/' + page + '/',
-			'page/' + ( page + num )
+			'page/' + (page + num)
 		);
-		return pathname.replace( 'page/1', '' );
+		return pathname.replace('page/1', '');
 	};
 
-	if ( page <= totalPage ) {
+	if (page <= totalPage) {
 		// eslint-disable-next-line eqeqeq
-		if ( page != totalPage ) {
+		if (page != totalPage) {
 			backLink = (
-				<div className={ 'nav-previous' }>
-					<Link to={ getLink( 1 ) }>
+				<div className={'nav-previous'}>
+					<Link to={getLink(1)}>
 						<span
 							className="meta-nav"
-							dangerouslySetInnerHTML={ {
+							dangerouslySetInnerHTML={{
 								__html: '&larr;',
-							} }
-						/>{ ' ' }
-						{ __( 'Older posts', 'wp-react-theme' ) }
+							}}
+						/>{' '}
+						{__('Older posts', 'wp-react-theme')}
 					</Link>
 				</div>
 			);
 		}
-		if ( page !== 1 ) {
+		if (page !== 1) {
 			forwardLink = (
-				<div className={ 'nav-next' }>
-					<Link to={ getLink( -1 ) }>
-						{ __( 'Newer posts', 'wp-react-theme' ) }{ ' ' }
+				<div className={'nav-next'}>
+					<Link to={getLink(-1)}>
+						{__('Newer posts', 'wp-react-theme')}{' '}
 						<span
 							className="meta-nav"
-							dangerouslySetInnerHTML={ {
+							dangerouslySetInnerHTML={{
 								__html: '&rarr;',
-							} }
+							}}
 						/>
 					</Link>
 				</div>
@@ -66,14 +66,14 @@ function Pagenation( { headers, page } ) {
 		<nav
 			className="navigation posts-navigation"
 			role="navigation"
-			aria-label={ __( 'Posts', 'wp-react-theme' ) }
+			aria-label={__('Posts', 'wp-react-theme')}
 		>
 			<h2 className="screen-reader-text">
-				{ __( 'Posts navigation', 'wp-react-theme' ) }
+				{__('Posts navigation', 'wp-react-theme')}
 			</h2>
-			<div className={ 'nav-links' }>
-				{ backLink }
-				{ forwardLink }
+			<div className={'nav-links'}>
+				{backLink}
+				{forwardLink}
 			</div>
 		</nav>
 	);

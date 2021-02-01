@@ -8,23 +8,23 @@ import { useConfig } from '../config';
  */
 import { useCallback, useEffect, useState } from '@wordpress/element';
 
-function BodyClassesProvider( { children } ) {
+function BodyClassesProvider({ children }) {
 	const { state: configState } = useConfig();
 	const { classes } = configState;
-	const [ bodyClasses, setBodyClasses ] = useState( [ ...classes ] );
+	const [bodyClasses, setBodyClasses] = useState([...classes]);
 
-	useEffect( () => {
+	useEffect(() => {
 		const body = document.body;
-		body.classList.remove( ...body.classList );
+		body.classList.remove(...body.classList);
 		const newBodyClasses = bodyClasses.sort();
-		body.classList.add( ...newBodyClasses );
-	}, [ bodyClasses ] );
+		body.classList.add(...newBodyClasses);
+	}, [bodyClasses]);
 
 	const setupClasses = useCallback(
-		( newClassNames ) => {
-			setBodyClasses( [ ...classes, ...newClassNames ] );
+		(newClassNames) => {
+			setBodyClasses([...classes, ...newClassNames]);
 		},
-		[ classes ]
+		[classes]
 	);
 
 	const state = {
@@ -36,7 +36,7 @@ function BodyClassesProvider( { children } ) {
 		},
 	};
 
-	return <Context.Provider value={ state }>{ children }</Context.Provider>;
+	return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 export default BodyClassesProvider;

@@ -30,19 +30,19 @@ function Search() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		getPosts( {
-			path: addQueryArgs( '/wp/v2/posts', {
+	useEffect(() => {
+		getPosts({
+			path: addQueryArgs('/wp/v2/posts', {
 				search: searchTerm,
 				page,
 				per_page: perPage,
-			} ),
-		} );
-	}, [ getPosts ] );
+			}),
+		});
+	}, [getPosts]);
 
-	useEffect( () => {
-		setupClasses( [ 'search', 'search-result', 'hfeed' ] );
-	}, [ posts ] );
+	useEffect(() => {
+		setupClasses(['search', 'search-result', 'hfeed']);
+	}, [posts]);
 
 	return <Archive />;
 }

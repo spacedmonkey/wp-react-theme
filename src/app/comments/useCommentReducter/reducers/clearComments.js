@@ -1,4 +1,4 @@
-export const clearComments = ( state ) => {
+export const clearComments = (state) => {
 	return {
 		...state,
 		comments: [],

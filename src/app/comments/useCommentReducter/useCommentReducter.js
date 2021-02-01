@@ -22,24 +22,24 @@ const INITIAL_STATE = {
 };
 
 function useCommentReducer() {
-	const [ state, dispatch ] = useReducer( reducer, {
+	const [state, dispatch] = useReducer(reducer, {
 		...INITIAL_STATE,
-	} );
+	});
 
-	const { actions } = useMemo( () => {
-		const wrapWithDispatch = ( apis ) =>
-			Object.keys( apis ).reduce(
-				( collection, action ) => ( {
+	const { actions } = useMemo(() => {
+		const wrapWithDispatch = (apis) =>
+			Object.keys(apis).reduce(
+				(collection, action) => ({
 					...collection,
-					[ action ]: apis[ action ]( dispatch ),
-				} ),
+					[action]: apis[action](dispatch),
+				}),
 				{}
 			);
 
 		return {
-			actions: wrapWithDispatch( exposedActions, dispatch ),
+			actions: wrapWithDispatch(exposedActions, dispatch),
 		};
-	}, [ dispatch ] );
+	}, [dispatch]);
 
 	return {
 		state,

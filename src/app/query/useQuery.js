@@ -12,7 +12,7 @@ import { useContext } from '@wordpress/element';
 import Context from './context';
 
 function useQuery() {
-	return useContext( Context );
+	return useContext(Context);
 }
 
 export default useQuery;

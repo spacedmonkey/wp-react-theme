@@ -14,7 +14,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { useLocation } from 'react-router-dom';
 
-function CommentProvider( { children } ) {
+function CommentProvider({ children }) {
 	const { state, actions } = useCommentReducer();
 
 	const location = useLocation();
@@ -29,36 +29,36 @@ function CommentProvider( { children } ) {
 	} = actions;
 
 	const getComments = useCallback(
-		( id, order = 'asc', password ) => {
-			if ( ! loading && ! loaded ) {
-				setLoading( { loading: true } );
+		(id, order = 'asc', password) => {
+			if (!loading && !loaded) {
+				setLoading({ loading: true });
 				const config = {
-					path: addQueryArgs( '/wp/v2/comments', {
+					path: addQueryArgs('/wp/v2/comments', {
 						post: id,
 						per_page: -1,
 						order,
 						password,
-					} ),
+					}),
 				};
 
-				apiFetch( config )
-					.then( ( newComments ) => {
-						setComments( {
-							comments: [ ...newComments ],
-						} );
-					} )
-					.finally( () => {
-						setLoaded( { loaded: true } );
-						setLoading( { loading: false } );
-					} );
+				apiFetch(config)
+					.then((newComments) => {
+						setComments({
+							comments: [...newComments],
+						});
+					})
+					.finally(() => {
+						setLoaded({ loaded: true });
+						setLoading({ loading: false });
+					});
 			}
 		},
-		[ loading, loaded ]
+		[loading, loaded]
 	);
 
 	const submitComment = useCallback(
-		( { post, parent = 0 } ) => {
-			return apiFetch( {
+		({ post, parent = 0 }) => {
+			return apiFetch({
 				path: '/wp/v2/comments',
 				data: {
 					post,
@@ -69,25 +69,25 @@ function CommentProvider( { children } ) {
 					parent,
 				},
 				method: 'POST',
-			} );
+			});
 		},
-		[ comment, author, email, url ]
+		[comment, author, email, url]
 	);
 
 	const addComment = useCallback(
-		( newComment ) => {
-			setComments( {
-				comments: [ ...comments, newComment ],
-			} );
+		(newComment) => {
+			setComments({
+				comments: [...comments, newComment],
+			});
 			clearForm();
 		},
-		[ comments ]
+		[comments]
 	);
 
-	useEffect( () => {
+	useEffect(() => {
 		clearComments();
 		clearForm();
-	}, [ location.pathname ] );
+	}, [location.pathname]);
 
 	const data = {
 		state,
@@ -99,7 +99,7 @@ function CommentProvider( { children } ) {
 		},
 	};
 
-	return <Context.Provider value={ data }>{ children }</Context.Provider>;
+	return <Context.Provider value={data}>{children}</Context.Provider>;
 }
 
 export default CommentProvider;
