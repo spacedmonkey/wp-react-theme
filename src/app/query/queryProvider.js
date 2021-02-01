@@ -39,21 +39,27 @@ function QueryProvider({ children }) {
 					parse: false,
 				};
 
-				apiFetch(options).then((results) => {
-					const resultsHeaders = {};
-					results.headers.forEach(function (value, name) {
-						resultsHeaders[name] = value;
-					});
-
-					setHeaders(resultsHeaders);
-					results
-						.json()
-						.then(setPosts)
-						.finally(() => {
-							setLoaded(true);
-							setLoading(false);
+				apiFetch(options)
+					.then((results) => {
+						const resultsHeaders = {};
+						results.headers.forEach(function (value, name) {
+							resultsHeaders[name] = value;
 						});
-				});
+
+						setHeaders(resultsHeaders);
+						results
+							.json()
+							.then(setPosts)
+							.finally(() => {
+								setLoaded(true);
+								setLoading(false);
+							});
+					})
+					.catch(() => {
+						setPosts([]);
+						setLoaded(true);
+						setLoading(false);
+					});
 			}
 		},
 		[loading, loaded]

@@ -106,4 +106,3 @@ function wp_react_theme_the_password_form( $output ) {
 }
 
 add_filter( 'the_password_form', 'wp_react_theme_the_password_form' );
-

@@ -3,7 +3,8 @@
  */
 import { useQuery } from '../../app/query';
 import { useConfig } from '../../app/config';
-import { isProtected, stripHTML } from '../../utils';
+import { useBodyClasses } from '../../app/bodyClasses';
+import { isProtected, stripHTML, useQueryString } from '../../utils';
 import {
 	NotFound,
 	Loading,
@@ -16,7 +17,7 @@ import {
 /**
  * External dependencies
  */
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 /**
@@ -24,7 +25,6 @@ import { Helmet } from 'react-helmet';
  */
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from '@wordpress/element';
-import { useBodyClasses } from '../../app/bodyClasses';
 
 function Home() {
 	const {
@@ -32,7 +32,9 @@ function Home() {
 		actions: { getPosts },
 	} = useQuery();
 	const params = useParams();
+	const queryString = useQueryString();
 	const { page = 1 } = params;
+	const history = useHistory();
 
 	const { metadata, settings } = useConfig();
 	const { pageOnFront, perPage } = settings;
@@ -41,6 +43,13 @@ function Home() {
 	const {
 		actions: { setupClasses },
 	} = useBodyClasses();
+
+	useEffect(() => {
+		const { preview, p } = queryString;
+		if (preview && p) {
+			history.push(`/preview/${p}`);
+		}
+	}, [queryString, history]);
 
 	useEffect(() => {
 		if (pageOnFront > 0) {

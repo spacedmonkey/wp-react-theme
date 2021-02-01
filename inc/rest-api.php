@@ -553,6 +553,10 @@ function wp_react_theme_preload() {
 		$preload_paths[] = sprintf( '/wp/v2/pages?_embed=%s&per_page=%d&slug=%s', $embed, 1, $post->post_name );
 	}
 
+	if ( is_preview() ) {
+		$preload_paths[] = sprintf( '/wp/v2/posts?_embed=%s&per_page=%d&include=%s&status=any', $embed, 1, $post->ID );
+	}
+
 	if ( is_home() ) {
 		$paged           = get_query_var( 'page', 1 );
 		$preload_paths[] = sprintf( '/wp/v2/posts?page=%d&per_page=%d&_embed=%s', $paged, $posts_per_page, $embed );

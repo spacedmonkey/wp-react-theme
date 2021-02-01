@@ -24,3 +24,4 @@ export { default as PasswordForm } from './PasswordForm';
 export { default as Navigation } from './Navigation';
 export { default as SkipLink } from './SkipLink';
 export { default as TaxonomyArchive } from './TaxonomyArchive';
+export { default as Preview } from './Preview';

@@ -20,6 +20,7 @@ import {
 	Sidebar,
 	SkipLink,
 	Navigation,
+	Preview,
 } from '../compontents';
 import { QueryProvider } from './query';
 import { CommentProvider } from './comments';
@@ -48,6 +49,9 @@ function App({ config }) {
 										</Route>
 										<Route exact path="/page/:page">
 											<Home />
+										</Route>
+										<Route exact path="/preview/:id">
+											<Preview />
 										</Route>
 										{taxonomies &&
 											taxonomies.map((tax) => {
