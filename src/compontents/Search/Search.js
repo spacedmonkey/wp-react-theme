@@ -14,15 +14,21 @@ import { useParams } from 'react-router-dom';
  */
 import { useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import { useBodyClasses } from '../../app/bodyClasses';
 
 function Search() {
 	const {
 		actions: { getPosts },
+		state: { posts },
 	} = useQuery();
 	const params = useParams();
 	const { searchTerm, page = 1 } = params;
 	const { settings } = useConfig();
 	const { perPage } = settings;
+
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
 
 	useEffect( () => {
 		getPosts( {
@@ -33,6 +39,10 @@ function Search() {
 			} ),
 		} );
 	}, [ getPosts ] );
+
+	useEffect( () => {
+		setupClasses( [ 'search', 'search-result', 'hfeed' ] );
+	}, [ posts ] );
 
 	return <Archive />;
 }

@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
  */
 import { useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import { useBodyClasses } from '../../app/bodyClasses';
 
 function SinglePost() {
 	const {
@@ -28,6 +29,10 @@ function SinglePost() {
 	const { name } = metadata;
 	const { embedAPI } = config;
 
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
+
 	useEffect( () => {
 		getPosts( {
 			path: addQueryArgs( '/wp/v2/posts', {
@@ -36,6 +41,20 @@ function SinglePost() {
 			} ),
 		} );
 	}, [ getPosts ] );
+
+	useEffect( () => {
+		if ( posts.length === 1 ) {
+			const post = posts[ 0 ];
+			const template = post.template ? post.template : 'default';
+			setupClasses( [
+				'single',
+				`single-${ post.type }`,
+				`postid-${ post.id }`,
+				`single-format-${ post.format }`,
+				`single-template-${ template }`,
+			] );
+		}
+	}, [ posts ] );
 
 	if ( ! loaded ) {
 		return <Loading />;

@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
  */
 import { useQuery } from '../../app/query';
 import { useConfig } from '../../app/config';
+import { useBodyClasses } from '../../app/bodyClasses';
 import { Archive } from '../';
 
 /**
@@ -19,12 +20,17 @@ import { useEffect } from '@wordpress/element';
 function AuthorArchive() {
 	const {
 		actions: { getPosts },
+		state: { posts },
 	} = useQuery();
 	const params = useParams();
 	const { slug, page = 1 } = params;
 
 	const { settings } = useConfig();
 	const { perPage } = settings;
+
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
 
 	useEffect( () => {
 		getPosts( {
@@ -35,6 +41,10 @@ function AuthorArchive() {
 			} ),
 		} );
 	}, [ getPosts ] );
+
+	useEffect( () => {
+		setupClasses( [ 'archive', 'author', `author-${ slug }`, 'hfeed' ] );
+	}, [ posts ] );
 
 	return <Archive />;
 }
