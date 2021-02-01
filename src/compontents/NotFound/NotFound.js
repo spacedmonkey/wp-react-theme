@@ -19,34 +19,28 @@ function NotFound() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		setupClasses( [ 'error404' ] );
-	}, [] );
+	useEffect(() => {
+		setupClasses(['error404']);
+	}, []);
 
 	return (
 		<section className="error-404 not-found">
 			<Helmet>
 				<title>
-					{ __(
-						"Oops! That page can't be found.",
-						'wp-react-theme'
-					) }
+					{__("Oops! That page can't be found.", 'wp-react-theme')}
 				</title>
 			</Helmet>
 			<header className="page-header">
 				<h1 className="page-title">
-					{ __(
-						"Oops! That page can't be found.",
-						'wp-react-theme'
-					) }
+					{__("Oops! That page can't be found.", 'wp-react-theme')}
 				</h1>
 			</header>
 			<div className="page-content">
 				<p>
-					{ __(
+					{__(
 						'It looks like nothing was found at this location. Maybe try one of the links below or a search?',
 						'wp-react-theme'
-					) }
+					)}
 				</p>
 				<SearchForm />
 			</div>

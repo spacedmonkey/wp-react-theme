@@ -9,7 +9,7 @@ import { useContext } from '@wordpress/element';
 import Context from './context';
 
 function useComments() {
-	return useContext( Context );
+	return useContext(Context);
 }
 
 export default useComments;

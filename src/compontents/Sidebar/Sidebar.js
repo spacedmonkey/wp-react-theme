@@ -19,21 +19,19 @@ function Sidebar() {
 
 	const history = useHistory();
 
-	useEffect( () => {
-		const links = document.querySelectorAll(
-			`#secondary a[href^='${ url }']`
-		);
-		Array.from( links ).forEach( ( link ) => {
-			link.addEventListener( 'click', ( evt ) => {
-				if ( evt ) {
+	useEffect(() => {
+		const links = document.querySelectorAll(`#secondary a[href^='${url}']`);
+		Array.from(links).forEach((link) => {
+			link.addEventListener('click', (evt) => {
+				if (evt) {
 					evt.preventDefault();
-					history.push( link.href.replace( url, '' ) );
+					history.push(link.href.replace(url, ''));
 				}
-			} );
-		} );
-	}, [ history ] );
+			});
+		});
+	}, [history]);
 
-	if ( ! sidebar ) {
+	if (!sidebar) {
 		return null;
 	}
 
@@ -41,7 +39,7 @@ function Sidebar() {
 		<aside
 			id="secondary"
 			className="widget-area"
-			dangerouslySetInnerHTML={ { __html: sidebar } }
+			dangerouslySetInnerHTML={{ __html: sidebar }}
 		/>
 	);
 }

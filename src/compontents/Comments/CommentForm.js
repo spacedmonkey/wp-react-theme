@@ -13,7 +13,7 @@ import { useCallback } from '@wordpress/element';
 import { useComments } from '../../app/comments';
 import { useConfig } from '../../app/config';
 
-function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
+function CommentForm({ post, parent = 0, onComplete = () => {} }) {
 	const {
 		state: { email, comment, author, url, error },
 		actions: {
@@ -34,64 +34,61 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 	const elId = uuid();
 
 	const changeEmail = useCallback(
-		( e ) => {
-			setEmail( { email: e.target.value } );
+		(e) => {
+			setEmail({ email: e.target.value });
 		},
-		[ setEmail ]
+		[setEmail]
 	);
 	const changeComment = useCallback(
-		( e ) => {
-			setComment( { comment: e.target.value } );
+		(e) => {
+			setComment({ comment: e.target.value });
 		},
-		[ setComment ]
+		[setComment]
 	);
 	const changeAuthor = useCallback(
-		( e ) => {
-			setAuthor( { author: e.target.value } );
+		(e) => {
+			setAuthor({ author: e.target.value });
 		},
-		[ setAuthor ]
+		[setAuthor]
 	);
 	const changeUrl = useCallback(
-		( e ) => {
-			setUrl( { url: e.target.value } );
+		(e) => {
+			setUrl({ url: e.target.value });
 		},
-		[ setUrl ]
+		[setUrl]
 	);
 
 	const onSubmit = useCallback(
-		( evt ) => {
-			if ( evt ) {
+		(evt) => {
+			if (evt) {
 				evt.preventDefault();
-				submitComment( {
+				submitComment({
 					post: post.id,
 					parent,
-				} )
-					.then( ( newComment ) => {
-						addComment( newComment );
+				})
+					.then((newComment) => {
+						addComment(newComment);
 						onComplete();
-					} )
-					.catch( ( e ) => {
-						setError( { error: e } );
-					} );
+					})
+					.catch((e) => {
+						setError({ error: e });
+					});
 			}
 		},
-		[ email, comment, author, url ]
+		[email, comment, author, url]
 	);
 
-	if ( commentRegistration && ! isLogged ) {
+	if (commentRegistration && !isLogged) {
 		return (
 			<div id="respond" className="comment-respond">
-				<h3
-					id={ `reply-title-${ elId }` }
-					className="comment-reply-title"
-				>
-					{ __( 'Leave a Reply', 'wp-react-theme' ) }
+				<h3 id={`reply-title-${elId}`} className="comment-reply-title">
+					{__('Leave a Reply', 'wp-react-theme')}
 				</h3>
 				<p className="must-log-in">
-					{ __(
+					{__(
 						'You must be logged in to post a comment.',
 						'wp-react-theme'
-					) }
+					)}
 				</p>
 			</div>
 		);
@@ -99,114 +96,114 @@ function CommentForm( { post, parent = 0, onComplete = () => {} } ) {
 
 	return (
 		<div id="respond" className="comment-respond">
-			<h3 id={ `reply-title-${ elId }` } className="comment-reply-title">
-				{ __( 'Leave a Reply', 'wp-react-theme' ) }
+			<h3 id={`reply-title-${elId}`} className="comment-reply-title">
+				{__('Leave a Reply', 'wp-react-theme')}
 			</h3>
-			{ error && (
+			{error && (
 				<h5
-					className={ `comment-error` }
-					dangerouslySetInnerHTML={ {
+					className={`comment-error`}
+					dangerouslySetInnerHTML={{
 						__html: error?.message,
-					} }
+					}}
 				/>
-			) }
+			)}
 			<form
-				id={ `commentform-${ elId }` }
+				id={`commentform-${elId}`}
 				className="comment-form"
 				noValidate=""
-				onSubmit={ onSubmit }
+				onSubmit={onSubmit}
 			>
 				<p className="comment-notes">
-					<span id={ `email-notes-${ elId }` }>
-						{ __(
+					<span id={`email-notes-${elId}`}>
+						{__(
 							'Your email address will not be published.',
 							'wp-react-theme'
-						) }
+						)}
 					</span>
-					{ requireNameEmail &&
-						__( 'Required fields are marked', 'wp-react-theme' ) }
-					{ requireNameEmail && <span className="required">*</span> }
+					{requireNameEmail &&
+						__('Required fields are marked', 'wp-react-theme')}
+					{requireNameEmail && <span className="required">*</span>}
 				</p>
 				<p className="comment-form-comment">
-					<label htmlFor={ `comment-${ elId }` }>
-						{ __( 'Comment', 'wp-react-theme' ) }
+					<label htmlFor={`comment-${elId}`}>
+						{__('Comment', 'wp-react-theme')}
 					</label>
 					<textarea
-						id={ `comment-${ elId }` }
+						id={`comment-${elId}`}
 						name="comment"
 						cols="45"
 						rows="8"
 						maxLength="65525"
 						required="required"
-						onChange={ changeComment }
-						value={ comment }
+						onChange={changeComment}
+						value={comment}
 					/>
 				</p>
-				{ ! isLogged && (
+				{!isLogged && (
 					<p className="comment-form-author">
-						<label htmlFor={ `author-${ elId }` }>
-							{ __( 'Name', 'wp-react-theme' ) }
-							{ requireNameEmail && (
+						<label htmlFor={`author-${elId}`}>
+							{__('Name', 'wp-react-theme')}
+							{requireNameEmail && (
 								<span className="required">*</span>
-							) }
+							)}
 						</label>
 						<input
-							id={ `author-${ elId }` }
+							id={`author-${elId}`}
 							name="author"
 							type="text"
 							size="30"
 							maxLength="245"
-							required={ requireNameEmail }
-							onChange={ changeAuthor }
-							value={ author }
+							required={requireNameEmail}
+							onChange={changeAuthor}
+							value={author}
 						/>
 					</p>
-				) }
-				{ ! isLogged && (
+				)}
+				{!isLogged && (
 					<p className="comment-form-email">
-						<label htmlFor={ `email-${ elId }` }>
-							{ __( 'Email', 'wp-react-theme' ) }
-							{ requireNameEmail && (
+						<label htmlFor={`email-${elId}`}>
+							{__('Email', 'wp-react-theme')}
+							{requireNameEmail && (
 								<span className="required">*</span>
-							) }
+							)}
 						</label>
 						<input
-							id={ `email-${ elId }` }
+							id={`email-${elId}`}
 							name="email"
 							type="email"
 							size="30"
 							maxLength="100"
 							aria-describedby="email-notes"
-							required={ requireNameEmail }
-							onChange={ changeEmail }
-							value={ email }
+							required={requireNameEmail}
+							onChange={changeEmail}
+							value={email}
 						/>
 					</p>
-				) }
-				{ ! isLogged && (
+				)}
+				{!isLogged && (
 					<p className="comment-form-url">
-						<label htmlFor={ `url-${ elId }` }>
-							{ __( 'Website', 'wp-react-theme' ) }
+						<label htmlFor={`url-${elId}`}>
+							{__('Website', 'wp-react-theme')}
 						</label>
 						<input
-							id={ `url-${ elId }` }
+							id={`url-${elId}`}
 							name="url"
 							type="url"
-							onChange={ changeUrl }
-							value={ url }
+							onChange={changeUrl}
+							value={url}
 							size="30"
 							maxLength="200"
 						/>
 					</p>
-				) }
+				)}
 				<p className="form-submit">
 					<button
 						name="submit"
 						type="submit"
-						id={ `submit-${ elId }` }
+						id={`submit-${elId}`}
 						className="submit"
 					>
-						{ __( 'Post Comment', 'wp-react-theme' ) }
+						{__('Post Comment', 'wp-react-theme')}
 					</button>
 				</p>
 			</form>

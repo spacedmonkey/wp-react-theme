@@ -12,37 +12,37 @@ import { useHistory } from 'react-router-dom';
 function SearchForm() {
 	const elId = uuid();
 
-	const [ search, setSearch ] = useState( '' );
+	const [search, setSearch] = useState('');
 	const history = useHistory();
 
 	const onSubmit = useCallback(
-		( evt ) => {
-			if ( evt ) {
+		(evt) => {
+			if (evt) {
 				evt.preventDefault();
-				history.push( `/search/${ search }` );
+				history.push(`/search/${search}`);
 			}
 		},
-		[ history, search ]
+		[history, search]
 	);
 
 	return (
-		<form role="search" className="search-form" onSubmit={ onSubmit }>
-			<label htmlFor={ `search-${ elId }` }>
+		<form role="search" className="search-form" onSubmit={onSubmit}>
+			<label htmlFor={`search-${elId}`}>
 				<span className="screen-reader-text">
-					{ __( 'Search for: ', 'wp-react-theme' ) }
+					{__('Search for: ', 'wp-react-theme')}
 				</span>
 				<input
 					type="search"
 					className="search-field"
-					placeholder={ __( 'Search …', 'wp-react-theme' ) }
-					value={ search }
-					onChange={ ( e ) => setSearch( e.target.value ) }
+					placeholder={__('Search …', 'wp-react-theme')}
+					value={search}
+					onChange={(e) => setSearch(e.target.value)}
 					name="s"
-					id={ `search-${ elId }` }
+					id={`search-${elId}`}
 				/>
 			</label>
 			<button type="submit" className="search-submit">
-				{ __( 'Search', 'wp-react-theme' ) }
+				{__('Search', 'wp-react-theme')}
 			</button>
 		</form>
 	);

@@ -12,7 +12,7 @@ import { commentsOpen, isEven } from '../../utils';
 import { __, sprintf } from '@wordpress/i18n';
 import { useState, useMemo, RawHTML } from '@wordpress/element';
 
-function Comment( { comment, depth, num, post } ) {
+function Comment({ comment, depth, num, post }) {
 	const { settings, state } = useConfig();
 	const {
 		threadComments,
@@ -27,7 +27,7 @@ function Comment( { comment, depth, num, post } ) {
 		actions: { setShowMainForm },
 	} = useComments();
 
-	const [ showForm, setShowForm ] = useState( false );
+	const [showForm, setShowForm] = useState(false);
 
 	const {
 		date_time: {
@@ -38,22 +38,22 @@ function Comment( { comment, depth, num, post } ) {
 
 	const newDepth = depth + 1;
 
-	const oddEvenClass = useMemo( () => {
-		return isEven( num ) ? 'even' : 'odd';
-	}, [ num ] );
+	const oddEvenClass = useMemo(() => {
+		return isEven(num) ? 'even' : 'odd';
+	}, [num]);
 
 	const replyText = showForm
-		? __( 'Cancel reply', 'wp-react-theme' )
-		: __( 'Reply', 'wp-react-theme' );
+		? __('Cancel reply', 'wp-react-theme')
+		: __('Reply', 'wp-react-theme');
 
 	let showReply = false;
-	if ( threadComments && commentsOpen( post ) ) {
+	if (threadComments && commentsOpen(post)) {
 		showReply = true;
 	}
-	if ( commentRegistration && ! isLogged ) {
+	if (commentRegistration && !isLogged) {
 		showReply = false;
 	}
-	if ( depth > threadCommentsDepth ) {
+	if (depth > threadCommentsDepth) {
 		showReply = false;
 	}
 
@@ -61,99 +61,96 @@ function Comment( { comment, depth, num, post } ) {
 
 	return (
 		<li
-			id={ `comment-${ comment.id }` }
-			className={ `comment depth-${ depth } ${ oddEvenClass } ${ showReplyForm }` }
+			id={`comment-${comment.id}`}
+			className={`comment depth-${depth} ${oddEvenClass} ${showReplyForm}`}
 		>
-			<article
-				id={ `div-comment-${ comment.id }` }
-				className="comment-body"
-			>
+			<article id={`div-comment-${comment.id}`} className="comment-body">
 				<footer className="comment-meta">
 					<div className="comment-author vcard">
-						{ showAvatars && (
+						{showAvatars && (
 							<>
 								<img
 									alt=""
-									src={ comment.author_avatar_urls[ '24' ] }
+									src={comment.author_avatar_urls['24']}
 									className="avatar avatar-24 photo"
 									height="24"
 									width="24"
 									loading="lazy"
-								/>{ ' ' }
+								/>{' '}
 							</>
-						) }
+						)}
 						<b className="fn">
 							<a
-								href={ comment.author_url }
+								href={comment.author_url}
 								rel="external nofollow ugc"
 								className="url"
 							>
-								{ comment.author_name }
+								{comment.author_name}
 							</a>
-						</b>{ ' ' }
+						</b>{' '}
 						<span className="says">
-							{ __( 'says:', 'wp-react-theme' ) }
+							{__('says:', 'wp-react-theme')}
 						</span>
 					</div>
 
 					<div className="comment-metadata">
-						<a href={ comment.link }>
-							<time dateTime={ comment.date }>
-								{ sprintf(
+						<a href={comment.link}>
+							<time dateTime={comment.date}>
+								{sprintf(
 									/* translators: 1: Comment date, 2: Comment time. */
-									__( '%1$s at %2$s', 'wp-react-theme' ),
+									__('%1$s at %2$s', 'wp-react-theme'),
 									commentDateFormat,
 									commentTimeFormat
-								) }
+								)}
 							</time>
 						</a>
 					</div>
 
-					{ comment.status === 'hold' && (
+					{comment.status === 'hold' && (
 						<em className="comment-awaiting-moderation">
-							{ __(
+							{__(
 								'Your comment is awaiting moderation. This is a preview; your comment will be visible after it has been approved. ',
 								'wp-react-theme'
-							) }
+							)}
 						</em>
-					) }
+					)}
 				</footer>
 				<RawHTML className="comment-content">
-					{ comment.content.rendered }
+					{comment.content.rendered}
 				</RawHTML>
 
-				{ showReply && (
+				{showReply && (
 					<div className="reply">
 						<button
 							className="comment-reply-link"
-							onClick={ () => {
-								setShowForm( ! showForm );
-								setShowMainForm( {
-									showMainForm: ! showMainForm,
-								} );
-							} }
+							onClick={() => {
+								setShowForm(!showForm);
+								setShowMainForm({
+									showMainForm: !showMainForm,
+								});
+							}}
 						>
-							{ replyText }
+							{replyText}
 						</button>
 					</div>
-				) }
-				{ showForm && (
+				)}
+				{showForm && (
 					<CommentForm
-						post={ post }
-						parent={ comment.id }
-						onComplete={ () => {
-							setShowForm( false );
-							setShowMainForm( { showMainForm: true } );
-						} }
+						post={post}
+						parent={comment.id}
+						onComplete={() => {
+							setShowForm(false);
+							setShowMainForm({ showMainForm: true });
+						}}
 					/>
-				) }
+				)}
 			</article>
 			<CommentList
 				className="children"
-				comments={ comments }
-				parent={ comment.id }
-				post={ post }
-				depth={ newDepth }
+				comments={comments}
+				parent={comment.id}
+				post={post}
+				depth={newDepth}
 			/>
 		</li>
 	);

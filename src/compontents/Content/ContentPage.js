@@ -9,7 +9,7 @@ import { isProtected } from '../../utils';
  */
 import { RawHTML } from '@wordpress/element';
 
-function ContentPage( { post } ) {
+function ContentPage({ post }) {
 	const {
 		id,
 		type,
@@ -18,25 +18,25 @@ function ContentPage( { post } ) {
 		content: { rendered: contentRendered },
 		_embedded: embedded,
 	} = post;
-	const featuredmedia = embedded?.[ 'wp:featuredmedia' ]?.[ 0 ];
+	const featuredmedia = embedded?.['wp:featuredmedia']?.[0];
 	return (
 		<article
-			id={ `post-${ id }` }
-			className={ `post-${ id } post hentry type-${ type } status-${ status }` }
+			id={`post-${id}`}
+			className={`post-${id} post hentry type-${type} status-${status}`}
 		>
 			<header className="entry-header">
-				<h1 className="entry-title">{ titleRendered }</h1>
+				<h1 className="entry-title">{titleRendered}</h1>
 			</header>
-			{ featuredmedia && (
+			{featuredmedia && (
 				<div className="post-thumbnail">
-					<Image data={ featuredmedia } />
+					<Image data={featuredmedia} />
 				</div>
-			) }
-			{ ! isProtected( post ) ? (
-				<RawHTML className="entry-content">{ contentRendered }</RawHTML>
+			)}
+			{!isProtected(post) ? (
+				<RawHTML className="entry-content">{contentRendered}</RawHTML>
 			) : (
-				<PasswordForm id={ post.id } />
-			) }
+				<PasswordForm id={post.id} />
+			)}
 		</article>
 	);
 }

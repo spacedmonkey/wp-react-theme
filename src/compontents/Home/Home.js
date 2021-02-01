@@ -42,89 +42,89 @@ function Home() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		if ( pageOnFront > 0 ) {
-			getPosts( {
-				path: addQueryArgs( '/wp/v2/pages', {
+	useEffect(() => {
+		if (pageOnFront > 0) {
+			getPosts({
+				path: addQueryArgs('/wp/v2/pages', {
 					include: pageOnFront,
 					per_page: perPage,
-				} ),
-			} );
+				}),
+			});
 		} else {
-			getPosts( {
-				path: addQueryArgs( '/wp/v2/posts', {
+			getPosts({
+				path: addQueryArgs('/wp/v2/posts', {
 					page,
 					per_page: perPage,
-				} ),
-			} );
+				}),
+			});
 		}
-	}, [ getPosts ] );
+	}, [getPosts]);
 
-	useEffect( () => {
-		if ( pageOnFront ) {
-			const post = posts[ 0 ];
+	useEffect(() => {
+		if (pageOnFront) {
+			const post = posts[0];
 			const template = post.template ? post.template : 'default';
-			setupClasses( [
+			setupClasses([
 				'home',
 				'page',
-				`page-id-${ post.id }`,
-				`page-template-${ template }`,
-			] );
+				`page-id-${post.id}`,
+				`page-template-${template}`,
+			]);
 		} else {
-			setupClasses( [ 'home', 'blog', 'hfeed' ] );
+			setupClasses(['home', 'blog', 'hfeed']);
 		}
-	}, [ posts ] );
+	}, [posts]);
 
-	if ( ! loaded ) {
+	if (!loaded) {
 		return <Loading />;
 	}
 
-	if ( ! posts ) {
+	if (!posts) {
 		return <NotFound />;
 	}
 
-	if ( pageOnFront ) {
-		const post = posts[ 0 ];
+	if (pageOnFront) {
+		const post = posts[0];
 		return (
 			<>
 				<Helmet>
 					<title>
-						{ post?.title.rendered }
-						{ ' - ' }
-						{ name }
+						{post?.title.rendered}
+						{' - '}
+						{name}
 					</title>
-					<link rel="canonical" href={ post?.link } />
-					<link rel="shortlink" href={ post?.guid.rendered } />
+					<link rel="canonical" href={post?.link} />
+					<link rel="shortlink" href={post?.guid.rendered} />
 					<meta
 						name="description"
-						content={ stripHTML( post?.excerpt.rendered ) }
+						content={stripHTML(post?.excerpt.rendered)}
 					/>
 					<link
 						rel="alternate"
 						type="application/json"
-						href={ post._links.self[ 0 ].href }
+						href={post._links.self[0].href}
 					/>
 				</Helmet>
-				<ContentPage post={ post } />
-				{ ! isProtected( post ) && <Comments post={ post } /> }
+				<ContentPage post={post} />
+				{!isProtected(post) && <Comments post={post} />}
 			</>
 		);
-	} else if ( posts.length ) {
-		const postList = posts.map( ( post ) => (
-			<Content post={ post } key={ post.id } />
-		) );
+	} else if (posts.length) {
+		const postList = posts.map((post) => (
+			<Content post={post} key={post.id} />
+		));
 		return (
 			<>
 				<Helmet>
 					<title>
-						{ metadata.name }
-						{ ' - ' }
-						{ name }
+						{metadata.name}
+						{' - '}
+						{name}
 					</title>
-					<meta name="description" content={ metadata.description } />
+					<meta name="description" content={metadata.description} />
 				</Helmet>
-				{ postList }
-				<Pagination headers={ headers } page={ parseInt( page ) } />
+				{postList}
+				<Pagination headers={headers} page={parseInt(page)} />
 			</>
 		);
 	}

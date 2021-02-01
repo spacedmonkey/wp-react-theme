@@ -1,4 +1,4 @@
-export const setLoaded = ( state, { loaded } ) => {
+export const setLoaded = (state, { loaded }) => {
 	return {
 		...state,
 		loaded,

@@ -1,4 +1,4 @@
-export const clearForm = ( state ) => {
+export const clearForm = (state) => {
 	return {
 		...state,
 		author: '',

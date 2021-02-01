@@ -1,17 +1,17 @@
-function PageHeader( { title, description } ) {
+function PageHeader({ title, description }) {
 	return (
 		<header className="page-header">
 			<h1
 				className="page-title"
-				dangerouslySetInnerHTML={ {
+				dangerouslySetInnerHTML={{
 					__html: title,
-				} }
+				}}
 			/>
 			<div
 				className="archive-description"
-				dangerouslySetInnerHTML={ {
+				dangerouslySetInnerHTML={{
 					__html: description,
-				} }
+				}}
 			/>
 		</header>
 	);

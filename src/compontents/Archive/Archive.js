@@ -22,44 +22,39 @@ function Archive() {
 	const { metadata } = useConfig();
 	const { name } = metadata;
 
-	if ( ! loaded ) {
+	if (!loaded) {
 		return <Loading />;
 	}
 
-	if ( posts.length < 1 ) {
+	if (posts.length < 1) {
 		return <NotFound />;
 	}
 
-	const postList = posts.map( ( post ) => (
-		<Content post={ post } key={ post.id } />
-	) );
+	const postList = posts.map((post) => <Content post={post} key={post.id} />);
 
-	const archiveTitle = headers?.[ 'x-wp-archive-header' ]
-		? headers?.[ 'x-wp-archive-header' ]
+	const archiveTitle = headers?.['x-wp-archive-header']
+		? headers?.['x-wp-archive-header']
 		: '';
-	const archiveDescription = headers?.[ 'x-wp-archive-description' ]
-		? headers?.[ 'x-wp-archive-description' ]
+	const archiveDescription = headers?.['x-wp-archive-description']
+		? headers?.['x-wp-archive-description']
 		: '';
 
 	return (
 		<>
 			<Helmet>
 				<title>
-					{ archiveTitle }
-					{ ' - ' }
-					{ name }
+					{archiveTitle}
+					{' - '}
+					{name}
 				</title>
 				<meta
 					name="description"
-					content={ stripHTML( archiveDescription ) }
+					content={stripHTML(archiveDescription)}
 				/>
 			</Helmet>
-			<PageHeader
-				title={ archiveTitle }
-				description={ archiveDescription }
-			/>
-			{ postList }
-			<Pagination headers={ headers } page={ parseInt( page ) } />
+			<PageHeader title={archiveTitle} description={archiveDescription} />
+			{postList}
+			<Pagination headers={headers} page={parseInt(page)} />
 		</>
 	);
 }

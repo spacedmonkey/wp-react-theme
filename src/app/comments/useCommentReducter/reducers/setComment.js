@@ -1,4 +1,4 @@
-export const setComment = ( state, { comment } ) => {
+export const setComment = (state, { comment }) => {
 	return {
 		...state,
 		comment,

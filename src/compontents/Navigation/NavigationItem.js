@@ -14,7 +14,7 @@ import { Link, useLocation } from 'react-router-dom';
  */
 import { useMemo } from '@wordpress/element';
 
-function NavigationItem( { menuItem } ) {
+function NavigationItem({ menuItem }) {
 	const location = useLocation();
 	const { menu, metadata } = useConfig();
 	const { url } = metadata;
@@ -33,56 +33,56 @@ function NavigationItem( { menuItem } ) {
 	} = menuItem;
 
 	let DisplayLink = '';
-	if ( linkUrl.startsWith( url ) || linkUrl.startsWith( '/' ) ) {
+	if (linkUrl.startsWith(url) || linkUrl.startsWith('/')) {
 		DisplayLink = (
 			<Link
-				to={ linkUrl.replace( url, '' ) }
-				target={ target }
-				title={ attrTitle }
-				className={ classes }
-				rel={ xfn }
+				to={linkUrl.replace(url, '')}
+				target={target}
+				title={attrTitle}
+				className={classes}
+				rel={xfn}
 			>
-				{ title }
+				{title}
 			</Link>
 		);
 	} else {
 		DisplayLink = (
 			<a
-				href={ linkUrl }
-				target={ target }
-				title={ attrTitle }
-				className={ classes }
-				rel={ xfn }
+				href={linkUrl}
+				target={target}
+				title={attrTitle}
+				className={classes}
+				rel={xfn}
 			>
-				{ title }
+				{title}
 			</a>
 		);
 	}
 
-	const menuItemsFilters = useMemo( () => {
-		return menuItems.filter( ( thisItem ) => {
-			return parseInt( thisItem.menu_item_parent ) === parseInt( ID );
-		} );
-	}, [ ID, menuItems ] );
+	const menuItemsFilters = useMemo(() => {
+		return menuItems.filter((thisItem) => {
+			return parseInt(thisItem.menu_item_parent) === parseInt(ID);
+		});
+	}, [ID, menuItems]);
 
 	const hasChildren =
 		menuItemsFilters.length > 0 ? 'menu-item-has-children' : '';
 	const currrentClass =
-		linkUrl.replace( url, '' ) === location.pathname
+		linkUrl.replace(url, '') === location.pathname
 			? 'current-menu-item'
 			: '';
 
 	return (
 		<li
-			className={ `menu-item ${ hasChildren } ${ currrentClass } menu-item-object-${ object } menu-item-type-${ type } menu-item-${ ID }` }
-			id={ `menu-item-${ ID }` }
+			className={`menu-item ${hasChildren} ${currrentClass} menu-item-object-${object} menu-item-type-${type} menu-item-${ID}`}
+			id={`menu-item-${ID}`}
 		>
-			{ DisplayLink }
+			{DisplayLink}
 			<NavigationList
 				className="sub-menu"
-				menuItems={ menuItems }
-				parent={ ID }
-				id={ `sub-menu-${ ID }` }
+				menuItems={menuItems}
+				parent={ID}
+				id={`sub-menu-${ID}`}
 			/>
 		</li>
 	);

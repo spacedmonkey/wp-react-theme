@@ -18,16 +18,16 @@ function Loading() {
 		actions: { setupClasses },
 	} = useBodyClasses();
 
-	useEffect( () => {
-		setupClasses( [ 'loading' ] );
-	}, [] );
+	useEffect(() => {
+		setupClasses(['loading']);
+	}, []);
 
 	return (
-		<div className={ `loading-message` }>
+		<div className={`loading-message`}>
 			<Helmet>
-				<title>{ __( 'Loading…', 'wp-react-theme' ) }</title>
+				<title>{__('Loading…', 'wp-react-theme')}</title>
 			</Helmet>
-			<h4>{ __( 'Loading…', 'wp-react-theme' ) }</h4>
+			<h4>{__('Loading…', 'wp-react-theme')}</h4>
 		</div>
 	);
 }

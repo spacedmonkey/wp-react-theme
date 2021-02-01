@@ -14,25 +14,25 @@ function Navigation() {
 	const { menu } = useConfig();
 	const { id, menuItems } = menu;
 
-	const [ expanded, setExpanded ] = useState( false );
+	const [expanded, setExpanded] = useState(false);
 
 	const className = expanded ? 'toggled main-navigation' : 'main-navigation';
 
-	if ( ! menuItems ) {
+	if (!menuItems) {
 		return null;
 	}
 
 	return (
-		<nav id="site-navigation" className={ className }>
+		<nav id="site-navigation" className={className}>
 			<button
 				className="menu-toggle"
-				aria-controls={ id }
-				onClick={ () => setExpanded( ! expanded ) }
-				aria-expanded={ expanded }
+				aria-controls={id}
+				onClick={() => setExpanded(!expanded)}
+				aria-expanded={expanded}
 			>
-				{ __( 'Menu', 'wp-react-theme' ) }
+				{__('Menu', 'wp-react-theme')}
 			</button>
-			<NavigationList id={ id } menuItems={ menuItems } parent="0" />
+			<NavigationList id={id} menuItems={menuItems} parent="0" />
 		</nav>
 	);
 }

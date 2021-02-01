@@ -8,34 +8,34 @@ import Comment from './Comment';
  */
 import { useMemo } from '@wordpress/element';
 
-function CommentList( {
+function CommentList({
 	className = 'comment-list',
 	parent = 0,
 	depth = 1,
 	comments = [],
 	post,
-} ) {
-	const commentFilters = useMemo( () => {
-		return comments.filter( ( comment ) => {
+}) {
+	const commentFilters = useMemo(() => {
+		return comments.filter((comment) => {
 			return comment.parent === parent;
-		} );
-	}, [ parent, comments ] );
+		});
+	}, [parent, comments]);
 
-	if ( ! commentFilters.length ) {
+	if (!commentFilters.length) {
 		return null;
 	}
 
 	return (
-		<ol className={ className }>
-			{ commentFilters.map( ( comment, index ) => (
+		<ol className={className}>
+			{commentFilters.map((comment, index) => (
 				<Comment
-					key={ comment.id }
-					comment={ comment }
-					depth={ depth }
-					post={ post }
-					num={ index }
+					key={comment.id}
+					comment={comment}
+					depth={depth}
+					post={post}
+					num={index}
 				/>
-			) ) }
+			))}
 		</ol>
 	);
 }

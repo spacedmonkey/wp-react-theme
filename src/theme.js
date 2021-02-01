@@ -21,10 +21,10 @@ const initialize = () => {
 	const config = window?.react_theme_settings;
 	render(
 		<StrictMode>
-			<App config={ config } />
+			<App config={config} />
 		</StrictMode>,
-		document.getElementById( 'page' )
+		document.getElementById('page')
 	);
 };
 
-domReady( initialize );
+domReady(initialize);
