@@ -24,6 +24,7 @@ import { Helmet } from 'react-helmet';
  */
 import { addQueryArgs } from '@wordpress/url';
 import { useEffect } from '@wordpress/element';
+import { useBodyClasses } from '../../app/bodyClasses';
 
 function Home() {
 	const {
@@ -36,6 +37,10 @@ function Home() {
 	const { metadata, settings } = useConfig();
 	const { pageOnFront, perPage } = settings;
 	const { name } = metadata;
+
+	const {
+		actions: { setupClasses },
+	} = useBodyClasses();
 
 	useEffect( () => {
 		if ( pageOnFront > 0 ) {
@@ -54,6 +59,21 @@ function Home() {
 			} );
 		}
 	}, [ getPosts ] );
+
+	useEffect( () => {
+		if ( pageOnFront ) {
+			const post = posts[ 0 ];
+			const template = post.template ? post.template : 'default';
+			setupClasses( [
+				'home',
+				'page',
+				`page-id-${ post.id }`,
+				`page-template-${ template }`,
+			] );
+		} else {
+			setupClasses( [ 'home', 'blog', 'hfeed' ] );
+		}
+	}, [ posts ] );
 
 	if ( ! loaded ) {
 		return <Loading />;
