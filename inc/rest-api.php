@@ -116,12 +116,12 @@ add_filter( 'rest_post_query', 'wp_react_theme_rest_query', 10, 2 );
  */
 function wp_react_theme_prepare_post( $response ) {
 
-	$previous_post = get_previous_post(); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post
+	$previous_post = get_adjacent_post( false, '', true, 'category' ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_previous_post
 	if ( $previous_post ) {
 		$previous = rest_url( 'wp/v2/posts/' . $previous_post->ID );
 		$response->add_link( 'previous', $previous, array( 'embeddable' => true ) );
 	}
-	$next_post = get_next_post(); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post
+	$next_post = get_adjacent_post( false, '', false, 'category' ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_adjacent_post_get_next_post
 	if ( $next_post ) {
 		$next = rest_url( 'wp/v2/posts/' . $next_post->ID );
 		$response->add_link( 'next', $next, array( 'embeddable' => true ) );
