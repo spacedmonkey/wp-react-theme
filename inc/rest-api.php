@@ -14,20 +14,23 @@
  * @return mixed
  */
 function wp_react_theme_extra_query_params( array $query_params, $post_type ) {
-	$taxonomies = wp_list_filter( get_object_taxonomies( $post_type, 'objects' ), array( 'show_in_rest' => true ) );
+	$object_taxonomies = get_object_taxonomies( $post_type->name, 'objects' );
+	if ( $object_taxonomies ) {
+		$taxonomies = wp_list_filter( $object_taxonomies, array( 'show_in_rest' => true ) );
 
-	foreach ( $taxonomies as $taxonomy ) {
-		$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
+		foreach ( $taxonomies as $taxonomy ) {
+			$base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 
-		$query_params[ $base . '_slug' ] = array(
-			/* translators: %s: Taxonomy name. */
-			'description' => sprintf( __( 'Limit result set to all items that have the specified term assigned in the %s taxonomy.', 'wp-react-theme' ), $base ),
-			'type'        => 'array',
-			'items'       => array(
-				'type' => 'string',
-			),
-			'default'     => array(),
-		);
+			$query_params[ $base . '_slug' ] = array(
+				/* translators: %s: Taxonomy name. */
+				'description' => sprintf( __( 'Limit result set to all items that have the specified term assigned in the %s taxonomy.', 'wp-react-theme' ), $base ),
+				'type'        => 'array',
+				'items'       => array(
+					'type' => 'string',
+				),
+				'default'     => array(),
+			);
+		}
 	}
 
 	$query_params['author_slug'] = array(
