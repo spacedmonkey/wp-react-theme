@@ -5,3 +5,5 @@
 package-lock.json
 .github/
 node_modules/
+src/
+vendor/
